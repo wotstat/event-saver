@@ -1,6 +1,8 @@
-const express = require('express')
-const cors = require('cors')
-const config = require('config')
+import express from 'express'
+import cors from 'cors'
+import config from 'config'
+
+import sendRoute from './event/send/index.js'
 
 const app = express()
 
@@ -8,7 +10,7 @@ app.use(express.json())
 app.use(cors());
 app.options('*', cors());
 
-app.use('/api/event', require('./event/send'))
+app.use('/api/event', sendRoute)
 
 async function Start() {
     const port = config.get('app-port') || 5000
