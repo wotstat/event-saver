@@ -2,8 +2,8 @@
     "app-port": 5000,
     "battle-secret-key": "battle-secret-key",
     "clickHouse": {
-        "host": "localhost",
-        "port": 8123,
+        "url": "localhost",
+        "port": 8124,
         "user": "default",
         "password": "",
         "database": "WOTSTAT"
