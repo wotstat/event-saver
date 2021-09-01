@@ -2,9 +2,11 @@
     "apps": [
         {
             "name": "prod.event-server",
-            "cwd": "../",
             "script": "npm",
-            "args": "start"
+            "args": [
+                "run",
+                "start"
+            ]
         }
     ]
 }
