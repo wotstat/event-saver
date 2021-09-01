@@ -1,6 +1,9 @@
 {
-    "app-port": 5000,
-    "battle-secret-key": "battle-secret-key",
+    "appPort": 5000,
+    "battleSecretKey": "battle-secret-key",
+    "redis": {
+        "startBattleTokenLifetime": 3600
+    },
     "clickHouse": {
         "url": "localhost",
         "port": 8124,

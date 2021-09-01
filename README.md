@@ -25,6 +25,9 @@ docker run -d --name clickhouse-server -p 8123:8123 --volume=$PATH_DB:/var/lib/c
 npm i
 ```
 
+### [Опционально] [Прокси сервер](https://clickhouse.tech/docs/ru/interfaces/third-party/proxy/)
+Я использую [clickhouse-bulk](https://github.com/nikepan/clickhouse-bulk)
+
 ## Запуск
 В тестовом режиме
 ```
