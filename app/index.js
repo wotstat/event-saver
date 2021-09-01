@@ -3,6 +3,7 @@ import cors from 'cors'
 import config from 'config'
 
 import sendRoute from './event/send/index.js'
+import status from './status/index.js'
 
 const app = express()
 
@@ -11,6 +12,7 @@ app.use(cors());
 app.options('*', cors());
 
 app.use('/api/events', sendRoute)
+app.use('/api/events', status)
 
 async function Start() {
     const port = config.get('appPort') || 5000

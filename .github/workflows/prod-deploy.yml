@@ -23,3 +23,4 @@ jobs:
                       git pull
                       npm i
                       pm2 start pm2/prod.json
+                      pm2 save
