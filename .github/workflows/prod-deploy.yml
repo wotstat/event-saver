@@ -1,9 +1,8 @@
 name: Deploy
 
 on:
-    push:
-        branches:
-            - master
+    release:
+        types: [published, created, edited]
 
     workflow_dispatch:
 
@@ -20,7 +19,7 @@ jobs:
                   password: ${{ secrets.PASSWORD }}
                   port: ${{ secrets.PORT }}
                   script: |
-                      cd /home/${{ secrets.USERNAME }}/web/wotstat/dev/EventSaver
+                      cd /home/${{ secrets.USERNAME }}/web/wotstat/prod/EventSaver
                       git pull
                       npm i
-                      pm2 start pm2/dev.json
+                      pm2 start pm2/prod.json

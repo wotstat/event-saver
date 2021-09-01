@@ -1,5 +1,5 @@
 {
-    "appPort": 5000,
+    "appPort": 5101,
     "battleSecretKey": "battle-secret-key",
     "redis": {
         "startBattleTokenLifetime": 3600
