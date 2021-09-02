@@ -1,5 +1,8 @@
 # Микросервис сохранения событий в БД
 
+## CI/CD
+GitHub Actions настроен так, что состояние ветки **master** соответствует [dev.wotstat](https://dev.wotstat.soprachev.com/) поддомену.
+
 ## Установка
 
 ### ClickHouse
