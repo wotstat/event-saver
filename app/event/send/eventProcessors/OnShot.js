@@ -1,5 +1,5 @@
 import { Insert } from '../dbProvider.js'
-import { Vector3Unwrap } from '../utils.js'
+import { Vector3Unwrap, CHBool } from '../utils.js'
 import { v4 as uuidv4 } from 'uuid'
 
 export default function Process(battleUUID, e) {
@@ -16,8 +16,8 @@ export default function Process(battleUUID, e) {
             clientShotDispersion    : e.ClientShotDispersion,   // Float64,
             gravity                 : e.Gravity,                // Float32,
             hitReason               : e.HitReason,              // Nullable(Enum8('tank' = 1, 'terrain' = 2, 'other' = 3)),
-            serverAim               : e.ServerAim,              // UInt8,
-            autoAim                 : e.AutoAim,                // UInt8,
+            serverAim               : CHBool(e.ServerAim),      // UInt8,
+            autoAim                 : CHBool(e.AutoAim),        // UInt8,
             ping                    : e.Ping,                   // Float32
             ...Vector3Unwrap('gunPoint', e.GunPoint),
             ...Vector3Unwrap('clientMarkerPoint', e.ClientMarkerPoint),

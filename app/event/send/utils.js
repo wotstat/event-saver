@@ -7,4 +7,8 @@ function Vector3Unwrap(name, vector) {
     }
 }
 
-export { Vector3Unwrap }
+function CHBool(val) {
+    return val ? 1 : 0
+}
+
+export { Vector3Unwrap, CHBool }
