@@ -1,12 +1,19 @@
 import config from 'config'
 import clickHouse from 'clickhouse'
 import Knex from 'knex'
-import { Migrate } from './migration/index.js';
 
 const knex = Knex({ client: 'pg' });
 
 const clickhouse = new clickHouse.ClickHouse(config.get('clickHouse'))
 
-Migrate(clickhouse)
+async function MultistatementQuery(client, sql) {
+    const querys = sql.split(';').filter(t => t.trim() != '')
+    const res = []
+    for (let i = 0; i < querys.length; i++) {
+        const query = querys[i];
+        res.push(await client.query(query).toPromise())
+    }
+    return res
+}
 
-export { knex, clickhouse }
+export { knex, clickhouse, MultistatementQuery }

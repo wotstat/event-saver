@@ -4,6 +4,10 @@ import { Migrate } from './migration/index.js';
 
 const clickhouse = new clickHouse.ClickHouse(config.get('clickHouse'))
 
-Migrate(clickhouse).then(() => {
-    console.log('Done');
-})
+Migrate(clickhouse)
+    .then(() => {
+        console.log('Done');
+    })
+    .catch(error => {
+        console.error(error);
+    })

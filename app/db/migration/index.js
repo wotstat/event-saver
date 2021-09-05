@@ -1,3 +1,4 @@
+import { MultistatementQuery } from '../index.js'
 import M_1 from './1.js'
 
 
@@ -15,11 +16,15 @@ async function Migrate(client) {
         const migrator = migrators[i];
         if (!currentMigrations.find(t => t.name == migrator.name)) {
             console.log(`[Migration]: apply ${migrator.name}`);
-            await Promise.all([
-                client.query(migrator.up).toPromise(),
-                client.query(`insert into migrations (name, uuid, date, order)
-                    VALUES ('${migrator.name}', generateUUIDv4(), '${(new Date()).getTime()}', ${++lastOrder})`).toPromise()
-            ])
+
+            try {
+                await MultistatementQuery(client, migrator.up)
+                await client.query(`insert into migrations (name, uuid, date, order)
+                VALUES ('${migrator.name}', generateUUIDv4(), '${(new Date()).getTime()}', ${++lastOrder})`).toPromise()
+            }
+            catch (e) {
+                console.error(e);
+            }
         }
     }
 }
@@ -29,8 +34,13 @@ async function Rollback(client) {
     if (currentMigrations.length > 0) {
         const migration = migrators.find(t => t.name == currentMigrations[0].name)
         console.log(`[Rollback]: migration ${migration.name}`);
-        await client.query(migration.down).toPromise()
-        await client.query(`alter table migrations delete where uuid = '${currentMigrations[0].uuid}'`).toPromise()
+        try {
+            await MultistatementQuery(client, migration.down)
+            await client.query(`alter table migrations delete where uuid = '${currentMigrations[0].uuid}'`).toPromise()
+        }
+        catch (e) {
+            console.error(e);
+        }
     }
 }
 
