@@ -1,4 +1,4 @@
-import { Insert } from '../dbProvider.js'
+import { Insert } from "../insert.js"
 import { Vector3Unwrap, CHBool } from '../utils.js'
 import { v4 as uuidv4 } from 'uuid'
 

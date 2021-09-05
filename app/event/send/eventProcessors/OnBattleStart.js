@@ -1,4 +1,5 @@
-import { Insert } from "../dbProvider.js"
+import { Insert } from "../insert.js"
+
 import { Vector3Unwrap } from "../utils.js"
 
 export default function Process(uuid, e) {
