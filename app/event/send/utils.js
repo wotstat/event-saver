@@ -11,4 +11,8 @@ function CHBool(val) {
     return val ? 1 : 0
 }
 
-export { Vector3Unwrap, CHBool }
+function S2MS(val) {
+    return Number.parseInt(val * 1000)
+}
+
+export { Vector3Unwrap, CHBool, S2MS }

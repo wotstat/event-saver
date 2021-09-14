@@ -1,5 +1,5 @@
 import { Insert } from "../insert.js"
-import { Vector3Unwrap, CHBool } from '../utils.js'
+import { Vector3Unwrap, CHBool, S2MS } from '../utils.js'
 import { v4 as uuidv4 } from 'uuid'
 
 export default function Process(battleUUID, e) {
@@ -19,6 +19,7 @@ export default function Process(battleUUID, e) {
             serverAim               : CHBool(e.ServerAim),      // UInt8,
             autoAim                 : CHBool(e.AutoAim),        // UInt8,
             ping                    : e.Ping,                   // Float32
+            battleTimeMS            : S2MS(e.BattleTime),       // Int32
             ...Vector3Unwrap('gunPoint', e.GunPoint),
             ...Vector3Unwrap('clientMarkerPoint', e.ClientMarkerPoint),
             ...Vector3Unwrap('serverMarkerPoint', e.ServerMarkerPoint),
