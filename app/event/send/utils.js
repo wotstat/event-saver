@@ -11,8 +11,12 @@ function CHBool(val) {
     return val ? 1 : 0
 }
 
+function CHArray(val) {
+    return JSON.stringify(val).replace(/"/g, '\'')
+}
+
 function S2MS(val) {
     return Number.parseInt(val * 1000)
 }
 
-export { Vector3Unwrap, CHBool, S2MS }
+export { Vector3Unwrap, CHBool, S2MS, CHArray }

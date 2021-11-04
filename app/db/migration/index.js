@@ -1,9 +1,10 @@
 import { MultistatementQuery } from '../index.js'
 import M_1 from './1.js'
 import M_2 from './2.js'
+import M_3 from './3.js'
 
 
-const migrators = [M_1, M_2]
+const migrators = [M_1, M_2, M_3]
 
 async function Migrate(client) {
 

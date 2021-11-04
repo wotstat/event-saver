@@ -6,9 +6,9 @@
     },
     "clickHouse": {
         "url": "localhost",
-        "port": 8124,
+        "port": 8123,
         "user": "default",
         "password": "",
-        "database": "WOTSTAT"
+        "database": "devWOTSTAT"
     }
 }
