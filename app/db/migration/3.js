@@ -19,7 +19,14 @@ alter table Event_OnShot add column fps Float32;
 `
 
 const down = `
-alter table Event_OnShot drop column results;
+alter table Event_OnShot drop column results.order;
+alter table Event_OnShot drop column results.tankTag;
+alter table Event_OnShot drop column results.shotDamage;
+alter table Event_OnShot drop column results.fireDamage;
+alter table Event_OnShot drop column results.shotHealth;
+alter table Event_OnShot drop column results.fireHealth;
+alter table Event_OnShot drop column results.flags;
+alter table Event_OnShot drop column results.ammoBayDestroyed;
 alter table Event_OnShot drop column fps;
 `
 

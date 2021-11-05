@@ -21,6 +21,22 @@ export default function Process(battleUUID, e) {
             ping:                           e.Ping,                   // Float32
             battleTimeMS:                   S2MS(e.BattleTime),       // Int32
             fps:                            e.FPS,                    // Float32
+            hitVehicleDescr:                e.HitVehicleDescr,        // UInt16
+            hitChassisDescr:                e.HitChassisDescr,        // UInt16
+            hitTurretDescr:                 e.HitTurretDescr,         // UInt16
+            hitGunDescr:                    e.HitGunDescr,            // UInt16
+            hitSegment:                     e.HitSegment ? BigInt(e.HitSegment).toString() : null, // UInt64
+            hitTurretYaw:                   e.HitTurretYaw,           // Float32
+            hitTurretPitch:                 e.HitTurretPitch,         // Float32
+            vehicleDescr:                   e.VehicleDescr,           // UInt16
+            chassisDescr:                   e.ChassisDescr,           // UInt16
+            turretDescr:                    e.TurretDescr,            // UInt16
+            gunDescr:                       e.GunDescr,               // UInt16
+            shellDescr:                     e.ShellDescr,             // UInt16
+            turretYaw:                      e.TurretYaw,              // Float32
+            turretPitch:                    e.TurretPitch,            // Float32
+            vehicleSpeed:                   e.VehicleSpeed,           // Float32
+            turretSpeed:                    e.TurretSpeed,            // Float32
             'results.order':                e.Results.map(t => t.order),
             'results.tankTag':              e.Results.map(t => t.tankTag),
             'results.shotDamage':           e.Results.map(t => t.shotDamage),
