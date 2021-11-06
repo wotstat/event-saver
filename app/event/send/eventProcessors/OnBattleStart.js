@@ -28,6 +28,8 @@ export default function Process(uuid, e) {
         battleTimeMS        : S2MS(e.BattleTime),               // Int32
         battleLoadTimeMS    : S2MS(e.LoadTime),                 // Int32
         preBattleWaitTimeMS : S2MS(e.PreBattleWaitTime),        // Int32
+        inQueueWaitTimeMS   : S2MS(e.InQueueWaitTime),          // Int32
+        gameplayMask        : e.GameplayMask,                   // UInt32
         ...Vector3Unwrap('spawnPoint', e.SpawnPoint)
     })
 }
