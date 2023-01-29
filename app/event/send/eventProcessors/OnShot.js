@@ -2,7 +2,14 @@ import { Insert } from "../insert.js"
 import { Vector3Unwrap, CHBool, S2MS } from '../utils.js'
 import { v4 as uuidv4 } from 'uuid'
 
+// ShellName
+// ShellDamage
+// ShellCaliber
+// ShellPiercingPower
+// ShellSpeed
+// ShellMaxDistance
 export default function Process(battleUUID, e) {
+    console.log(`Event_OnShot ${e}`);
     Insert('Event_OnShot',
         {
             id:                             uuidv4(),                 // UUID,
