@@ -1,4 +1,4 @@
-const name = 'upd 06.11.2021 (add inQueueWaitTimeMS)'
+const name = 'upd 29.01.2023 (add shell info)'
 
 const up = `
 alter table Event_OnShot add column shellName String;
