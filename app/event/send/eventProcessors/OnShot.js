@@ -1,15 +1,11 @@
 import { Insert } from "../insert.js"
-import { Vector3Unwrap, CHBool, S2MS } from '../utils.js'
+import { Vector3Unwrap, CHBool, S2MS, TupleStringToArray, ArrayAverage } from '../utils.js'
 import { v4 as uuidv4 } from 'uuid'
 
-// ShellName
-// ShellDamage
-// ShellCaliber
-// ShellPiercingPower
-// ShellSpeed
-// ShellMaxDistance
 export default function Process(battleUUID, e) {
-    console.log(`Event_OnShot ${JSON.stringify(e)}`);
+    const shellDamage = TupleStringToArray(e.ShellDamage);
+    const shellPiercingPower = TupleStringToArray(e.ShellPiercingPower);
+    
     Insert('Event_OnShot',
         {
             id:                             uuidv4(),                 // UUID,
@@ -17,6 +13,16 @@ export default function Process(battleUUID, e) {
             dateTime:                       e.Date,                   // DateTime64(3) codec (DoubleDelta),
             shotWGID:                       e.ShotID,                 // UInt32,
             shellTag:                       e.ShellTag,               // String,
+            shellName:                      e.ShellName,              // String,
+            shellDamage:                    ArrayAverage(shellDamage),// Float64,
+            shellDamageMin:                 Math.min(...shellDamage), // Float64,
+            shellDamageMax:                 Math.max(...shellDamage), // Float64,
+            shellPiercingPower:             ArrayAverage(shellPiercingPower), // Float64,
+            shellPiercingPowerMin:          Math.min(...shellPiercingPower),  // Float64,
+            shellPiercingPowerMax:          Math.max(...shellPiercingPower),  // Float64,
+            shellCaliber:                   e.ShellCaliber,           // UInt32,
+            shellSpeed:                     e.ShellSpeed,             // Float64,
+            shellMaxDistance:               e.ShellMaxDistance,       // UInt32,
             gunDispersion:                  e.GunDispersion,          // Float64,
             battleDispersion:               e.BattleDispersion,       // Float64,
             serverShotDispersion:           e.ServerShotDispersion,   // Float64,

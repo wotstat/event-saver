@@ -19,4 +19,12 @@ function S2MS(val) {
     return Number.parseInt(val * 1000)
 }
 
-export { Vector3Unwrap, CHBool, S2MS, CHArray }
+function TupleStringToArray(val) {
+    return val.replace(/[\(\)]/g, '').split(',').map(Number)
+}
+
+function ArrayAverage(val) {
+    return val.reduce((a, b) => a + b, 0) / val.length
+}
+
+export { Vector3Unwrap, CHBool, S2MS, CHArray, TupleStringToArray, ArrayAverage }
