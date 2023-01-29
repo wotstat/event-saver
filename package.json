@@ -12,9 +12,9 @@
     "migrate": "cross-env NODE_ENV=development node app/db/Migrate.js",
     "migrate:dev": "cross-env NODE_ENV=dev node app/db/Migrate.js",
     "migrate:prod": "cross-env NODE_ENV=production node app/db/Migrate.js",
-    "rollBack": "cross-env NODE_ENV=development node app/db/RollBack.js",
-    "rollBack:dev": "cross-env NODE_ENV=dev node app/db/RollBack.js",
-    "rollBack:prod": "cross-env NODE_ENV=production node app/db/RollBack.js"
+    "rollBack": "cross-env NODE_ENV=development node app/db/Rollback.js",
+    "rollBack:dev": "cross-env NODE_ENV=dev node app/db/Rollback.js",
+    "rollBack:prod": "cross-env NODE_ENV=production node app/db/Rollback.js"
   },
   "author": "Soprachev Andrei",
   "license": "ISC",
