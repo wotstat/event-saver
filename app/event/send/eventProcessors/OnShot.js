@@ -9,7 +9,7 @@ import { v4 as uuidv4 } from 'uuid'
 // ShellSpeed
 // ShellMaxDistance
 export default function Process(battleUUID, e) {
-    console.log(`Event_OnShot ${e}`);
+    console.log(`Event_OnShot ${JSON.stringify(e)}`);
     Insert('Event_OnShot',
         {
             id:                             uuidv4(),                 // UUID,
