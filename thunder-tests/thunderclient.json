@@ -1,0 +1,35 @@
+[
+  {
+    "_id": "151f17fa-783e-42eb-90f1-b63429cc4091",
+    "colId": "8d240faf-5521-48c6-b4e2-fd7f77587d42",
+    "containerId": "",
+    "name": "OnBattleStart",
+    "url": "http://localhost:9000/api/events/OnBattleStart",
+    "method": "GET",
+    "sortNum": 10000,
+    "created": "2023-02-23T02:36:44.529Z",
+    "modified": "2023-02-23T02:36:44.529Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "c5a41e06-bdf9-43f0-b72c-7cf9bc16481b",
+    "colId": "8d240faf-5521-48c6-b4e2-fd7f77587d42",
+    "containerId": "",
+    "name": "send",
+    "url": "http://localhost:9000/api/events/send",
+    "method": "GET",
+    "sortNum": 20000,
+    "created": "2023-02-23T02:38:49.720Z",
+    "modified": "2023-02-23T02:40:08.427Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"events\": [\n    {\n      \"OnBattleResult\": {}\n    }\n  ]\n}",
+      "form": []
+    },
+    "tests": []
+  }
+]

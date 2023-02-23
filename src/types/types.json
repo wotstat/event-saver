@@ -1,0 +1,263 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "Event": {
+      "additionalProperties": false,
+      "properties": {
+        "eventName": {
+          "type": "string"
+        },
+        "token": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "eventName",
+        "token"
+      ],
+      "type": "object"
+    },
+    "OnBattleResult": {
+      "additionalProperties": false,
+      "properties": {
+        "botsCount": {
+          "description": "количество ботов в бою",
+          "type": "number"
+        },
+        "credits": {
+          "description": "количество кредитов за бой",
+          "type": "number"
+        },
+        "duration": {
+          "description": "длительность боя в мс",
+          "type": "number"
+        },
+        "eventName": {
+          "type": "string"
+        },
+        "raw": {
+          "type": "string"
+        },
+        "result": {
+          "description": "результат боя",
+          "enum": [
+            "lose",
+            "win"
+          ],
+          "type": "string"
+        },
+        "token": {
+          "type": "string"
+        },
+        "xp": {
+          "description": "количество опыта за бой",
+          "type": "number"
+        }
+      },
+      "required": [
+        "botsCount",
+        "credits",
+        "duration",
+        "eventName",
+        "raw",
+        "result",
+        "token",
+        "xp"
+      ],
+      "type": "object"
+    },
+    "OnBattleStart": {
+      "additionalProperties": false,
+      "properties": {
+        "arenaID": {
+          "description": "id арены из танков",
+          "type": "integer"
+        },
+        "arenaTag": {
+          "description": "название карты",
+          "type": "string"
+        },
+        "battleGameplay": {
+          "description": "режим игры",
+          "enum": [
+            "ctf",
+            "domination",
+            "assault",
+            "nations",
+            "ctf2",
+            "domination2",
+            "assault2",
+            "fallout",
+            "fallout2",
+            "fallout3",
+            "fallout4",
+            "ctf30x30",
+            "domination30x30",
+            "sandbox",
+            "bootcamp",
+            "epic"
+          ],
+          "type": "string"
+        },
+        "battleMode": {
+          "description": "тип боя",
+          "type": "string"
+        },
+        "battlePeriod": {
+          "description": "Момент входа в бой",
+          "enum": [
+            "IDLE",
+            "WAITING",
+            "PREBATTLE",
+            "BATTLE",
+            "AFTERBATTLE"
+          ],
+          "type": "string"
+        },
+        "battleTime": {
+          "description": "Время в бою относительно начала игры",
+          "type": "integer"
+        },
+        "eventName": {
+          "type": "string"
+        },
+        "gameVersion": {
+          "description": "версия игры",
+          "type": "string"
+        },
+        "gameplayMask": {
+          "type": "integer"
+        },
+        "gunTag": {
+          "description": "название пушки",
+          "type": "string"
+        },
+        "inQueueWaitTime": {
+          "description": "Время в очереди перед началом боя",
+          "type": "integer"
+        },
+        "loadTime": {
+          "description": "Время в загрузки карты",
+          "type": "integer"
+        },
+        "modVersion": {
+          "description": "версия мода",
+          "type": "string"
+        },
+        "playerClan": {
+          "description": "клан игрока",
+          "type": "string"
+        },
+        "playerDBID": {
+          "description": "WG accountDBID",
+          "type": "integer"
+        },
+        "playerName": {
+          "description": "ник игрока",
+          "type": "string"
+        },
+        "preBattleWaitTime": {
+          "description": "Время в ожидания начала боя после загрузки",
+          "type": "integer"
+        },
+        "region": {
+          "description": "регион игры",
+          "type": "string"
+        },
+        "serverName": {
+          "description": "название сервера",
+          "type": "string"
+        },
+        "spawnPoint": {
+          "additionalProperties": false,
+          "description": "координата спавна",
+          "properties": {
+            "x": {
+              "type": "number"
+            },
+            "y": {
+              "type": "number"
+            },
+            "z": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "x",
+            "y",
+            "z"
+          ],
+          "type": "object"
+        },
+        "startDis": {
+          "description": "разброс на момент старта боя",
+          "type": "number"
+        },
+        "tankLevel": {
+          "description": "уровень танка",
+          "type": "integer"
+        },
+        "tankTag": {
+          "description": "название танка",
+          "type": "string"
+        },
+        "tankType": {
+          "description": "типа танка",
+          "type": "string"
+        },
+        "team": {
+          "description": "команда игрока",
+          "type": "integer"
+        },
+        "token": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "arenaID",
+        "arenaTag",
+        "battleGameplay",
+        "battleMode",
+        "battlePeriod",
+        "battleTime",
+        "eventName",
+        "gameVersion",
+        "gameplayMask",
+        "gunTag",
+        "inQueueWaitTime",
+        "loadTime",
+        "modVersion",
+        "playerClan",
+        "playerDBID",
+        "playerName",
+        "preBattleWaitTime",
+        "region",
+        "serverName",
+        "spawnPoint",
+        "startDis",
+        "tankLevel",
+        "tankTag",
+        "tankType",
+        "team",
+        "token"
+      ],
+      "type": "object"
+    },
+    "OnShot": {
+      "additionalProperties": false,
+      "properties": {
+        "eventName": {
+          "type": "string"
+        },
+        "token": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "eventName",
+        "token"
+      ],
+      "type": "object"
+    }
+  }
+}
