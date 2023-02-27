@@ -5,7 +5,7 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "build": "rimraf ./build && tsc && tspath -f",
+    "build": "rimraf ./build && tsc",
     "docker": "node index.js",
     "serve": "cross-env NODE_ENV=local nodemon",
     "serve:dev": "cross-env NODE_ENV=dev nodemon src/index.js",
@@ -43,8 +43,6 @@
     "nodemon": "^2.0.20",
     "rimraf": "^3.0.2",
     "ts-node": "^10.9.1",
-    "tsconfig-paths": "^4.1.2",
-    "tspath": "^2.6.8",
     "typescript": "^4.8.4"
   }
 }
