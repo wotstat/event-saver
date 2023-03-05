@@ -94,7 +94,9 @@ export interface OnBattleResult extends Event {
   /** длительность боя в мс */
   duration: number
 
-  /** количество ботов в бою */
+  /** количество ботов в бою 
+   * @minimum 0
+  */
   botsCount: number
 }
 

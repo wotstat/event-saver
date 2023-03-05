@@ -22,6 +22,7 @@
       "properties": {
         "botsCount": {
           "description": "количество ботов в бою",
+          "minimum": 0,
           "type": "number"
         },
         "credits": {

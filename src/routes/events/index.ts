@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken'
 import { Router } from "express"
+import { v4 as uuidv4 } from 'uuid'
 
 import { Event } from '@/types/events.js'
 
@@ -41,6 +42,11 @@ router.post('/OnBattleStart', async (req, res) => {
   //     }
 
   // })
+
+  const id = uuidv4();
+
+  const token = jwt.sign(id, process.env.JWT_SECRET as string);
+  return res.send(token).end()
 })
 
 router.post('/send', async (req, res) => {

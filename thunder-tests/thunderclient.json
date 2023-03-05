@@ -5,29 +5,34 @@
     "containerId": "",
     "name": "OnBattleStart",
     "url": "http://localhost:9000/api/events/OnBattleStart",
-    "method": "GET",
+    "method": "POST",
     "sortNum": 10000,
     "created": "2023-02-23T02:36:44.529Z",
-    "modified": "2023-02-23T02:36:44.529Z",
+    "modified": "2023-03-04T01:16:45.843Z",
     "headers": [],
     "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \n}",
+      "form": []
+    },
     "tests": []
   },
   {
     "_id": "c5a41e06-bdf9-43f0-b72c-7cf9bc16481b",
     "colId": "8d240faf-5521-48c6-b4e2-fd7f77587d42",
     "containerId": "",
-    "name": "send",
+    "name": "send/OnBattleResult",
     "url": "http://localhost:9000/api/events/send",
-    "method": "GET",
+    "method": "POST",
     "sortNum": 20000,
     "created": "2023-02-23T02:38:49.720Z",
-    "modified": "2023-02-23T02:40:08.427Z",
+    "modified": "2023-03-04T01:27:47.608Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"events\": [\n    {\n      \"OnBattleResult\": {}\n    }\n  ]\n}",
+      "raw": "{\n  \"events\": [\n    {\n      \"eventName\": \"OnBattleResult\",\n      \"token\": \"eyJhbGciOiJIUzI1NiJ9.MjEyNmQzYTktNGU5Yy00MTUwLThjYjctNTc2ZjBlODNkMGJk.07ArQucw7xGPwWFNpQmZ0dbTIvxUiz_FskvimueS1RE\",\n      \"botsCount\": 1,\n      \"credits\": 1,\n      \"duration\": 5,\n      \"raw\": \"123\",\n      \"result\": \"win\",\n      \"xp\": 1\n    }\n  ]\n}",
       "form": []
     },
     "tests": []

@@ -18,7 +18,7 @@ FROM node:19-alpine
 WORKDIR /usr
 
 COPY package*.json ./
-RUN npm install --only=production
+RUN npm install --only-production
 
 COPY --from=0 /usr/build .
-CMD ["npm", "run", "docker"]
+CMD ["npm", "run", "start:docker"]

@@ -1,16 +1,1 @@
-[
-  {
-    "_id": "baf2847d-c5d2-45b7-83ce-f5b1f250c795",
-    "colId": "history",
-    "containerId": "",
-    "name": "http://localhost:9000/api",
-    "url": "http://localhost:9000/api/events/OnBattleStart",
-    "method": "GET",
-    "sortNum": 0,
-    "created": "2023-02-23T02:29:04.882Z",
-    "modified": "2023-02-23T02:35:12.972Z",
-    "headers": [],
-    "params": [],
-    "tests": []
-  }
-]
+[]
