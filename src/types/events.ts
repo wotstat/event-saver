@@ -1,48 +1,25 @@
-export interface Event {
-  eventName: string
-  token: string
-}
-
 /** @asType integer */
 declare type integer = number
 declare type Vector3 = { x: number, y: number, z: number }
 
-export interface OnBattleStart extends Event {
-  /** id арены из танков */
-  arenaID: integer
+interface Event {
+  eventName: string
+  token: string
+}
+
+interface BattleEvent extends Event {
+  /** Время в бою относительно начала игры */
+  battleTime: integer
+}
+
+// Статические данные о бое (не изменяются), присутствуют во всех событиях для удобных селектов и фильтров
+interface StaticBattleInfo {
 
   /** название карты */
   arenaTag: string
 
-  /** команда игрока */
-  team: integer
-
   /** ник игрока */
   playerName: string
-
-  /** WG accountDBID */
-  playerDBID: integer
-
-  /** клан игрока */
-  playerClan: string
-
-  /** название танка */
-  tankTag: string
-
-  /** типа танка */
-  tankType: string
-
-  /** уровень танка */
-  tankLevel: integer
-
-  /** название пушки */
-  gunTag: string
-
-  /** разброс на момент старта боя */
-  startDis: number
-
-  /** координата спавна */
-  spawnPoint: Vector3
 
   /** тип боя */
   battleMode: string
@@ -58,15 +35,40 @@ export interface OnBattleStart extends Event {
 
   /** версия игры */
   gameVersion: string
+}
+
+// Динамические данные о бое (могут изменяться во время боя), присутствуют во всех событиях для удобных селектов и фильтров
+interface DynamicBattleInfo extends StaticBattleInfo {
+
+  /** команда игрока */
+  team: integer
+
+  /** название танка */
+  tankTag: string
+
+  /** типа танка */
+  tankType: string
+
+  /** уровень танка */
+  tankLevel: integer
+
+  /** название пушки */
+  gunTag: string
+
+}
+
+export interface OnBattleStart extends BattleEvent, DynamicBattleInfo {
+  /** id арены из танков */
+  arenaID: integer
+
+  /** координата спавна */
+  spawnPoint: Vector3
 
   /** версия мода */
   modVersion: string
 
   /** Момент входа в бой */
   battlePeriod: 'IDLE' | 'WAITING' | 'PREBATTLE' | 'BATTLE' | 'AFTERBATTLE'
-
-  /** Время в бою относительно начала игры */
-  battleTime: integer
 
   /** Время в загрузки карты */
   loadTime: integer
@@ -76,6 +78,7 @@ export interface OnBattleStart extends Event {
 
   /** Время в очереди перед началом боя */
   inQueueWaitTime: integer
+
   gameplayMask: integer
 }
 
@@ -100,5 +103,59 @@ export interface OnBattleResult extends Event {
   botsCount: number
 }
 
-export interface OnShot extends Event {
+export interface OnShot extends BattleEvent, DynamicBattleInfo {
+  shellTag: string
+  shellName: string,
+  shellDamage: number,
+  shellPiercingPower: number,
+  shellCaliber: integer,
+  shellSpeed: number,
+  shellMaxDistance: integer,
+  gunDispersion: number,
+  battleDispersion: number,
+  serverShotDispersion: number,
+  clientShotDispersion: number,
+  gravity: number,
+  hitReason: 'tank' | 'terrain' | 'other',
+  serverAim: boolean,
+  autoAim: boolean,
+  ping: integer,
+  battleTimeMS: integer,
+  fps: integer,
+  hitVehicleDescr: integer,
+  hitChassisDescr: integer,
+  hitTurretDescr: integer,
+  hitGunDescr: integer,
+  hitSegment: integer,
+  hitTurretYaw: number,
+  hitTurretPitch: number,
+  vehicleDescr: integer,
+  chassisDescr: integer,
+  turretDescr: integer,
+  gunDescr: integer,
+  shellDescr: integer,
+  turretYaw: number,
+  turretPitch: number,
+  vehicleSpeed: number,
+  turretSpeed: number,
+  gunPoint: Vector3,
+  clientMarkerPoint: Vector3,
+  serverMarkerPoint: Vector3,
+  tracerStart: Vector3,
+  tracerEnd: Vector3,
+  tracerVel: Vector3,
+  HitPoint?: Vector3,
+  results: {
+    order: integer,
+    tankTag: string,
+    shotDamage: number,
+    fireDamage: number,
+    shotHealth: number,
+    fireHealth: number,
+    flags: integer,
+    ammoBayDestroyed: boolean,
+  }[],
 }
+
+
+export { Event }

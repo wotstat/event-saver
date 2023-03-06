@@ -5,7 +5,7 @@ dotenv.setup()
 
 import routes from './routes/index.js'
 import { migrate } from './db/migration.js'
-import { clickhouse } from './db/index.js'
+import { connect, clickhouse } from './db/index.js'
 
 
 const app = express();
@@ -20,7 +20,7 @@ async function Start() {
   const port = process.env.PORT;
 
   try {
-    if (!await clickhouse.ping()) {
+    if (!await connect({ timeout: 10 })) {
       throw new Error('ClickHouse is not available')
     }
 

@@ -5,7 +5,7 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "build": "npm run prepare && rimraf ./build && tsc",
+    "build": "rimraf ./build && tsc",
     "prepare": "ts-patch install -s",
     "start:docker": "node index.js",
     "start:local": "cross-env NODE_ENV=local node build/index.js",

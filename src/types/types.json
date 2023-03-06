@@ -1,22 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
-    "Event": {
-      "additionalProperties": false,
-      "properties": {
-        "eventName": {
-          "type": "string"
-        },
-        "token": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "eventName",
-        "token"
-      ],
-      "type": "object"
-    },
     "OnBattleResult": {
       "additionalProperties": false,
       "properties": {
@@ -145,14 +129,6 @@
           "description": "версия мода",
           "type": "string"
         },
-        "playerClan": {
-          "description": "клан игрока",
-          "type": "string"
-        },
-        "playerDBID": {
-          "description": "WG accountDBID",
-          "type": "integer"
-        },
         "playerName": {
           "description": "ник игрока",
           "type": "string"
@@ -190,10 +166,6 @@
           ],
           "type": "object"
         },
-        "startDis": {
-          "description": "разброс на момент старта боя",
-          "type": "number"
-        },
         "tankLevel": {
           "description": "уровень танка",
           "type": "integer"
@@ -228,14 +200,11 @@
         "inQueueWaitTime",
         "loadTime",
         "modVersion",
-        "playerClan",
-        "playerDBID",
         "playerName",
         "preBattleWaitTime",
         "region",
         "serverName",
         "spawnPoint",
-        "startDis",
         "tankLevel",
         "tankTag",
         "tankType",
@@ -247,15 +216,98 @@
     "OnShot": {
       "additionalProperties": false,
       "properties": {
+        "arenaTag": {
+          "description": "название карты",
+          "type": "string"
+        },
+        "battleGameplay": {
+          "description": "режим игры",
+          "enum": [
+            "ctf",
+            "domination",
+            "assault",
+            "nations",
+            "ctf2",
+            "domination2",
+            "assault2",
+            "fallout",
+            "fallout2",
+            "fallout3",
+            "fallout4",
+            "ctf30x30",
+            "domination30x30",
+            "sandbox",
+            "bootcamp",
+            "epic"
+          ],
+          "type": "string"
+        },
+        "battleMode": {
+          "description": "тип боя",
+          "type": "string"
+        },
+        "battleTime": {
+          "description": "Время в бою относительно начала игры",
+          "type": "integer"
+        },
         "eventName": {
           "type": "string"
+        },
+        "gameVersion": {
+          "description": "версия игры",
+          "type": "string"
+        },
+        "gunTag": {
+          "description": "название пушки",
+          "type": "string"
+        },
+        "playerName": {
+          "description": "ник игрока",
+          "type": "string"
+        },
+        "region": {
+          "description": "регион игры",
+          "type": "string"
+        },
+        "serverName": {
+          "description": "название сервера",
+          "type": "string"
+        },
+        "tankLevel": {
+          "description": "уровень танка",
+          "type": "integer"
+        },
+        "tankTag": {
+          "description": "название танка",
+          "type": "string"
+        },
+        "tankType": {
+          "description": "типа танка",
+          "type": "string"
+        },
+        "team": {
+          "description": "команда игрока",
+          "type": "integer"
         },
         "token": {
           "type": "string"
         }
       },
       "required": [
+        "arenaTag",
+        "battleGameplay",
+        "battleMode",
+        "battleTime",
         "eventName",
+        "gameVersion",
+        "gunTag",
+        "playerName",
+        "region",
+        "serverName",
+        "tankLevel",
+        "tankTag",
+        "tankType",
+        "team",
         "token"
       ],
       "type": "object"
