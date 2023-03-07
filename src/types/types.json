@@ -214,34 +214,16 @@
     "OnShot": {
       "additionalProperties": false,
       "properties": {
-        "HitPoint": {
-          "additionalProperties": false,
-          "properties": {
-            "x": {
-              "type": "number"
-            },
-            "y": {
-              "type": "number"
-            },
-            "z": {
-              "type": "number"
-            }
-          },
-          "required": [
-            "x",
-            "y",
-            "z"
-          ],
-          "type": "object"
-        },
         "arenaTag": {
           "description": "название карты",
           "type": "string"
         },
         "autoAim": {
+          "description": "Используется автоприцел",
           "type": "boolean"
         },
         "battleDispersion": {
+          "description": "Разброс орудия по ттх без временных бафов, но с учётом оборудования",
           "type": "number"
         },
         "battleGameplay": {
@@ -275,13 +257,16 @@
           "type": "integer"
         },
         "battleTimeMS": {
+          "description": "Время боя относительно конца отсчёта",
           "type": "integer"
         },
         "chassisDescr": {
+          "description": "ID ходовой своего танка",
           "type": "integer"
         },
         "clientMarkerPoint": {
           "additionalProperties": false,
+          "description": "Координата клиентского маркера",
           "properties": {
             "x": {
               "type": "number"
@@ -301,12 +286,14 @@
           "type": "object"
         },
         "clientShotDispersion": {
+          "description": "Клиентское сведение",
           "type": "number"
         },
         "eventName": {
           "type": "string"
         },
         "fps": {
+          "description": "Частота кадров",
           "type": "integer"
         },
         "gameVersion": {
@@ -314,16 +301,20 @@
           "type": "string"
         },
         "gravity": {
+          "description": "Гравитация",
           "type": "number"
         },
         "gunDescr": {
+          "description": "ID пушки своего танка",
           "type": "integer"
         },
         "gunDispersion": {
+          "description": "Разброс орудия с учётом временных бафов (например оглушение)",
           "type": "number"
         },
         "gunPoint": {
           "additionalProperties": false,
+          "description": "Координата пушки",
           "properties": {
             "x": {
               "type": "number"
@@ -347,35 +338,66 @@
           "type": "string"
         },
         "hitChassisDescr": {
+          "description": "ID ходовой танка по которому попал снаряд",
           "type": "integer"
         },
         "hitGunDescr": {
+          "description": "ID пушки танка по которому попал снаряд",
           "type": "integer"
         },
+        "hitPoint": {
+          "additionalProperties": false,
+          "description": "Координата попадания",
+          "properties": {
+            "x": {
+              "type": "number"
+            },
+            "y": {
+              "type": "number"
+            },
+            "z": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "x",
+            "y",
+            "z"
+          ],
+          "type": "object"
+        },
         "hitReason": {
+          "description": "Причина попадания (tank, terrain, other, none)",
           "enum": [
             "tank",
             "terrain",
-            "other"
+            "other",
+            "none"
           ],
           "type": "string"
         },
         "hitSegment": {
+          "description": "Первый элемент массива `points` [Vehicle.showDamageFromShot](https://github.com/StranikS-Scan/WorldOfTanks-Decompiled/blob/ed9c58eecc460df6f293c60202f0f1ba26e65ab0/source/res/scripts/client/Vehicle.py#L349)",
           "type": "integer"
         },
         "hitTurretDescr": {
+          "description": "ID башни танка по которому попал снаряд",
           "type": "integer"
         },
         "hitTurretPitch": {
+          "description": "Pitch башни танка по которому попал снаряд",
           "type": "number"
         },
         "hitTurretYaw": {
+          "description": "Yaw башни танка по которому попал снаряд",
           "type": "number"
         },
         "hitVehicleDescr": {
+          "description": "ID корпуса танка по которому попал снаряд",
           "type": "integer"
         },
         "ping": {
+          "description": "Пинг",
           "type": "integer"
         },
         "playerName": {
@@ -387,31 +409,45 @@
           "type": "string"
         },
         "results": {
+          "description": "Результаты попадания",
           "items": {
             "additionalProperties": false,
             "properties": {
               "ammoBayDestroyed": {
+                "description": "Был ли взрыв БК",
                 "type": "boolean"
               },
               "fireDamage": {
-                "type": "number"
+                "description": "Урон огнём",
+                "minimum": 0,
+                "type": "integer"
               },
               "fireHealth": {
-                "type": "number"
+                "description": "ХП противника оставшееся после пожара",
+                "minimum": 0,
+                "type": "integer"
               },
               "flags": {
+                "description": "Флаги попадания [VEHICLE_HIT_FLAGS](https://github.com/StranikS-Scan/WorldOfTanks-Decompiled/blob/a301bd7678d1c9c1d618fdaa87fba91447989e91/source/res/scripts/common/constants.py#L1145)",
+                "minimum": 0,
                 "type": "integer"
               },
               "order": {
+                "description": "Очерёдность попадания",
                 "type": "integer"
               },
               "shotDamage": {
-                "type": "number"
+                "description": "Урон выстрелом",
+                "minimum": 0,
+                "type": "integer"
               },
               "shotHealth": {
-                "type": "number"
+                "description": "ХП противника оставшееся после выстрела",
+                "minimum": 0,
+                "type": "integer"
               },
               "tankTag": {
+                "description": "Тег танка по которому попал",
                 "type": "string"
               }
             },
@@ -422,18 +458,20 @@
               "fireDamage",
               "shotHealth",
               "fireHealth",
-              "flags",
-              "ammoBayDestroyed"
+              "ammoBayDestroyed",
+              "flags"
             ],
             "type": "object"
           },
           "type": "array"
         },
         "serverAim": {
+          "description": "Используется ли серверный прицел",
           "type": "boolean"
         },
         "serverMarkerPoint": {
           "additionalProperties": false,
+          "description": "Координата серверного маркера",
           "properties": {
             "x": {
               "type": "number"
@@ -457,30 +495,39 @@
           "type": "string"
         },
         "serverShotDispersion": {
+          "description": "Серверное сведение",
           "type": "number"
         },
         "shellCaliber": {
+          "description": "Калибр снаряда",
+          "minimum": 0,
           "type": "integer"
         },
         "shellDamage": {
+          "description": "Средний урон снаряда",
           "type": "number"
         },
         "shellDescr": {
+          "description": "ID снаряда",
           "type": "integer"
         },
         "shellMaxDistance": {
+          "description": "Максимальная дистанци полёта снаряда",
           "type": "integer"
         },
         "shellName": {
           "type": "string"
         },
         "shellPiercingPower": {
+          "description": "Среднее пробитие снаряда",
           "type": "number"
         },
         "shellSpeed": {
+          "description": "Скорость снаряла по ттх",
           "type": "number"
         },
         "shellTag": {
+          "description": "Тег снаряда (ARMOR_PIERCING...)",
           "type": "string"
         },
         "tankLevel": {
@@ -504,6 +551,7 @@
         },
         "tracerEnd": {
           "additionalProperties": false,
+          "description": "Координата конца трассера",
           "properties": {
             "x": {
               "type": "number"
@@ -524,6 +572,7 @@
         },
         "tracerStart": {
           "additionalProperties": false,
+          "description": "Координата старта трассера",
           "properties": {
             "x": {
               "type": "number"
@@ -544,6 +593,7 @@
         },
         "tracerVel": {
           "additionalProperties": false,
+          "description": "Вектор начальной скорости трассера",
           "properties": {
             "x": {
               "type": "number"
@@ -563,21 +613,27 @@
           "type": "object"
         },
         "turretDescr": {
+          "description": "ID башни своего танка",
           "type": "integer"
         },
         "turretPitch": {
+          "description": "Pitch башни совего танка",
           "type": "number"
         },
         "turretSpeed": {
+          "description": "Скорость вращения башни в момент выстрела",
           "type": "number"
         },
         "turretYaw": {
+          "description": "Yaw башни совего танка",
           "type": "number"
         },
         "vehicleDescr": {
+          "description": "ID корпуса своего танка",
           "type": "integer"
         },
         "vehicleSpeed": {
+          "description": "Скорость танка в момент выстрела",
           "type": "number"
         }
       },
@@ -602,6 +658,7 @@
         "gunTag",
         "hitChassisDescr",
         "hitGunDescr",
+        "hitPoint",
         "hitReason",
         "hitSegment",
         "hitTurretDescr",

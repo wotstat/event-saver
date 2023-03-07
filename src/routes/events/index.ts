@@ -5,10 +5,12 @@ import { v4 as uuidv4 } from 'uuid'
 import { Event } from '@/types/events.js'
 import OnBattleResult from './processors/onBattleResult.js'
 import OnBattleStart from './processors/onBattleStart.js'
+import OnShot from './processors/onShot.js'
 
 import { redis } from '@/redis/index.js'
 
 import { onBattleStartSchema } from '@/types/validator.js';
+import { debug } from '@/utils/utils.js'
 
 const router = Router()
 
@@ -17,6 +19,7 @@ const lifetime = process.env.REDIS_BATTLE_TOKEN_LIFETIME ? Number.parseInt(proce
 const supportedEvents = {
   'OnBattleStart': OnBattleStart,
   'OnBattleResult': OnBattleResult,
+  'OnShot': OnShot
 }
 
 function processEvent(eventName: string, event: Event) {
@@ -26,8 +29,12 @@ function processEvent(eventName: string, event: Event) {
     jwt.verify(token, secret, (err, uuid) => {
       if (!err) {
         (supportedEvents as any)[eventName](uuid, event)
+      } else {
+        debug(`JWT error: ${err.message}`)
       }
     });
+  } else {
+    debug(`Unsupported event: ${eventName}`)
   }
 }
 

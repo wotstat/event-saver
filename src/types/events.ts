@@ -1,10 +1,13 @@
 /** @asType integer */
 declare type integer = number
 /** @minimum 0*/
-declare type UInt = integer
+declare type UInt32 = integer
+/** @minimum 0*/
+declare type UInt16 = integer
 declare type Vector3 = { x: number, y: number, z: number }
 
 interface Event {
+  localtime: string
   eventName: string
   token: string
 }
@@ -67,7 +70,7 @@ export interface OnBattleStart extends DynamicBattleInfo {
   arenaID: integer
 
   /** id игрока из танков, нужен для прддержания уникальной сесии */
-  playerWotID: UInt
+  playerWotID: UInt32
 
   /** координата спавна */
   spawnPoint: Vector3
@@ -112,58 +115,116 @@ export interface OnBattleResult extends Event {
 }
 
 export interface OnShot extends BattleEvent, DynamicBattleInfo {
-  shellTag: string
-  shellName: string,
-  shellDamage: number,
-  shellPiercingPower: number,
-  shellCaliber: integer,
-  shellSpeed: number,
-  shellMaxDistance: integer,
-  gunDispersion: number,
-  battleDispersion: number,
-  serverShotDispersion: number,
-  clientShotDispersion: number,
-  gravity: number,
-  hitReason: 'tank' | 'terrain' | 'other',
-  serverAim: boolean,
-  autoAim: boolean,
-  ping: integer,
+  /** Время боя относительно конца отсчёта */
   battleTimeMS: integer,
+
+  /** Тег снаряда (ARMOR_PIERCING...) */
+  shellTag: string
+  /**   */
+  shellName: string,
+
+  /** Средний урон снаряда */
+  shellDamage: number,
+  /** Среднее пробитие снаряда */
+  shellPiercingPower: number,
+  /** Калибр снаряда */
+  shellCaliber: UInt16,
+  /** Скорость снаряла по ттх */
+  shellSpeed: number,
+  /** Максимальная дистанци полёта снаряда */
+  shellMaxDistance: integer,
+
+  /** Разброс орудия с учётом временных бафов (например оглушение) */
+  gunDispersion: number,
+  /** Разброс орудия по ттх без временных бафов, но с учётом оборудования */
+  battleDispersion: number,
+  /** Серверное сведение */
+  serverShotDispersion: number,
+  /** Клиентское сведение */
+  clientShotDispersion: number,
+  /** Гравитация */
+  gravity: number,
+  /** Используется ли серверный прицел */
+  serverAim: boolean,
+  /** Используется автоприцел */
+  autoAim: boolean,
+  /** Пинг */
+  ping: integer,
+  /** Частота кадров */
   fps: integer,
+
+  // Параметры попадания
+  /** ID корпуса танка по которому попал снаряд */
   hitVehicleDescr: integer,
+  /** ID ходовой танка по которому попал снаряд */
   hitChassisDescr: integer,
+  /** ID башни танка по которому попал снаряд */
   hitTurretDescr: integer,
+  /** ID пушки танка по которому попал снаряд */
   hitGunDescr: integer,
-  hitSegment: integer,
+  /** Yaw башни танка по которому попал снаряд */
   hitTurretYaw: number,
+  /** Pitch башни танка по которому попал снаряд */
   hitTurretPitch: number,
+  /** ID корпуса своего танка */
   vehicleDescr: integer,
+  /** ID ходовой своего танка */
   chassisDescr: integer,
+  /** ID башни своего танка */
   turretDescr: integer,
+  /** ID пушки своего танка */
   gunDescr: integer,
-  shellDescr: integer,
+  /** Yaw башни совего танка  */
   turretYaw: number,
+  /** Pitch башни совего танка */
   turretPitch: number,
+  /** ID снаряда */
+  shellDescr: integer,
+  /** Первый элемент массива `points` [Vehicle.showDamageFromShot](https://github.com/StranikS-Scan/WorldOfTanks-Decompiled/blob/ed9c58eecc460df6f293c60202f0f1ba26e65ab0/source/res/scripts/client/Vehicle.py#L349) */
+  hitSegment: integer,
+
+  /** Скорость танка в момент выстрела */
   vehicleSpeed: number,
+  /** Скорость вращения башни в момент выстрела */
   turretSpeed: number,
+  /** Координата пушки */
   gunPoint: Vector3,
+  /** Координата клиентского маркера */
   clientMarkerPoint: Vector3,
+  /** Координата серверного маркера */
   serverMarkerPoint: Vector3,
+  /** Координата старта трассера */
   tracerStart: Vector3,
+  /** Координата конца трассера */
   tracerEnd: Vector3,
+  /** Вектор начальной скорости трассера */
   tracerVel: Vector3,
-  HitPoint?: Vector3,
+
+  /** Причина попадания (tank, terrain, other, none) */
+  hitReason: 'tank' | 'terrain' | 'other' | 'none',
+  /** Координата попадания */
+  hitPoint: Vector3,
+
+  /** Результаты попадания */
   results: {
+    /** Очерёдность попадания */
     order: integer,
+    /** Тег танка по которому попал */
     tankTag: string,
-    shotDamage: number,
-    fireDamage: number,
-    shotHealth: number,
-    fireHealth: number,
-    flags: integer,
+    /** Урон выстрелом */
+    shotDamage: UInt16,
+    /** Урон огнём */
+    fireDamage: UInt16,
+    /** ХП противника оставшееся после выстрела */
+    shotHealth: UInt16,
+    /** ХП противника оставшееся после пожара */
+    fireHealth: UInt16,
+    /** Был ли взрыв БК */
     ammoBayDestroyed: boolean,
+    /** Флаги попадания [VEHICLE_HIT_FLAGS](https://github.com/StranikS-Scan/WorldOfTanks-Decompiled/blob/a301bd7678d1c9c1d618fdaa87fba91447989e91/source/res/scripts/common/constants.py#L1145)                        */
+    flags: UInt16,
   }[],
 }
 
 
-export { Event }
+export { Event, DynamicBattleInfo, StaticBattleInfo }

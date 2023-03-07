@@ -1,7 +1,7 @@
 
 import { clickhouse } from '@/db/index.js'
 
-export function insert(tableName: string, data: any) {
+let insertFunc = (tableName: string, data: any) => {
   clickhouse.insert({
     table: tableName,
     values: data,
@@ -12,4 +12,19 @@ export function insert(tableName: string, data: any) {
       async_insert_busy_timeout_ms: 500,
     }
   })
+}
+
+if (process.env.DEBUG) {
+  insertFunc = (tableName: string, data: any) => {
+    clickhouse.insert({
+      table: tableName,
+      values: data,
+      format: 'JSONEachRow'
+    })
+  }
+}
+
+
+export function insert(tableName: string, data: any) {
+  insertFunc(tableName, data)
 }
