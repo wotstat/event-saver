@@ -103,9 +103,6 @@
           "description": "Время в бою относительно начала игры",
           "type": "integer"
         },
-        "eventName": {
-          "type": "string"
-        },
         "gameVersion": {
           "description": "версия игры",
           "type": "string"
@@ -132,6 +129,11 @@
         "playerName": {
           "description": "ник игрока",
           "type": "string"
+        },
+        "playerWotID": {
+          "description": "id игрока из танков, нужен для прддержания уникальной сесии",
+          "minimum": 0,
+          "type": "integer"
         },
         "preBattleWaitTime": {
           "description": "Время в ожидания начала боя после загрузки",
@@ -181,9 +183,6 @@
         "team": {
           "description": "команда игрока",
           "type": "integer"
-        },
-        "token": {
-          "type": "string"
         }
       },
       "required": [
@@ -193,7 +192,6 @@
         "battleMode",
         "battlePeriod",
         "battleTime",
-        "eventName",
         "gameVersion",
         "gameplayMask",
         "gunTag",
@@ -201,6 +199,7 @@
         "loadTime",
         "modVersion",
         "playerName",
+        "playerWotID",
         "preBattleWaitTime",
         "region",
         "serverName",
@@ -208,17 +207,42 @@
         "tankLevel",
         "tankTag",
         "tankType",
-        "team",
-        "token"
+        "team"
       ],
       "type": "object"
     },
     "OnShot": {
       "additionalProperties": false,
       "properties": {
+        "HitPoint": {
+          "additionalProperties": false,
+          "properties": {
+            "x": {
+              "type": "number"
+            },
+            "y": {
+              "type": "number"
+            },
+            "z": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "x",
+            "y",
+            "z"
+          ],
+          "type": "object"
+        },
         "arenaTag": {
           "description": "название карты",
           "type": "string"
+        },
+        "autoAim": {
+          "type": "boolean"
+        },
+        "battleDispersion": {
+          "type": "number"
         },
         "battleGameplay": {
           "description": "режим игры",
@@ -250,16 +274,109 @@
           "description": "Время в бою относительно начала игры",
           "type": "integer"
         },
+        "battleTimeMS": {
+          "type": "integer"
+        },
+        "chassisDescr": {
+          "type": "integer"
+        },
+        "clientMarkerPoint": {
+          "additionalProperties": false,
+          "properties": {
+            "x": {
+              "type": "number"
+            },
+            "y": {
+              "type": "number"
+            },
+            "z": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "x",
+            "y",
+            "z"
+          ],
+          "type": "object"
+        },
+        "clientShotDispersion": {
+          "type": "number"
+        },
         "eventName": {
           "type": "string"
+        },
+        "fps": {
+          "type": "integer"
         },
         "gameVersion": {
           "description": "версия игры",
           "type": "string"
         },
+        "gravity": {
+          "type": "number"
+        },
+        "gunDescr": {
+          "type": "integer"
+        },
+        "gunDispersion": {
+          "type": "number"
+        },
+        "gunPoint": {
+          "additionalProperties": false,
+          "properties": {
+            "x": {
+              "type": "number"
+            },
+            "y": {
+              "type": "number"
+            },
+            "z": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "x",
+            "y",
+            "z"
+          ],
+          "type": "object"
+        },
         "gunTag": {
           "description": "название пушки",
           "type": "string"
+        },
+        "hitChassisDescr": {
+          "type": "integer"
+        },
+        "hitGunDescr": {
+          "type": "integer"
+        },
+        "hitReason": {
+          "enum": [
+            "tank",
+            "terrain",
+            "other"
+          ],
+          "type": "string"
+        },
+        "hitSegment": {
+          "type": "integer"
+        },
+        "hitTurretDescr": {
+          "type": "integer"
+        },
+        "hitTurretPitch": {
+          "type": "number"
+        },
+        "hitTurretYaw": {
+          "type": "number"
+        },
+        "hitVehicleDescr": {
+          "type": "integer"
+        },
+        "ping": {
+          "type": "integer"
         },
         "playerName": {
           "description": "ник игрока",
@@ -269,8 +386,101 @@
           "description": "регион игры",
           "type": "string"
         },
+        "results": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "ammoBayDestroyed": {
+                "type": "boolean"
+              },
+              "fireDamage": {
+                "type": "number"
+              },
+              "fireHealth": {
+                "type": "number"
+              },
+              "flags": {
+                "type": "integer"
+              },
+              "order": {
+                "type": "integer"
+              },
+              "shotDamage": {
+                "type": "number"
+              },
+              "shotHealth": {
+                "type": "number"
+              },
+              "tankTag": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "order",
+              "tankTag",
+              "shotDamage",
+              "fireDamage",
+              "shotHealth",
+              "fireHealth",
+              "flags",
+              "ammoBayDestroyed"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "serverAim": {
+          "type": "boolean"
+        },
+        "serverMarkerPoint": {
+          "additionalProperties": false,
+          "properties": {
+            "x": {
+              "type": "number"
+            },
+            "y": {
+              "type": "number"
+            },
+            "z": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "x",
+            "y",
+            "z"
+          ],
+          "type": "object"
+        },
         "serverName": {
           "description": "название сервера",
+          "type": "string"
+        },
+        "serverShotDispersion": {
+          "type": "number"
+        },
+        "shellCaliber": {
+          "type": "integer"
+        },
+        "shellDamage": {
+          "type": "number"
+        },
+        "shellDescr": {
+          "type": "integer"
+        },
+        "shellMaxDistance": {
+          "type": "integer"
+        },
+        "shellName": {
+          "type": "string"
+        },
+        "shellPiercingPower": {
+          "type": "number"
+        },
+        "shellSpeed": {
+          "type": "number"
+        },
+        "shellTag": {
           "type": "string"
         },
         "tankLevel": {
@@ -291,24 +501,143 @@
         },
         "token": {
           "type": "string"
+        },
+        "tracerEnd": {
+          "additionalProperties": false,
+          "properties": {
+            "x": {
+              "type": "number"
+            },
+            "y": {
+              "type": "number"
+            },
+            "z": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "x",
+            "y",
+            "z"
+          ],
+          "type": "object"
+        },
+        "tracerStart": {
+          "additionalProperties": false,
+          "properties": {
+            "x": {
+              "type": "number"
+            },
+            "y": {
+              "type": "number"
+            },
+            "z": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "x",
+            "y",
+            "z"
+          ],
+          "type": "object"
+        },
+        "tracerVel": {
+          "additionalProperties": false,
+          "properties": {
+            "x": {
+              "type": "number"
+            },
+            "y": {
+              "type": "number"
+            },
+            "z": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "x",
+            "y",
+            "z"
+          ],
+          "type": "object"
+        },
+        "turretDescr": {
+          "type": "integer"
+        },
+        "turretPitch": {
+          "type": "number"
+        },
+        "turretSpeed": {
+          "type": "number"
+        },
+        "turretYaw": {
+          "type": "number"
+        },
+        "vehicleDescr": {
+          "type": "integer"
+        },
+        "vehicleSpeed": {
+          "type": "number"
         }
       },
       "required": [
         "arenaTag",
+        "autoAim",
+        "battleDispersion",
         "battleGameplay",
         "battleMode",
         "battleTime",
+        "battleTimeMS",
+        "chassisDescr",
+        "clientMarkerPoint",
+        "clientShotDispersion",
         "eventName",
+        "fps",
         "gameVersion",
+        "gravity",
+        "gunDescr",
+        "gunDispersion",
+        "gunPoint",
         "gunTag",
+        "hitChassisDescr",
+        "hitGunDescr",
+        "hitReason",
+        "hitSegment",
+        "hitTurretDescr",
+        "hitTurretPitch",
+        "hitTurretYaw",
+        "hitVehicleDescr",
+        "ping",
         "playerName",
         "region",
+        "results",
+        "serverAim",
+        "serverMarkerPoint",
         "serverName",
+        "serverShotDispersion",
+        "shellCaliber",
+        "shellDamage",
+        "shellDescr",
+        "shellMaxDistance",
+        "shellName",
+        "shellPiercingPower",
+        "shellSpeed",
+        "shellTag",
         "tankLevel",
         "tankTag",
         "tankType",
         "team",
-        "token"
+        "token",
+        "tracerEnd",
+        "tracerStart",
+        "tracerVel",
+        "turretDescr",
+        "turretPitch",
+        "turretSpeed",
+        "turretYaw",
+        "vehicleDescr",
+        "vehicleSpeed"
       ],
       "type": "object"
     }

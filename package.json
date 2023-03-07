@@ -5,18 +5,15 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
+    "dev:docker": "docker compose -f dev/docker-compose.yml up --build",
     "build": "rimraf ./build && tsc",
     "prepare": "ts-patch install -s",
     "start:docker": "node index.js",
     "start:local": "cross-env NODE_ENV=local node build/index.js",
     "serve": "cross-env NODE_ENV=local nodemon",
     "serve:dev": "cross-env NODE_ENV=dev nodemon src/index.js",
-    "migrate": "npm run build && cross-env NODE_ENV=local node build/db/migrate.js",
-    "migrate:dev": "npm run build && cross-env NODE_ENV=dev node build/db/migrate.js",
-    "migrate:prod": "npm run build && cross-env NODE_ENV=production node build/db/migrate.js",
-    "rollBack": "npm run build && cross-env NODE_ENV=local node build/db/rollback.js",
-    "rollBack:dev": "npm run build && cross-env NODE_ENV=dev node build/db/rollback.js",
-    "rollBack:prod": "npm run build && cross-env NODE_ENV=production node build/db/rollback.js",
+    "migrate": "node build/db/migrate.js",
+    "rollBack": "node build/db/rollback.js",
     "generateJsonSchema": "npx ts-json-schema-generator --path ./src/types/events.ts --out ./src/types/types.json"
   },
   "keywords": [],
@@ -32,6 +29,7 @@
     "glob-promise": "^6.0.2",
     "jsonwebtoken": "^9.0.0",
     "knex": "^2.4.2",
+    "redis": "^4.6.5",
     "uuid": "^9.0.0"
   },
   "devDependencies": {

@@ -1,5 +1,7 @@
 /** @asType integer */
 declare type integer = number
+/** @minimum 0*/
+declare type UInt = integer
 declare type Vector3 = { x: number, y: number, z: number }
 
 interface Event {
@@ -57,9 +59,15 @@ interface DynamicBattleInfo extends StaticBattleInfo {
 
 }
 
-export interface OnBattleStart extends BattleEvent, DynamicBattleInfo {
+export interface OnBattleStart extends DynamicBattleInfo {
+  /** Время в бою относительно начала игры */
+  battleTime: integer
+
   /** id арены из танков */
   arenaID: integer
+
+  /** id игрока из танков, нужен для прддержания уникальной сесии */
+  playerWotID: UInt
 
   /** координата спавна */
   spawnPoint: Vector3

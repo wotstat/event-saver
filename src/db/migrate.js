@@ -1,7 +1,5 @@
 import { migrate } from './migration.js';
 import { createClient } from '@clickhouse/client'
-import dotenv from '../dotenv.js';
-dotenv.setup();
 
 const clickhouse = createClient({
   host: process.env.CLICKHOUSE_HOST,

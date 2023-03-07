@@ -79,3 +79,5 @@ web_modules/
 
 
 build/
+dev/clickhouse/data
+dev/clickhouse/log

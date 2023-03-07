@@ -8,12 +8,12 @@
     "method": "POST",
     "sortNum": 10000,
     "created": "2023-02-23T02:36:44.529Z",
-    "modified": "2023-03-04T01:16:45.843Z",
+    "modified": "2023-03-06T23:55:16.025Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \n}",
+      "raw": "{\n  \"battleTime\": -1,\n  \"arenaID\": 530,\n  \"playerWotID\": 5155,\n  \"spawnPoint\": {\n    \"x\": 1,\n    \"y\": 1,\n    \"z\": 1\n  },\n  \"modVersion\": \"1.0.0.0\",\n  \"battlePeriod\": \"PREBATTLE\",\n  \"loadTime\": 123,\n  \"preBattleWaitTime\": 123,\n  \"inQueueWaitTime\": 123,\n  \"gameplayMask\": 12,\n  \"arenaTag\": \"\",\n  \"playerName\": \"\",\n  \"battleMode\": \"\",\n  \"battleGameplay\": \"ctf\",\n  \"serverName\": \"\",\n  \"region\": \"\",\n  \"gameVersion\": \"\",\n  \"team\": 1,\n  \"tankTag\": \"\",\n  \"tankType\": \"\",\n  \"tankLevel\": 1,\n  \"gunTag\": \"\"\n}",
       "form": []
     },
     "tests": []
@@ -27,12 +27,12 @@
     "method": "POST",
     "sortNum": 20000,
     "created": "2023-02-23T02:38:49.720Z",
-    "modified": "2023-03-06T01:41:16.993Z",
+    "modified": "2023-03-06T22:52:31.642Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"events\": [\n    {\n      \"eventName\": \"OnBattleResult\",\n      \"token\": \"eyJhbGciOiJIUzI1NiJ9.MjEyNmQzYTktNGU5Yy00MTUwLThjYjctNTc2ZjBlODNkMGJk.07ArQucw7xGPwWFNpQmZ0dbTIvxUiz_FskvimueS1RE\",\n      \"botsCount\": 1,\n      \"credits\": 1,\n      \"duration\": 5,\n      \"raw\": \"123\",\n      \"result\": \"win\",\n      \"xp\": 1\n    }\n  ]\n}",
+      "raw": "{\n  \"events\": [\n    {\n      \"eventName\": \"OnBattleResult\",\n      \"token\": \"eyJhbGciOiJIUzI1NiJ9.NTAyNzkyNzktODQyNS00MjZjLWI0MWQtOTNjNjBmZWFmODY3.Lw6O9TguZW_EVVdlgA1ToJC9pwQI8zmxQe_3RnPy3W4\",\n      \"botsCount\": 1,\n      \"credits\": 1,\n      \"duration\": 5,\n      \"raw\": \"123\",\n      \"result\": \"win\",\n      \"xp\": 1\n    }\n  ]\n}",
       "form": []
     },
     "tests": []

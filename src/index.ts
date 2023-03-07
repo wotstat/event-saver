@@ -1,11 +1,10 @@
 import express from 'express'
 import cors from 'cors'
-import dotenv from './dotenv.js'
-dotenv.setup()
 
 import routes from './routes/index.js'
 import { migrate } from './db/migration.js'
 import { connect, clickhouse } from './db/index.js'
+import { redis } from './redis/index.js'
 
 
 const app = express();
@@ -24,7 +23,10 @@ async function Start() {
       throw new Error('ClickHouse is not available')
     }
 
-    await migrate(clickhouse)
+    await Promise.all([
+      migrate(clickhouse),
+      redis.connect()
+    ])
 
     app.listen(port, () => {
       console.log(`App listening at http://localhost:${port}`)

@@ -4,105 +4,50 @@
 
 GitHub Actions настроен так, что состояние ветки **main** соответствует [dev.wotstat](https://dev.wotstat.soprachev.com/) поддомену. Теги – релизу.
 
-## Быстрый запуск
+## Установка и Запуск
 
-С помощью Docker Compose. Подробнее в соответствующем репозитории.
-
-## Установка
-
-### ClickHouse
-
-Официальный туториал [clickhouse.tech/docs](https://clickhouse.tech/docs/ru/getting-started/install/)
-
-Для тестов рекомендую использовать [Docker](https://www.docker.com)
-
-PATH_DB это путь до места, где будут храниться данные БД
+Необходим установленный [Docker](https://www.docker.com/) и [Node.js](https://nodejs.org/en/).
+Запуск командой из корня проекта:
 
 ```
-docker run -d --name clickhouse-server -p 8123:8123 --volume=$PATH_DB:/var/lib/clickhouse yandex/clickhouse-server
+npm run dev:docker
 ```
 
-После запуска по очереди применятся все миграции и база данных наполняется нужными таблицами.
+Запустит docker-compose сконфигурированный в `./dev/docker-compose.yml`. Локальное состояние БД и логи будут сохранены в `./dev/clickhouse`.
 
-Подключаться рекомендую [DataGrip](https://www.jetbrains.com/datagrip/)
+Для доступа к тестовой БД рекомендую [DataGrip](https://www.jetbrains.com/datagrip/)
 
+- Driver: ClickHouse
 - Host: localhost
 - Port: 8123
 - User: default
 - Password: **[отсутствует]**
 
-### Nodejs
+## Тестирование
 
-```
-npm i
-```
+В VSCode установить расширение [Thunder Client](https://marketplace.visualstudio.com/items?itemName=rangav.vscode-thunder-client), перейти в его интерфейс, открыть вкладку коллекций.
+В ней будут необходимые запросы с подготовленными данными.
 
-### [Опционально] [Прокси сервер](https://clickhouse.tech/docs/ru/interfaces/third-party/proxy/)
-
-Я использую [clickhouse-bulk](https://github.com/nikepan/clickhouse-bulk)
-
-### REDIS
-
-Ну в общем он нужен.
-
-## Запуск
-
-В тестовом режиме и локальном окружении
-
-```
-npm run serve
-```
-
-В тестовом режиме и dev окружении (подключение к порд бд)
-
-```
-npm run serve:dev
-```
-
-В продакшен запускается через compose
+По умолчанию порт для тестирования 9000. Можно изменить в `./dev/docker-compose.yml`
 
 ## Миграции
 
 ### Обновление
 
-При запуске сервера автоматически запускаются все неприменённые миграции в нужном окружение. Можно запустить миграцию вручную:
-
-В окружение _default_
+Подключиться к контейнеру с приложением и запустить команду migrate
 
 ```
+docker exec -it <<ID>> bash
 npm run migrate
-```
-
-В окружение _dev_
-
-```
-npm run migrate:dev
-```
-
-В окружение _production_
-
-```
-npm run migrate:prod
 ```
 
 ### Откат
 
-Отменяет последнюю применённую миграцию
+Подключиться к контейнеру с приложением и запустить команду rollback.
 
-В окружение _default_
-
-```
-npm run rollBack
-```
-
-В окружение _dev_
+Откатывает последнюю миграцию.
 
 ```
-npm run rollBack:dev
-```
-
-В окружение _production_
-
-```
-npm run rollBack:prod
+docker exec -it <<ID>> bash
+npm run rollback
 ```
