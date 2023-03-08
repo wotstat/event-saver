@@ -3,12 +3,18 @@ declare type integer = number
 /** @minimum 0*/
 declare type UInt32 = integer
 /** @minimum 0*/
+declare type UInt64 = string
+/** @minimum 0*/
 declare type UInt16 = integer
 declare type Vector3 = { x: number, y: number, z: number }
 
-interface Event {
+interface EventWithoutToken {
   localtime: string
   eventName: string
+}
+
+
+interface Event extends EventWithoutToken {
   token: string
 }
 
@@ -26,11 +32,14 @@ interface StaticBattleInfo {
   /** ник игрока */
   playerName: string
 
+  /** клан игрока */
+  playerClan: string
+
   /** тип боя */
   battleMode: string
 
   /** режим игры */
-  battleGameplay: 'ctf' | 'domination' | 'assault' | 'nations' | 'ctf2' | 'domination2' | 'assault2' | 'fallout' | 'fallout2' | 'fallout3' | 'fallout4' | 'ctf30x30' | 'domination30x30' | 'sandbox' | 'bootcamp' | 'epic'
+  battleGameplay: 'ctf' | 'domination' | 'assault' | 'nations' | 'ctf2' | 'domination2' | 'assault2' | 'fallout' | 'fallout2' | 'fallout3' | 'fallout4' | 'ctf30x30' | 'domination30x30' | 'sandbox' | 'bootcamp' | 'epic' | 'maps_training' | 'rts' | 'rts_1x1' | 'rts_bootcamp' | 'comp7'
 
   /** название сервера */
   serverName: string
@@ -60,14 +69,14 @@ interface DynamicBattleInfo extends StaticBattleInfo {
   /** название пушки */
   gunTag: string
 
+  /** время относительно начала боя. Если событие до старта, время отрицательно  */
+  battleTime: number
+
 }
 
-export interface OnBattleStart extends DynamicBattleInfo {
-  /** Время в бою относительно начала игры */
-  battleTime: integer
-
+export interface OnBattleStart extends DynamicBattleInfo, EventWithoutToken {
   /** id арены из танков */
-  arenaID: integer
+  arenaID: UInt64
 
   /** id игрока из танков, нужен для прддержания уникальной сесии */
   playerWotID: UInt32
@@ -82,13 +91,13 @@ export interface OnBattleStart extends DynamicBattleInfo {
   battlePeriod: 'IDLE' | 'WAITING' | 'PREBATTLE' | 'BATTLE' | 'AFTERBATTLE'
 
   /** Время в загрузки карты */
-  loadTime: integer
+  loadTime: number
 
   /** Время в ожидания начала боя после загрузки  */
-  preBattleWaitTime: integer
+  preBattleWaitTime: number
 
   /** Время в очереди перед началом боя */
-  inQueueWaitTime: integer
+  inQueueWaitTime: number
 
   gameplayMask: integer
 }
@@ -115,9 +124,6 @@ export interface OnBattleResult extends Event {
 }
 
 export interface OnShot extends BattleEvent, DynamicBattleInfo {
-  /** Время боя относительно конца отсчёта */
-  battleTimeMS: integer,
-
   /** Тег снаряда (ARMOR_PIERCING...) */
   shellTag: string
   /**   */

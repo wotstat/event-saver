@@ -4,8 +4,8 @@ export default {
   name: "2",
   up: `
     create table if not exists Event_OnBattleResult (
-      id String,
-      onBattleStart_id String,
+      id UInt128,
+      onBattleStartId UInt128,
       dateTime DateTime64,
       reason String,
       durationMs UInt32,

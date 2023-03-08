@@ -12,8 +12,8 @@
     "start:local": "cross-env NODE_ENV=local node build/index.js",
     "serve": "cross-env NODE_ENV=local nodemon",
     "serve:dev": "cross-env NODE_ENV=dev nodemon src/index.js",
-    "migrate": "node build/db/migrate.js",
-    "rollBack": "node build/db/rollback.js",
+    "migrate": "ts-node --esm src/db/migrate.ts",
+    "rollback": "ts-node --esm src/db/rollback.ts",
     "generateJsonSchema": "npx ts-json-schema-generator --path ./src/types/events.ts --out ./src/types/types.json"
   },
   "keywords": [],

@@ -12,6 +12,10 @@ export function unwrapVector3(name: string, v: { x: number, y: number, z: number
   }
 }
 
+export function secToMs(sec: number) {
+  return Math.round(sec * 1000)
+}
+
 export function unwrapDynamicBattleInfo(e: DynamicBattleInfo) {
   return {
     arenaTag: e.arenaTag,
@@ -26,5 +30,6 @@ export function unwrapDynamicBattleInfo(e: DynamicBattleInfo) {
     tankType: e.tankType,
     tankLevel: e.tankLevel,
     gunTag: e.gunTag,
+    battleTime: secToMs(e.battleTime)
   }
 }

@@ -1,26 +1,35 @@
 
 import { clickhouse } from '@/db/index.js'
+import { debug } from '@/utils/utils.js'
 
-let insertFunc = (tableName: string, data: any) => {
-  clickhouse.insert({
-    table: tableName,
-    values: data,
-    format: 'JSONEachRow',
-    clickhouse_settings: {
-      async_insert: 1,
-      wait_for_async_insert: 0,
-      async_insert_busy_timeout_ms: 500,
-    }
-  })
+let insertFunc = async (tableName: string, data: any) => {
+  try {
+    await clickhouse.insert({
+      table: tableName,
+      values: data,
+      format: 'JSONEachRow',
+      clickhouse_settings: {
+        async_insert: 1,
+        wait_for_async_insert: 0,
+        async_insert_busy_timeout_ms: 500,
+      }
+    })
+  } catch (e) {
+    debug(`Insert error ${e}`)
+  }
 }
 
 if (process.env.DEBUG) {
-  insertFunc = (tableName: string, data: any) => {
-    clickhouse.insert({
-      table: tableName,
-      values: data,
-      format: 'JSONEachRow'
-    })
+  insertFunc = async (tableName: string, data: any) => {
+    try {
+      await clickhouse.insert({
+        table: tableName,
+        values: data,
+        format: 'JSONEachRow'
+      })
+    } catch (e) {
+      console.error(e)
+    }
   }
 }
 

@@ -20,6 +20,9 @@
         "eventName": {
           "type": "string"
         },
+        "localtime": {
+          "type": "string"
+        },
         "raw": {
           "type": "string"
         },
@@ -44,6 +47,7 @@
         "credits",
         "duration",
         "eventName",
+        "localtime",
         "raw",
         "result",
         "token",
@@ -56,7 +60,8 @@
       "properties": {
         "arenaID": {
           "description": "id арены из танков",
-          "type": "integer"
+          "minimum": 0,
+          "type": "string"
         },
         "arenaTag": {
           "description": "название карты",
@@ -80,7 +85,12 @@
             "domination30x30",
             "sandbox",
             "bootcamp",
-            "epic"
+            "epic",
+            "maps_training",
+            "rts",
+            "rts_1x1",
+            "rts_bootcamp",
+            "comp7"
           ],
           "type": "string"
         },
@@ -100,8 +110,11 @@
           "type": "string"
         },
         "battleTime": {
-          "description": "Время в бою относительно начала игры",
-          "type": "integer"
+          "description": "время относительно начала боя. Если событие до старта, время отрицательно",
+          "type": "number"
+        },
+        "eventName": {
+          "type": "string"
         },
         "gameVersion": {
           "description": "версия игры",
@@ -116,14 +129,21 @@
         },
         "inQueueWaitTime": {
           "description": "Время в очереди перед началом боя",
-          "type": "integer"
+          "type": "number"
         },
         "loadTime": {
           "description": "Время в загрузки карты",
-          "type": "integer"
+          "type": "number"
+        },
+        "localtime": {
+          "type": "string"
         },
         "modVersion": {
           "description": "версия мода",
+          "type": "string"
+        },
+        "playerClan": {
+          "description": "клан игрока",
           "type": "string"
         },
         "playerName": {
@@ -137,7 +157,7 @@
         },
         "preBattleWaitTime": {
           "description": "Время в ожидания начала боя после загрузки",
-          "type": "integer"
+          "type": "number"
         },
         "region": {
           "description": "регион игры",
@@ -192,12 +212,15 @@
         "battleMode",
         "battlePeriod",
         "battleTime",
+        "eventName",
         "gameVersion",
         "gameplayMask",
         "gunTag",
         "inQueueWaitTime",
         "loadTime",
+        "localtime",
         "modVersion",
+        "playerClan",
         "playerName",
         "playerWotID",
         "preBattleWaitTime",
@@ -244,7 +267,12 @@
             "domination30x30",
             "sandbox",
             "bootcamp",
-            "epic"
+            "epic",
+            "maps_training",
+            "rts",
+            "rts_1x1",
+            "rts_bootcamp",
+            "comp7"
           ],
           "type": "string"
         },
@@ -254,10 +282,6 @@
         },
         "battleTime": {
           "description": "Время в бою относительно начала игры",
-          "type": "integer"
-        },
-        "battleTimeMS": {
-          "description": "Время боя относительно конца отсчёта",
           "type": "integer"
         },
         "chassisDescr": {
@@ -396,9 +420,16 @@
           "description": "ID корпуса танка по которому попал снаряд",
           "type": "integer"
         },
+        "localtime": {
+          "type": "string"
+        },
         "ping": {
           "description": "Пинг",
           "type": "integer"
+        },
+        "playerClan": {
+          "description": "клан игрока",
+          "type": "string"
         },
         "playerName": {
           "description": "ник игрока",
@@ -644,7 +675,6 @@
         "battleGameplay",
         "battleMode",
         "battleTime",
-        "battleTimeMS",
         "chassisDescr",
         "clientMarkerPoint",
         "clientShotDispersion",
@@ -665,7 +695,9 @@
         "hitTurretPitch",
         "hitTurretYaw",
         "hitVehicleDescr",
+        "localtime",
         "ping",
+        "playerClan",
         "playerName",
         "region",
         "results",

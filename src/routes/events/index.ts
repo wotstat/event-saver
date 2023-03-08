@@ -1,6 +1,5 @@
 import jwt from 'jsonwebtoken'
 import { Router } from "express"
-import { v4 as uuidv4 } from 'uuid'
 
 import { Event } from '@/types/events.js'
 import OnBattleResult from './processors/onBattleResult.js'
@@ -10,7 +9,8 @@ import OnShot from './processors/onShot.js'
 import { redis } from '@/redis/index.js'
 
 import { onBattleStartSchema } from '@/types/validator.js';
-import { debug } from '@/utils/utils.js'
+import { debug, uuid, uuidToUInt128String } from '@/utils/utils.js'
+import { randomBytes } from 'crypto'
 
 const router = Router()
 
@@ -37,8 +37,6 @@ function processEvent(eventName: string, event: Event) {
     debug(`Unsupported event: ${eventName}`)
   }
 }
-
-
 router.post('/OnBattleStart', async (req, res) => {
 
   if (!onBattleStartSchema(req.body)) return res.status(400).send(process.env.DEBUG ? onBattleStartSchema.errors : undefined).end()
@@ -49,7 +47,7 @@ router.post('/OnBattleStart', async (req, res) => {
   if (replay) {
     return res.send(replay).end()
   } else {
-    const id = uuidv4();
+    const id = uuid();
     const token = jwt.sign(id, process.env.JWT_SECRET as string);
     await redis.setEx(cacheKey, lifetime, token)
     OnBattleStart(id, req.body)

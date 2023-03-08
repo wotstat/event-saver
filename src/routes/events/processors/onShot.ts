@@ -1,17 +1,16 @@
-import { v4 as uuidv4 } from 'uuid';
 import { insert } from "../insert.js"
 import { now, unwrapDynamicBattleInfo, unwrapVector3 } from './utils.js';
 
 import { check, onShotSchema } from '@/types/validator.js';
+import { uuid } from "@/utils/utils.js";
 
 
 export default function process(battleUUID: string, e: any) {
   check(onShotSchema, e, (e) => {
     insert('Event_OnBattleResult', {
-      id: uuidv4(),
-      onBattleStart_id: battleUUID,
+      id: uuid(),
+      onBattleStartId: battleUUID,
       dateTime: now(),
-      battleTimeMS: e.battleTimeMS,
       shellTag: e.shellTag,
       shellName: e.shellName,
       shellDamage: e.shellDamage,
