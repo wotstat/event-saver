@@ -2,7 +2,7 @@ import { insert } from "../insert.js"
 import { now, unwrapDynamicBattleInfo, unwrapVector3 } from './utils.js';
 
 import { check, onShotSchema } from '@/types/validator.js';
-import { uuid } from "@/utils/utils.js";
+import { uuid } from "@/utils/uuid.js";
 
 
 export default function process(battleUUID: string, e: any) {

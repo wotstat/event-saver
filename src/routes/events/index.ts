@@ -9,8 +9,8 @@ import OnShot from './processors/onShot.js'
 import { redis } from '@/redis/index.js'
 
 import { onBattleStartSchema } from '@/types/validator.js';
-import { debug, uuid, uuidToUInt128String } from '@/utils/utils.js'
-import { randomBytes } from 'crypto'
+import { debug } from '@/utils/utils.js'
+import { uuid } from '@/utils/uuid.js'
 
 const router = Router()
 
