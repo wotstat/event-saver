@@ -2,8 +2,9 @@ name: Build to docker
 
 on:
   create:
-    tags: ['v*']
-    branches: main
+    branches: 
+      - main
+      - dev
 
 env:
   REGISTRY: ghcr.io
@@ -31,7 +32,10 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-dev
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags:
+            type=ref,event=branch
+            type=sha
 
       - name: Build and push Docker image
         id: build-and-push
@@ -44,17 +48,12 @@ jobs:
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new
 
-      - name: Generate release
-        uses: softprops/action-gh-release@v1
-        with:
-          generate_release_notes: true
-
-      - name: Restart compose on server
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SERVER_KEY }}
-          script: |
-            cd ~/PATH/compose/
-            ./restart-dev.sh
+      # - name: Restart compose on server
+      #   uses: appleboy/ssh-action@master
+      #   with:
+      #     host: ${{ secrets.SERVER_HOST }}
+      #     username: ${{ secrets.SERVER_USER }}
+      #     key: ${{ secrets.SERVER_KEY }}
+      #     script: |
+      #       cd ~/PATH/compose/
+      #       ./restart-dev.sh
