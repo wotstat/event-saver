@@ -37,6 +37,7 @@ function processEvent(eventName: string, event: Event) {
     debug(`Unsupported event: ${eventName}`)
   }
 }
+
 router.post('/OnBattleStart', async (req, res) => {
 
   if (!onBattleStartSchema(req.body)) return res.status(400).send(process.env.DEBUG ? onBattleStartSchema.errors : undefined).end()
@@ -57,9 +58,11 @@ router.post('/OnBattleStart', async (req, res) => {
 
 router.post('/send', async (req, res) => {
   try {
-    req.body.events.forEach(async (event: Event) => {
-      processEvent(event.eventName, event)
-    });
+    if (req.body && 'events' in req.body && Array.isArray(req.body.events)) {
+      for (const event of req.body.events) {
+        processEvent(event.eventName, event)
+      }
+    }
   }
   catch (e: any) {
     console.error(`Send Event error: ${e.message}`);
@@ -68,8 +71,6 @@ router.post('/send', async (req, res) => {
     return res.status(200).end()
   }
 })
-
-
 
 
 export default router

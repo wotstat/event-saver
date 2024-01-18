@@ -61,7 +61,7 @@
         "arenaID": {
           "description": "id арены из танков",
           "minimum": 0,
-          "type": "string"
+          "type": "integer"
         },
         "arenaTag": {
           "description": "название карты",
@@ -110,7 +110,7 @@
           "type": "string"
         },
         "battleTime": {
-          "description": "время относительно начала боя. Если событие до старта, время отрицательно",
+          "description": "Время относительно начала боя. Если событие до старта, время отрицательно",
           "type": "number"
         },
         "eventName": {
@@ -281,8 +281,8 @@
           "type": "string"
         },
         "battleTime": {
-          "description": "Время в бою относительно начала игры",
-          "type": "integer"
+          "description": "Время относительно начала боя. Если событие до старта, время отрицательно",
+          "type": "number"
         },
         "chassisDescr": {
           "description": "ID ходовой своего танка",
@@ -362,33 +362,54 @@
           "type": "string"
         },
         "hitChassisDescr": {
-          "description": "ID ходовой танка по которому попал снаряд",
-          "type": "integer"
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "ID ходовой танка по которому попал снаряд"
         },
         "hitGunDescr": {
-          "description": "ID пушки танка по которому попал снаряд",
-          "type": "integer"
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "ID пушки танка по которому попал снаряд"
         },
         "hitPoint": {
-          "additionalProperties": false,
-          "description": "Координата попадания",
-          "properties": {
-            "x": {
-              "type": "number"
+          "anyOf": [
+            {
+              "additionalProperties": false,
+              "properties": {
+                "x": {
+                  "type": "number"
+                },
+                "y": {
+                  "type": "number"
+                },
+                "z": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "x",
+                "y",
+                "z"
+              ],
+              "type": "object"
             },
-            "y": {
-              "type": "number"
-            },
-            "z": {
-              "type": "number"
+            {
+              "type": "null"
             }
-          },
-          "required": [
-            "x",
-            "y",
-            "z"
           ],
-          "type": "object"
+          "description": "Координата попадания"
         },
         "hitReason": {
           "description": "Причина попадания (tank, terrain, other, none)",
@@ -396,36 +417,63 @@
             "tank",
             "terrain",
             "other",
-            "none"
+            "none",
+            null
           ],
-          "type": "string"
+          "type": [
+            "string",
+            "null"
+          ]
         },
         "hitSegment": {
           "description": "Первый элемент массива `points` [Vehicle.showDamageFromShot](https://github.com/StranikS-Scan/WorldOfTanks-Decompiled/blob/ed9c58eecc460df6f293c60202f0f1ba26e65ab0/source/res/scripts/client/Vehicle.py#L349)",
-          "type": "integer"
+          "type": [
+            "string",
+            "null"
+          ]
         },
         "hitTurretDescr": {
-          "description": "ID башни танка по которому попал снаряд",
-          "type": "integer"
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "ID башни танка по которому попал снаряд"
         },
         "hitTurretPitch": {
           "description": "Pitch башни танка по которому попал снаряд",
-          "type": "number"
+          "type": [
+            "number",
+            "null"
+          ]
         },
         "hitTurretYaw": {
           "description": "Yaw башни танка по которому попал снаряд",
-          "type": "number"
+          "type": [
+            "number",
+            "null"
+          ]
         },
         "hitVehicleDescr": {
-          "description": "ID корпуса танка по которому попал снаряд",
-          "type": "integer"
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "ID корпуса танка по которому попал снаряд"
         },
         "localtime": {
           "type": "string"
         },
         "ping": {
           "description": "Пинг",
-          "type": "integer"
+          "type": "number"
         },
         "playerClan": {
           "description": "клан игрока",
@@ -454,9 +502,16 @@
                 "type": "integer"
               },
               "fireHealth": {
-                "description": "ХП противника оставшееся после пожара",
-                "minimum": 0,
-                "type": "integer"
+                "anyOf": [
+                  {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "description": "ХП противника оставшееся после пожара"
               },
               "flags": {
                 "description": "Флаги попадания [VEHICLE_HIT_FLAGS](https://github.com/StranikS-Scan/WorldOfTanks-Decompiled/blob/a301bd7678d1c9c1d618fdaa87fba91447989e91/source/res/scripts/common/constants.py#L1145)",
@@ -473,9 +528,16 @@
                 "type": "integer"
               },
               "shotHealth": {
-                "description": "ХП противника оставшееся после выстрела",
-                "minimum": 0,
-                "type": "integer"
+                "anyOf": [
+                  {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "description": "ХП противника оставшееся после выстрела"
               },
               "tankTag": {
                 "description": "Тег танка по которому попал",
@@ -560,6 +622,10 @@
         "shellTag": {
           "description": "Тег снаряда (ARMOR_PIERCING...)",
           "type": "string"
+        },
+        "shotId": {
+          "description": "id выстрела уникальный для клиента",
+          "type": "number"
         },
         "tankLevel": {
           "description": "уровень танка",
@@ -663,6 +729,10 @@
           "description": "ID корпуса своего танка",
           "type": "integer"
         },
+        "vehicleRotationSpeed": {
+          "description": "Скорость вращения танков в момент выстрела",
+          "type": "number"
+        },
         "vehicleSpeed": {
           "description": "Скорость танка в момент выстрела",
           "type": "number"
@@ -713,6 +783,7 @@
         "shellPiercingPower",
         "shellSpeed",
         "shellTag",
+        "shotId",
         "tankLevel",
         "tankTag",
         "tankType",
@@ -726,6 +797,7 @@
         "turretSpeed",
         "turretYaw",
         "vehicleDescr",
+        "vehicleRotationSpeed",
         "vehicleSpeed"
       ],
       "type": "object"

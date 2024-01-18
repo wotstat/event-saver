@@ -24,7 +24,6 @@ const clickhouse = createClient({
   username: process.env.CLICKHOUSE_USER,
   password: process.env.CLICKHOUSE_PASSWORD,
   database: process.env.CLICKHOUSE_DATABASE,
-  connect_timeout: 60_000,
 })
 
 async function connect(options: { timeout?: number }) {

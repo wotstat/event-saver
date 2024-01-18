@@ -1,10 +1,17 @@
-import { DynamicBattleInfo } from "@/types/events.js"
+import { DynamicBattleInfo, BattleEvent } from "@/types/events.js"
 
 export function now() {
   return (new Date()).getTime()
 }
 
-export function unwrapVector3(name: string, v: { x: number, y: number, z: number }) {
+export function unwrapVector3(name: string, v: { x: number, y: number, z: number } | null) {
+  if (v === null)
+    return {
+      [`${name}_x`]: null,
+      [`${name}_y`]: null,
+      [`${name}_z`]: null,
+    }
+
   return {
     [`${name}_x`]: v.x,
     [`${name}_y`]: v.y,

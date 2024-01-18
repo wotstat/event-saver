@@ -1,3 +1,5 @@
+# docker compose down; docker compose up --remove-orphans;
+
 version: "3.7"
 
 services:

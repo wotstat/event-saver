@@ -1,16 +1,44 @@
 import { insert } from "../insert.js"
 import { now, unwrapDynamicBattleInfo, unwrapVector3 } from './utils.js';
+import { BallisticCalculator } from "@/utils/ballisticCalc.js";
 
 import { check, onShotSchema } from '@/types/validator.js';
 import { uuid } from "@/utils/uuid.js";
 
-
 export default function process(battleUUID: string, e: any) {
   check(onShotSchema, e, (e) => {
-    insert('Event_OnBattleResult', {
+
+    const shared = {
+      gravity: -e.gravity,
+      gunPos: e.gunPoint,
+      tracerStart: e.tracerStart,
+      tracerVelocity: e.tracerVel,
+    }
+
+    const clientBallistic = BallisticCalculator.calculate({
+      ...shared,
+      markerPos: e.clientMarkerPoint,
+      dispersionAngle: e.clientShotDispersion,
+    })
+
+    const serverBallistic = BallisticCalculator.calculate({
+      ...shared,
+      markerPos: e.serverMarkerPoint,
+      dispersionAngle: e.serverShotDispersion,
+    })
+
+    insert('Event_OnShot', {
       id: uuid(),
       onBattleStartId: battleUUID,
       dateTime: now(),
+      localtime: e.localtime,
+
+      ballisticResultClient_r: clientBallistic.r,
+      ballisticResultClient_theta: clientBallistic.theta,
+      ballisticResultServer_r: serverBallistic.r,
+      ballisticResultServer_theta: serverBallistic.theta,
+
+      shotId: e.shotId,
       shellTag: e.shellTag,
       shellName: e.shellName,
       shellDamage: e.shellDamage,
@@ -42,6 +70,7 @@ export default function process(battleUUID: string, e: any) {
       shellDescr: e.shellDescr,
       hitSegment: e.hitSegment,
       vehicleSpeed: e.vehicleSpeed,
+      vehicleRotationSpeed: e.vehicleRotationSpeed,
       turretSpeed: e.turretSpeed,
       ...unwrapVector3('gunPoint', e.gunPoint),
       ...unwrapVector3('clientMarkerPoint', e.clientMarkerPoint),
@@ -49,8 +78,8 @@ export default function process(battleUUID: string, e: any) {
       ...unwrapVector3('tracerStart', e.tracerStart),
       ...unwrapVector3('tracerEnd', e.tracerEnd),
       ...unwrapVector3('tracerVel', e.tracerVel),
-      hitReason: e.hitReason,
-      hitPoint: e.hitPoint,
+      hitReason: e.hitReason === null ? 'none' : e.hitReason,
+      ...unwrapVector3('hitPoint', e.hitPoint),
       'results.order': e.results.map(r => r.order),
       'results.tankTag': e.results.map(r => r.tankTag),
       'results.shotDamage': e.results.map(r => r.shotDamage),

@@ -35,5 +35,6 @@ if (process.env.DEBUG) {
 
 
 export function insert(tableName: string, data: any) {
+  // console.log(`insert into ${tableName}`, data);
   insertFunc(tableName, data)
 }

@@ -3,7 +3,7 @@ declare type integer = number
 /** @minimum 0*/
 declare type UInt32 = integer
 /** @minimum 0*/
-declare type UInt64 = string
+declare type UInt64 = integer
 /** @minimum 0*/
 declare type UInt16 = integer
 declare type Vector3 = { x: number, y: number, z: number }
@@ -19,8 +19,8 @@ interface Event extends EventWithoutToken {
 }
 
 interface BattleEvent extends Event {
-  /** Время в бою относительно начала игры */
-  battleTime: integer
+  /** Время относительно начала боя. Если событие до старта, время отрицательно */
+  battleTime: number
 }
 
 // Статические данные о бое (не изменяются), присутствуют во всех событиях для удобных селектов и фильтров
@@ -67,11 +67,10 @@ interface DynamicBattleInfo extends StaticBattleInfo {
   tankLevel: integer
 
   /** название пушки */
-  gunTag: string
+  gunTag: string,
 
-  /** время относительно начала боя. Если событие до старта, время отрицательно  */
+  /** Время относительно начала боя. Если событие до старта, время отрицательно */
   battleTime: number
-
 }
 
 export interface OnBattleStart extends DynamicBattleInfo, EventWithoutToken {
@@ -124,6 +123,9 @@ export interface OnBattleResult extends Event {
 }
 
 export interface OnShot extends BattleEvent, DynamicBattleInfo {
+  /** id выстрела уникальный для клиента */
+  shotId: number,
+
   /** Тег снаряда (ARMOR_PIERCING...) */
   shellTag: string
   /**   */
@@ -155,23 +157,23 @@ export interface OnShot extends BattleEvent, DynamicBattleInfo {
   /** Используется автоприцел */
   autoAim: boolean,
   /** Пинг */
-  ping: integer,
+  ping: number,
   /** Частота кадров */
   fps: integer,
 
   // Параметры попадания
   /** ID корпуса танка по которому попал снаряд */
-  hitVehicleDescr: integer,
+  hitVehicleDescr: integer | null,
   /** ID ходовой танка по которому попал снаряд */
-  hitChassisDescr: integer,
+  hitChassisDescr: integer | null,
   /** ID башни танка по которому попал снаряд */
-  hitTurretDescr: integer,
+  hitTurretDescr: integer | null,
   /** ID пушки танка по которому попал снаряд */
-  hitGunDescr: integer,
+  hitGunDescr: integer | null,
   /** Yaw башни танка по которому попал снаряд */
-  hitTurretYaw: number,
+  hitTurretYaw: number | null,
   /** Pitch башни танка по которому попал снаряд */
-  hitTurretPitch: number,
+  hitTurretPitch: number | null,
   /** ID корпуса своего танка */
   vehicleDescr: integer,
   /** ID ходовой своего танка */
@@ -187,10 +189,12 @@ export interface OnShot extends BattleEvent, DynamicBattleInfo {
   /** ID снаряда */
   shellDescr: integer,
   /** Первый элемент массива `points` [Vehicle.showDamageFromShot](https://github.com/StranikS-Scan/WorldOfTanks-Decompiled/blob/ed9c58eecc460df6f293c60202f0f1ba26e65ab0/source/res/scripts/client/Vehicle.py#L349) */
-  hitSegment: integer,
+  hitSegment: string | null,
 
   /** Скорость танка в момент выстрела */
   vehicleSpeed: number,
+  /** Скорость вращения танков в момент выстрела */
+  vehicleRotationSpeed: number,
   /** Скорость вращения башни в момент выстрела */
   turretSpeed: number,
   /** Координата пушки */
@@ -207,9 +211,9 @@ export interface OnShot extends BattleEvent, DynamicBattleInfo {
   tracerVel: Vector3,
 
   /** Причина попадания (tank, terrain, other, none) */
-  hitReason: 'tank' | 'terrain' | 'other' | 'none',
+  hitReason: 'tank' | 'terrain' | 'other' | 'none' | null,
   /** Координата попадания */
-  hitPoint: Vector3,
+  hitPoint: Vector3 | null,
 
   /** Результаты попадания */
   results: {
@@ -222,9 +226,9 @@ export interface OnShot extends BattleEvent, DynamicBattleInfo {
     /** Урон огнём */
     fireDamage: UInt16,
     /** ХП противника оставшееся после выстрела */
-    shotHealth: UInt16,
+    shotHealth: UInt16 | null,
     /** ХП противника оставшееся после пожара */
-    fireHealth: UInt16,
+    fireHealth: UInt16 | null,
     /** Был ли взрыв БК */
     ammoBayDestroyed: boolean,
     /** Флаги попадания [VEHICLE_HIT_FLAGS](https://github.com/StranikS-Scan/WorldOfTanks-Decompiled/blob/a301bd7678d1c9c1d618fdaa87fba91447989e91/source/res/scripts/common/constants.py#L1145)                        */
@@ -233,4 +237,4 @@ export interface OnShot extends BattleEvent, DynamicBattleInfo {
 }
 
 
-export { Event, DynamicBattleInfo, StaticBattleInfo }
+export { Event, BattleEvent, DynamicBattleInfo, StaticBattleInfo }
