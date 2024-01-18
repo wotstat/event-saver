@@ -48,6 +48,16 @@ jobs:
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new
 
+      - name: Trigger re deploy
+        - uses: convictional/trigger-workflow-and-wait@v1.6.1
+        with:
+          owner: WOT-STAT
+          repo: compose
+          github_token: ${{ secrets.GITHUB_PERSONAL_ACCESS_TOKEN }}
+          workflow_file_name: deploy.yaml
+          trigger_workflow: true
+          wait_workflow: true
+
       # - name: Restart compose on server
       #   uses: appleboy/ssh-action@master
       #   with:
