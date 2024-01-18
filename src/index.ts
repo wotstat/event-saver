@@ -24,6 +24,8 @@ try {
     migrate(clickhouse),
     redis.connect()
   ])
+
+  console.log(`Server is listening on port ${Bun.env.PORT}`);
 }
 catch (e: any) {
   console.error(`Server error: ${e.message}`)
