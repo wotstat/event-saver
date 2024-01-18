@@ -1,11 +1,11 @@
-import { migrate } from './migration.js';
+import { migrate } from './migration';
 import { createClient } from '@clickhouse/client'
 
 const clickhouse = createClient({
-  host: process.env.CLICKHOUSE_HOST,
-  username: process.env.CLICKHOUSE_USER,
-  password: process.env.CLICKHOUSE_PASSWORD,
-  database: process.env.CLICKHOUSE_DATABASE
+  host: Bun.env.CLICKHOUSE_HOST,
+  username: Bun.env.CLICKHOUSE_USER,
+  password: Bun.env.CLICKHOUSE_PASSWORD,
+  database: Bun.env.CLICKHOUSE_DATABASE
 })
 
 migrate(clickhouse)

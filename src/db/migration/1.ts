@@ -1,4 +1,4 @@
-import { MigrationData } from "../migration.js";
+import { MigrationData } from "../migration";
 
 export default {
   name: "1",

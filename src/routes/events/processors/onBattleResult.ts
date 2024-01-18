@@ -1,8 +1,8 @@
-import { insert } from "../insert.js"
-import { now } from './utils.js';
+import { insert } from "../insert"
+import { now } from './utils';
 
-import { check, onBattleResultSchema } from '@/types/validator.js';
-import { uuid } from "@/utils/uuid.js";
+import { check, onBattleResultSchema } from '@/types/validator';
+import { uuid } from "@/utils/uuid";
 
 
 export default function process(battleUUID: string, e: any) {

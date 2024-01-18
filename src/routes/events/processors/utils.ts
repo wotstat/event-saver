@@ -1,4 +1,4 @@
-import { DynamicBattleInfo, BattleEvent } from "@/types/events.js"
+import type { DynamicBattleInfo, BattleEvent } from "@/types/events"
 
 export function now() {
   return (new Date()).getTime()

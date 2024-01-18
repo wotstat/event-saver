@@ -237,4 +237,4 @@ export interface OnShot extends BattleEvent, DynamicBattleInfo {
 }
 
 
-export { Event, BattleEvent, DynamicBattleInfo, StaticBattleInfo }
+export type { Event, BattleEvent, DynamicBattleInfo, StaticBattleInfo }

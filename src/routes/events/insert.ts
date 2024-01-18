@@ -1,6 +1,6 @@
 
-import { clickhouse } from '@/db/index.js'
-import { debug } from '@/utils/utils.js'
+import { clickhouse } from '@/db/index'
+import { debug } from '@/utils/utils'
 
 let insertFunc = async (tableName: string, data: any) => {
   try {

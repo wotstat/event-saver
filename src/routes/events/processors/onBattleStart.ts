@@ -1,7 +1,7 @@
-import { insert } from "../insert.js"
-import { now, secToMs, unwrapDynamicBattleInfo, unwrapVector3 } from './utils.js';
+import { insert } from "../insert"
+import { now, secToMs, unwrapDynamicBattleInfo, unwrapVector3 } from './utils';
 
-import { OnBattleStart } from '@/types/events.js';
+import { type OnBattleStart } from '@/types/events';
 
 
 export default function process(battleUUID: string, e: OnBattleStart) {

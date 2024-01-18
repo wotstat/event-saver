@@ -1,9 +1,9 @@
-import { insert } from "../insert.js"
-import { now, unwrapDynamicBattleInfo, unwrapVector3 } from './utils.js';
-import { BallisticCalculator } from "@/utils/ballisticCalc.js";
+import { insert } from "../insert"
+import { now, unwrapDynamicBattleInfo, unwrapVector3 } from './utils';
+import { BallisticCalculator } from "@/utils/ballisticCalc";
 
-import { check, onShotSchema } from '@/types/validator.js';
-import { uuid } from "@/utils/uuid.js";
+import { check, onShotSchema } from '@/types/validator';
+import { uuid } from "@/utils/uuid";
 
 export default function process(battleUUID: string, e: any) {
   check(onShotSchema, e, (e) => {

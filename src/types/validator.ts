@@ -1,8 +1,8 @@
-import _Ajv, { ValidateFunction } from "ajv"
-import { OnBattleResult, OnBattleStart, OnShot } from "./events.js";
+import _Ajv, { type ValidateFunction } from "ajv"
+import type { OnBattleResult, OnBattleStart, OnShot } from "./events";
 import types from './types.json' assert { type: "json" };
 
-export const Ajv = _Ajv as unknown as typeof _Ajv.default;
+export const Ajv = _Ajv as unknown as typeof _Ajv;
 
 export const ajv = new Ajv()
 

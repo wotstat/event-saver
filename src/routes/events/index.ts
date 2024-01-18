@@ -1,18 +1,19 @@
-import jwt from 'jsonwebtoken'
-import { Router } from "express"
+import { verify, sign } from 'hono/jwt'
+import { Hono } from "hono"
 
-import { Event } from '@/types/events.js'
-import OnBattleResult from './processors/onBattleResult.js'
-import OnBattleStart from './processors/onBattleStart.js'
-import OnShot from './processors/onShot.js'
+import type { Event } from '@/types/events'
+import OnBattleResult from './processors/onBattleResult'
+import OnBattleStart from './processors/onBattleStart'
+import OnShot from './processors/onShot'
 
-import { redis } from '@/redis/index.js'
+import { redis } from '@/redis/index'
 
-import { onBattleStartSchema } from '@/types/validator.js';
-import { debug } from '@/utils/utils.js'
-import { uuid } from '@/utils/uuid.js'
+import { onBattleStartSchema } from '@/types/validator';
+import { debug } from '@/utils/utils'
+import { uuid } from '@/utils/uuid'
+import type { BodyData } from 'hono/utils/body'
 
-const router = Router()
+const router = new Hono()
 
 const lifetime = process.env.REDIS_BATTLE_TOKEN_LIFETIME ? Number.parseInt(process.env.REDIS_BATTLE_TOKEN_LIFETIME) : 30 * 60
 
@@ -22,45 +23,61 @@ const supportedEvents = {
   'OnShot': OnShot
 }
 
-function processEvent(eventName: string, event: Event) {
+async function processEvent(eventName: string, event: Event) {
   if (eventName in supportedEvents) {
     const token = event.token
-    const secret = process.env.JWT_SECRET as string
-    jwt.verify(token, secret, (err, uuid) => {
-      if (!err) {
-        (supportedEvents as any)[eventName](uuid, event)
-      } else {
-        debug(`JWT error: ${err.message}`)
-      }
-    });
+    const secret = Bun.env.JWT_SECRET
+    try {
+      const data = await verify(token, secret)
+      supportedEvents[eventName as keyof typeof supportedEvents](data, event as any)
+    } catch (e) {
+      debug(`JWT error: ${e}`)
+    }
   } else {
     debug(`Unsupported event: ${eventName}`)
   }
 }
 
-router.post('/OnBattleStart', async (req, res) => {
+router.post('/OnBattleStart', async c => {
+  const body = await c.req.json()
 
-  if (!onBattleStartSchema(req.body)) return res.status(400).send(process.env.DEBUG ? onBattleStartSchema.errors : undefined).end()
+  if (!onBattleStartSchema(body)) return c.json(Bun.env.DEBUG ? onBattleStartSchema.errors : '', 400)
 
-  const cacheKey = `${req.body.playerWotID}-${req.body.arenaID}`
+  const cacheKey = `${body.playerWotID}-${body.arenaID}`
 
   const replay = await redis.get(cacheKey)
   if (replay) {
-    return res.send(replay).end()
+    return c.text(replay)
   } else {
     const id = uuid();
-    const token = jwt.sign(id, process.env.JWT_SECRET as string);
+    const token = await sign(id, process.env.JWT_SECRET as string);
     await redis.setEx(cacheKey, lifetime, token)
-    OnBattleStart(id, req.body)
-    return res.send(token).end()
+    OnBattleStart(id, body)
+    return c.text(token)
   }
 })
 
-router.post('/send', async (req, res) => {
+
+function isEventBody(body: BodyData): body is BodyData & {
+  events: Event[]
+} {
+  return 'events' in body &&
+    Array.isArray(body.events) &&
+    body.events.length > 0 &&
+    body.events.every(event => {
+      return typeof event === 'object' &&
+        'eventName' in event &&
+        'token' in event &&
+        typeof event.token === 'string'
+    })
+}
+
+router.post('/send', async c => {
+  const body = await c.req.json()
   try {
-    if (req.body && 'events' in req.body && Array.isArray(req.body.events)) {
-      for (const event of req.body.events) {
-        processEvent(event.eventName, event)
+    if (isEventBody(body)) {
+      for (const event of body.events) {
+        await processEvent(event.eventName, event)
       }
     }
   }
@@ -68,9 +85,8 @@ router.post('/send', async (req, res) => {
     console.error(`Send Event error: ${e.message}`);
   }
   finally {
-    return res.status(200).end()
+    return c.text('')
   }
 })
-
 
 export default router

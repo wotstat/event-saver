@@ -1,16 +1,16 @@
-import { Router } from "express";
+import { Hono } from "hono";
 
-import eventProcessor from './events/index.js'
+import eventProcessor from './events/index'
 
-const router = Router();
+const router = new Hono();
 
-router.get("/api", (req, res) => {
-  res.json({
+router.get("/api", c => {
+  return c.json({
     status: 'online',
     env: process.env.NODE_ENV
   })
 })
 
-router.use('/api/events', eventProcessor)
+router.route('/api/events', eventProcessor)
 
 export default router

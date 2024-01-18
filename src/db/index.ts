@@ -1,29 +1,30 @@
-import { ClickHouseClient, createClient } from '@clickhouse/client'
+import { createClient } from '@clickhouse/client-web'
+import type { WebClickHouseClient } from '@clickhouse/client-web/dist/client'
 
-declare module '@clickhouse/client' {
-  interface ResultSet {
-    json<T>(): Promise<{
-      meta: {
-        name: string,
-        type: string
-
-      }[]
-      data: T,
-      rows: number,
-      statistics: {
-        elapsed: number,
-        rows_read: number,
-        bytes_read: number
-      }
-    }>
-  }
-}
+// declare module '@clickhouse/client-web' {
+//   interface ResultSet {
+//     json<T>(): Promise<{
+//       meta: {
+//         name: string,
+//         type: string
+//       }[]
+//       data: T,
+//       rows: number,
+//       statistics: {
+//         elapsed: number,
+//         rows_read: number,
+//         bytes_read: number
+//       }
+//     }>
+//   }
+// }
 
 const clickhouse = createClient({
   host: process.env.CLICKHOUSE_HOST,
   username: process.env.CLICKHOUSE_USER,
   password: process.env.CLICKHOUSE_PASSWORD,
   database: process.env.CLICKHOUSE_DATABASE,
+  request_timeout: 1000,
 })
 
 async function connect(options: { timeout?: number }) {
@@ -32,7 +33,8 @@ async function connect(options: { timeout?: number }) {
 
   for (let i = 0; i <= timeout; i += delay) {
     try {
-      if (await clickhouse.ping()) {
+      const ping = await clickhouse.query({ query: `select 1;` })
+      if (ping && ping.query_id) {
         console.log('ClickHouse connected');
         return true
       }
@@ -44,7 +46,7 @@ async function connect(options: { timeout?: number }) {
   return false;
 }
 
-async function multistatementQuery(client: ClickHouseClient, query: string) {
+async function multistatementQuery(client: WebClickHouseClient, query: string) {
   const queries = query.split(';').filter(t => t.trim() != '')
   for (let i = 0; i < queries.length; i++) {
     const q = queries[i];

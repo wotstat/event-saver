@@ -1,42 +1,36 @@
-import express from 'express'
-import cors from 'cors'
+import { Hono } from "hono";
+import { cors } from 'hono/cors'
 
-import routes from './routes/index.js'
-import { migrate } from './db/migration.js'
-import { connect, clickhouse } from './db/index.js'
-import { redis } from './redis/index.js'
+import routes from './routes';
+import { migrate } from './db/migration'
+import { connect, clickhouse } from './db/index'
+import { redis } from './redis/index'
 
+const hono = new Hono();
+hono.use(cors());
 
-const app = express();
+hono.route('/', routes);
 
-app.use(express.json())
-app.use(cors());
-app.options('*', cors());
+try {
+  console.log('Connecting to ClickHouse...');
 
-app.use('/', routes)
-
-async function Start() {
-  const port = process.env.PORT;
-
-  try {
-    if (!await connect({ timeout: 10 })) {
-      throw new Error('ClickHouse is not available')
-    }
-
-    await Promise.all([
-      migrate(clickhouse),
-      redis.connect()
-    ])
-
-    app.listen(port, () => {
-      console.log(`App listening at http://localhost:${port}`)
-    })
+  if (!await connect({ timeout: 10 })) {
+    throw new Error('ClickHouse is not available')
   }
-  catch (e: any) {
-    console.error(`Server error: ${e.message}`)
-    process.exit(1)
-  }
+
+  console.log('Connecting to Redis...');
+
+  await Promise.all([
+    migrate(clickhouse),
+    redis.connect()
+  ])
+}
+catch (e: any) {
+  console.error(`Server error: ${e.message}`)
+  process.exit(1)
 }
 
-Start()
-
+export default {
+  port: Bun.env.PORT,
+  fetch: hono.fetch,
+}

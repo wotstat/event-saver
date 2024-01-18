@@ -1,7 +1,8 @@
-import { ClickHouseClient } from '@clickhouse/client';
-import glob from 'glob-promise';
+import { ClickHouseClient } from '@clickhouse/client-web';
 import { v4 } from 'uuid';
-import { multistatementQuery } from './index.js';
+import { multistatementQuery } from './index';
+import { Glob } from "bun";
+import type { WebClickHouseClient } from '@clickhouse/client-web/dist/client';
 
 export interface MigrationData {
   name: string,
@@ -16,12 +17,15 @@ export type Migration = {
   order: number
 }
 
+const MIGRATION_PATH = 'src/db/migration'
+
 let migrators: MigrationData[] = []
 
 async function loadMigrations() {
   try {
-    const res = await glob('./src/db/migration/**/*.ts');
-    const modules = await Promise.all(res.map((file) => import(file.replace('src/db/', '').replace('.ts', '.js'))))
+    const glob = new Glob('*.ts')
+    const scannedFiles = await Array.fromAsync(glob.scan({ cwd: MIGRATION_PATH }))
+    const modules = await Promise.all(scannedFiles.map(t => import(`./migration/${t}`)))
 
     return modules.map(t => t.default)
   } catch (err) {
@@ -29,21 +33,19 @@ async function loadMigrations() {
   }
 }
 
-async function migrate(client: ClickHouseClient) {
+async function migrate(client: WebClickHouseClient) {
   migrators = await loadMigrations() || [];
 
   await client.query({
     query: `create table if not exists migrations (name String, uuid UUID, date DateTime64, order Int8 ) engine MergeTree() order by order;`
   })
 
-  const currentMigrations = await (await client.query({ query: `select * from migrations order by order;` })).json<Migration[]>()
-
-  let lastOrder = currentMigrations.data.reduce((a, val) => Math.max(a, val.order), 0) || 0
-
+  const currentMigrations = await (await client.query({ query: `select * from migrations order by order;`, format: 'JSONEachRow' })).json<Migration[]>()
+  let lastOrder = currentMigrations.reduce((a, val) => Math.max(a, val.order), 0) ?? 0
 
   for (let i = 0; i < migrators.length; i++) {
     const migrator = migrators[i];
-    if (!currentMigrations.data.find(t => t.name == migrator.name)) {
+    if (!currentMigrations.find(t => t.name == migrator.name)) {
       console.log(`[Migration]: apply ${migrator.name}`);
 
       try {
@@ -67,24 +69,24 @@ async function migrate(client: ClickHouseClient) {
   }
 }
 
-async function rollback(client: ClickHouseClient) {
+async function rollback(client: WebClickHouseClient) {
   migrators = await loadMigrations() || [];
 
   await client.query({
     query: `create table if not exists migrations (name String, uuid UUID, date DateTime64, order Int8 ) engine MergeTree() order by order;`
   })
 
-  const currentMigrations = await (await client.query({ query: `select * from migrations order by order desc;` })).json<Migration[]>()
+  const currentMigrations = await (await client.query({ query: `select * from migrations order by order desc;`, format: 'JSONEachRow' })).json<Migration[]>()
 
-  if (currentMigrations.data.length == 0) return;
+  if (currentMigrations.length == 0) return;
 
-  const migration = migrators.find(t => t.name == currentMigrations.data[0].name)
+  const migration = migrators.find(t => t.name == currentMigrations[0].name)
 
   if (migration) {
     console.log(`[Rollback]: migration ${migration.name}`);
     try {
       await multistatementQuery(client, migration.down)
-      await client.query({ query: `alter table migrations delete where uuid = '${currentMigrations.data[0].uuid}'` })
+      await client.query({ query: `alter table migrations delete where uuid = '${currentMigrations[0].uuid}'` })
     }
     catch (e) {
       console.error(e);
