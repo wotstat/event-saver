@@ -16,7 +16,8 @@ export default function process(battleUUID: string, e: OnBattleStart) {
     loadTime: secToMs(e.loadTime),
     preBattleWaitTime: secToMs(e.preBattleWaitTime),
     gameplayMask: e.gameplayMask,
+    battleTime: e.battleTime,
     ...unwrapVector3('spawnPoint', e.spawnPoint),
-    ...unwrapDynamicBattleInfo(e)
+    ...unwrapDynamicBattleInfo(e),
   })
 }
