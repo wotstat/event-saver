@@ -25,6 +25,8 @@ async function loadMigrations() {
   try {
     const glob = new Glob('*.ts')
     const scannedFiles = await Array.fromAsync(glob.scan({ cwd: MIGRATION_PATH }))
+    scannedFiles.sort()
+
     const modules = await Promise.all(scannedFiles.map(t => import(`./migration/${t}`)))
 
     return modules.map(t => t.default)

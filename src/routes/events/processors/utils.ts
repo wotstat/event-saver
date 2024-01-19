@@ -36,7 +36,12 @@ export function unwrapDynamicBattleInfo(e: DynamicBattleInfo) {
     tankTag: e.tankTag,
     tankType: e.tankType,
     tankLevel: e.tankLevel,
-    gunTag: e.gunTag,
+    gunTag: e.gunTag
+  }
+}
+
+export function unwrapBattleEvent(e: BattleEvent) {
+  return {
     battleTime: secToMs(e.battleTime)
   }
 }

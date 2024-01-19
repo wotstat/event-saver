@@ -6,6 +6,8 @@ declare type UInt32 = integer
 declare type UInt64 = integer
 /** @minimum 0*/
 declare type UInt16 = integer
+/** @minimum 0*/
+declare type UInt8 = integer
 declare type Vector3 = { x: number, y: number, z: number }
 
 interface EventWithoutToken {
@@ -68,9 +70,6 @@ interface DynamicBattleInfo extends StaticBattleInfo {
 
   /** название пушки */
   gunTag: string,
-
-  /** Время относительно начала боя. Если событие до старта, время отрицательно */
-  battleTime: number
 }
 
 export interface OnBattleStart extends DynamicBattleInfo, EventWithoutToken {
@@ -99,6 +98,9 @@ export interface OnBattleStart extends DynamicBattleInfo, EventWithoutToken {
   inQueueWaitTime: number
 
   gameplayMask: integer
+
+  /** Время относительно начала боя. Если событие до старта, время отрицательно */
+  battleTime: number
 }
 
 type VehicleBattleResult = {
@@ -125,9 +127,12 @@ type VehicleBattleResult = {
   shots: UInt16
   kills: UInt16
   lifeTime: UInt16
+  tankLevel: UInt8
+  tankType: 'LT' | 'MT' | 'HT' | 'SPG' | 'AT'
+  tankTag: string
 }
 
-export interface OnBattleResult extends Event {
+export interface OnBattleResult extends Event, DynamicBattleInfo {
   raw: string;
 
   result: {

@@ -4,13 +4,68 @@
     "OnBattleResult": {
       "additionalProperties": false,
       "properties": {
+        "arenaTag": {
+          "description": "название карты",
+          "type": "string"
+        },
+        "battleGameplay": {
+          "description": "режим игры",
+          "enum": [
+            "ctf",
+            "domination",
+            "assault",
+            "nations",
+            "ctf2",
+            "domination2",
+            "assault2",
+            "fallout",
+            "fallout2",
+            "fallout3",
+            "fallout4",
+            "ctf30x30",
+            "domination30x30",
+            "sandbox",
+            "bootcamp",
+            "epic",
+            "maps_training",
+            "rts",
+            "rts_1x1",
+            "rts_bootcamp",
+            "comp7"
+          ],
+          "type": "string"
+        },
+        "battleMode": {
+          "description": "тип боя",
+          "type": "string"
+        },
         "eventName": {
+          "type": "string"
+        },
+        "gameVersion": {
+          "description": "версия игры",
+          "type": "string"
+        },
+        "gunTag": {
+          "description": "название пушки",
           "type": "string"
         },
         "localtime": {
           "type": "string"
         },
+        "playerClan": {
+          "description": "клан игрока",
+          "type": "string"
+        },
+        "playerName": {
+          "description": "ник игрока",
+          "type": "string"
+        },
         "raw": {
+          "type": "string"
+        },
+        "region": {
+          "description": "регион игры",
           "type": "string"
         },
         "result": {
@@ -112,6 +167,23 @@
                   "minimum": 0,
                   "type": "integer"
                 },
+                "tankLevel": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "tankTag": {
+                  "type": "string"
+                },
+                "tankType": {
+                  "enum": [
+                    "LT",
+                    "MT",
+                    "HT",
+                    "SPG",
+                    "AT"
+                  ],
+                  "type": "string"
+                },
                 "team": {
                   "minimum": 0,
                   "type": "integer"
@@ -144,7 +216,10 @@
                 "stunned",
                 "shots",
                 "kills",
-                "lifeTime"
+                "lifeTime",
+                "tankLevel",
+                "tankType",
+                "tankTag"
               ],
               "type": "object"
             },
@@ -246,6 +321,23 @@
                     "minimum": 0,
                     "type": "integer"
                   },
+                  "tankLevel": {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "tankTag": {
+                    "type": "string"
+                  },
+                  "tankType": {
+                    "enum": [
+                      "LT",
+                      "MT",
+                      "HT",
+                      "SPG",
+                      "AT"
+                    ],
+                    "type": "string"
+                  },
                   "team": {
                     "minimum": 0,
                     "type": "integer"
@@ -279,6 +371,9 @@
                   "spotted",
                   "stunDuration",
                   "stunned",
+                  "tankLevel",
+                  "tankTag",
+                  "tankType",
                   "team",
                   "xp"
                 ],
@@ -326,15 +421,48 @@
           ],
           "type": "object"
         },
+        "serverName": {
+          "description": "название сервера",
+          "type": "string"
+        },
+        "tankLevel": {
+          "description": "уровень танка",
+          "type": "integer"
+        },
+        "tankTag": {
+          "description": "название танка",
+          "type": "string"
+        },
+        "tankType": {
+          "description": "типа танка",
+          "type": "string"
+        },
+        "team": {
+          "description": "команда игрока",
+          "type": "integer"
+        },
         "token": {
           "type": "string"
         }
       },
       "required": [
+        "arenaTag",
+        "battleGameplay",
+        "battleMode",
         "eventName",
+        "gameVersion",
+        "gunTag",
         "localtime",
+        "playerClan",
+        "playerName",
         "raw",
+        "region",
         "result",
+        "serverName",
+        "tankLevel",
+        "tankTag",
+        "tankType",
+        "team",
         "token"
       ],
       "type": "object"

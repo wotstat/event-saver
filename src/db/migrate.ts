@@ -1,5 +1,5 @@
 import { migrate } from './migration';
-import { createClient } from '@clickhouse/client'
+import { createClient } from '@clickhouse/client-web'
 
 const clickhouse = createClient({
   host: Bun.env.CLICKHOUSE_HOST,
