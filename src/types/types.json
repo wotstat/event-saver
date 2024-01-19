@@ -4,19 +4,6 @@
     "OnBattleResult": {
       "additionalProperties": false,
       "properties": {
-        "botsCount": {
-          "description": "количество ботов в бою",
-          "minimum": 0,
-          "type": "number"
-        },
-        "credits": {
-          "description": "количество кредитов за бой",
-          "type": "number"
-        },
-        "duration": {
-          "description": "длительность боя в мс",
-          "type": "number"
-        },
         "eventName": {
           "type": "string"
         },
@@ -27,31 +14,328 @@
           "type": "string"
         },
         "result": {
-          "description": "результат боя",
-          "enum": [
-            "lose",
-            "win"
+          "additionalProperties": false,
+          "properties": {
+            "credits": {
+              "type": "integer"
+            },
+            "duration": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "originalCredits": {
+              "type": "integer"
+            },
+            "personal": {
+              "additionalProperties": false,
+              "properties": {
+                "damageAssistedRadio": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "damageAssistedStun": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "damageAssistedTrack": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "damageBlockedByArmor": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "damageDealt": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "damageReceived": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "damageReceivedFromInvisibles": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "damaged": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "directEnemyHits": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "directHitsReceived": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "explosionHits": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "explosionHitsReceived": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "kills": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "lifeTime": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "mileage": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "piercingEnemyHits": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "piercingsReceived": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "shots": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "spotted": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "stunDuration": {
+                  "type": "number"
+                },
+                "stunned": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "team": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "xp": {
+                  "minimum": 0,
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "spotted",
+                "mileage",
+                "damageAssistedTrack",
+                "damageReceivedFromInvisibles",
+                "damageReceived",
+                "piercingsReceived",
+                "directHitsReceived",
+                "piercingEnemyHits",
+                "explosionHits",
+                "damageAssistedRadio",
+                "stunDuration",
+                "damageBlockedByArmor",
+                "damageDealt",
+                "xp",
+                "team",
+                "damaged",
+                "damageAssistedStun",
+                "explosionHitsReceived",
+                "directEnemyHits",
+                "stunned",
+                "shots",
+                "kills",
+                "lifeTime"
+              ],
+              "type": "object"
+            },
+            "playerTeam": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "playersResults": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "bdid": {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "damageAssistedRadio": {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "damageAssistedStun": {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "damageAssistedTrack": {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "damageBlockedByArmor": {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "damageDealt": {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "damageReceived": {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "damageReceivedFromInvisibles": {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "damaged": {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "directEnemyHits": {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "directHitsReceived": {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "explosionHits": {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "explosionHitsReceived": {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "kills": {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "lifeTime": {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "mileage": {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "piercingEnemyHits": {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "piercingsReceived": {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "shots": {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "spotted": {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "stunDuration": {
+                    "type": "number"
+                  },
+                  "stunned": {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "team": {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "xp": {
+                    "minimum": 0,
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "bdid",
+                  "damageAssistedRadio",
+                  "damageAssistedStun",
+                  "damageAssistedTrack",
+                  "damageBlockedByArmor",
+                  "damageDealt",
+                  "damageReceived",
+                  "damageReceivedFromInvisibles",
+                  "damaged",
+                  "directEnemyHits",
+                  "directHitsReceived",
+                  "explosionHits",
+                  "explosionHitsReceived",
+                  "kills",
+                  "lifeTime",
+                  "mileage",
+                  "name",
+                  "piercingEnemyHits",
+                  "piercingsReceived",
+                  "shots",
+                  "spotted",
+                  "stunDuration",
+                  "stunned",
+                  "team",
+                  "xp"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "result": {
+              "enum": [
+                "win",
+                "lose",
+                "tie"
+              ],
+              "type": "string"
+            },
+            "teamHealth": {
+              "items": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "type": "array"
+            },
+            "winnerTeam": {
+              "anyOf": [
+                {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "credits",
+            "originalCredits",
+            "teamHealth",
+            "result",
+            "winnerTeam",
+            "duration",
+            "playerTeam",
+            "personal",
+            "playersResults"
           ],
-          "type": "string"
+          "type": "object"
         },
         "token": {
           "type": "string"
-        },
-        "xp": {
-          "description": "количество опыта за бой",
-          "type": "number"
         }
       },
       "required": [
-        "botsCount",
-        "credits",
-        "duration",
         "eventName",
         "localtime",
         "raw",
         "result",
-        "token",
-        "xp"
+        "token"
       ],
       "type": "object"
     },

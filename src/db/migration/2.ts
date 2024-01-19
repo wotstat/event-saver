@@ -1,4 +1,4 @@
-import { MigrationData } from "../migration";
+import type { MigrationData } from "../migration";
 
 export default {
   name: "2",

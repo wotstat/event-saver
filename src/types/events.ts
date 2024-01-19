@@ -101,25 +101,49 @@ export interface OnBattleStart extends DynamicBattleInfo, EventWithoutToken {
   gameplayMask: integer
 }
 
+type VehicleBattleResult = {
+  spotted: UInt16
+  mileage: UInt16
+  damageAssistedTrack: UInt16
+  damageReceivedFromInvisibles: UInt16
+  damageReceived: UInt16
+  piercingsReceived: UInt16
+  directHitsReceived: UInt16
+  piercingEnemyHits: UInt16
+  explosionHits: UInt16
+  damageAssistedRadio: UInt16
+  stunDuration: number
+  damageBlockedByArmor: UInt16
+  damageDealt: UInt16
+  xp: UInt16
+  team: UInt16
+  damaged: UInt16
+  damageAssistedStun: UInt16
+  explosionHitsReceived: UInt16
+  directEnemyHits: UInt16
+  stunned: UInt16
+  shots: UInt16
+  kills: UInt16
+  lifeTime: UInt16
+}
+
 export interface OnBattleResult extends Event {
   raw: string;
 
-  /** результат боя */
-  result: 'lose' | 'win'
-
-  /** количество кредитов за бой */
-  credits: number
-
-  /** количество опыта за бой */
-  xp: number
-
-  /** длительность боя в мс */
-  duration: number
-
-  /** количество ботов в бою 
-   * @minimum 0
-  */
-  botsCount: number
+  result: {
+    credits: integer,
+    originalCredits: integer,
+    teamHealth: UInt16[],
+    result: 'win' | 'lose' | 'tie',
+    winnerTeam: UInt16 | null,
+    duration: UInt16,
+    playerTeam: UInt16,
+    personal: VehicleBattleResult
+    playersResults: (VehicleBattleResult & {
+      bdid: UInt64,
+      name: string,
+    })[]
+  }
 }
 
 export interface OnShot extends BattleEvent, DynamicBattleInfo {
