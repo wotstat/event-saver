@@ -1,40 +1,29 @@
 
 import { clickhouse } from '@/db/index'
-import { debug } from '@/utils/utils'
+import type { ClickHouseSettings } from '@clickhouse/client-web'
 
-let insertFunc = async (tableName: string, data: any) => {
+const prodSettings = {
+  async_insert: 1,
+  wait_for_async_insert: 0,
+  async_insert_busy_timeout_ms: 500,
+} satisfies ClickHouseSettings
+
+async function insertFunc(tableName: string, data: any, event: any) {
   try {
     await clickhouse.insert({
       table: tableName,
       values: data,
       format: 'JSONEachRow',
-      clickhouse_settings: {
-        async_insert: 1,
-        wait_for_async_insert: 0,
-        async_insert_busy_timeout_ms: 500,
-      }
+      clickhouse_settings: Bun.env.DEBUG ? undefined : prodSettings
     })
   } catch (e) {
-    debug(`Insert error ${e}`)
-  }
-}
-
-if (process.env.DEBUG) {
-  insertFunc = async (tableName: string, data: any) => {
-    try {
-      await clickhouse.insert({
-        table: tableName,
-        values: data,
-        format: 'JSONEachRow'
-      })
-    } catch (e) {
-      console.error(e)
-    }
+    console.error(e)
+    console.error(`insert into ${tableName}`, data);
+    console.error(`event for inserting ${tableName}`, JSON.stringify(event));
   }
 }
 
 
-export function insert(tableName: string, data: any) {
-  // console.log(`insert into ${tableName}`, data);
-  insertFunc(tableName, data)
+export function insert(tableName: string, data: any, event: any) {
+  insertFunc(tableName, data, event)
 }

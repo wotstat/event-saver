@@ -11,6 +11,7 @@ export function check<T>(schema: ValidateFunction<T>, data: any, t: (e: T) => vo
     t(data)
   } else {
     console.debug(schema.errors);
+    console.debug(JSON.stringify(data));
   }
 }
 

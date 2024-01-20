@@ -90,6 +90,6 @@ export default function process(battleUUID: string, e: any) {
       'results.flags': e.results.map(r => r.flags),
       ...unwrapDynamicBattleInfo(e),
       ...unwrapBattleEvent(e),
-    })
+    }, e)
   })
 }

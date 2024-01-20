@@ -49,6 +49,7 @@ async function migrate(client: WebClickHouseClient) {
     const migrator = migrators[i];
     if (!currentMigrations.find(t => t.name == migrator.name)) {
       console.log(`[Migration]: apply ${migrator.name}`);
+      console.info(`[Migration]: apply ${migrator.up}`);
 
       try {
         await multistatementQuery(client, migrator.up)

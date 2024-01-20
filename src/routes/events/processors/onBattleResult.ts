@@ -39,6 +39,6 @@ export default function process(battleUUID: string, e: any) {
       ...unwrapVehicleBattleResult('personal', r.personal),
       ...unwrapPlayersResults(r.playersResults),
       ...unwrapDynamicBattleInfo(e)
-    })
+    }, e)
   })
 }

@@ -9,8 +9,6 @@ export default function process(battleUUID: string, e: OnBattleStart) {
     id: battleUUID,
     dateTime: now(),
     arenaId: e.arenaID,
-    playerWotId: e.playerWotID,
-    modVersion: e.modVersion,
     loadBattlePeriod: e.battlePeriod,
     inQueueWaitTime: secToMs(e.inQueueWaitTime),
     loadTime: secToMs(e.loadTime),
@@ -19,5 +17,5 @@ export default function process(battleUUID: string, e: OnBattleStart) {
     battleTime: secToMs(e.battleTime),
     ...unwrapVector3('spawnPoint', e.spawnPoint),
     ...unwrapDynamicBattleInfo(e),
-  })
+  }, e)
 }

@@ -31,6 +31,9 @@ interface StaticBattleInfo {
   /** название карты */
   arenaTag: string
 
+  /** ID аккаунта */
+  accountDBID: UInt64
+
   /** ник игрока */
   playerName: string
 
@@ -38,10 +41,10 @@ interface StaticBattleInfo {
   playerClan: string
 
   /** тип боя */
-  battleMode: string
+  battleMode: 'UNKNOWN' | 'REGULAR' | 'TRAINING' | 'TOURNAMENT' | 'CLAN' | 'CYBERSPORT' | 'EVENT_BATTLES' | 'GLOBAL_MAP' | 'TOURNAMENT_REGULAR' | 'TOURNAMENT_CLAN' | 'FALLOUT_CLASSIC' | 'FALLOUT_MULTITEAM' | 'SORTIE_2' | 'FORT_BATTLE_2' | 'RANKED' | 'BOOTCAMP' | 'EPIC_RANDOM' | 'EPIC_RANDOM_TRAINING' | 'EVENT_BATTLES_2' | 'EPIC_BATTLE' | 'EPIC_BATTLE_TRAINING' | 'BATTLE_ROYALE_SOLO' | 'BATTLE_ROYALE_SQUAD' | 'TOURNAMENT_EVENT' | 'BOB' | 'EVENT_RANDOM' | 'BATTLE_ROYALE_TRN_SOLO' | 'BATTLE_ROYALE_TRN_SQUAD' | 'WEEKEND_BRAWL' | 'MAPBOX' | 'MAPS_TRAINING' | 'RTS' | 'RTS_1x1' | 'RTS_BOOTCAMP' | 'FUN_RANDOM' | 'COMP7' | 'WINBACK' | 'VERSUS_AI'
 
   /** режим игры */
-  battleGameplay: 'ctf' | 'domination' | 'assault' | 'nations' | 'ctf2' | 'domination2' | 'assault2' | 'fallout' | 'fallout2' | 'fallout3' | 'fallout4' | 'ctf30x30' | 'domination30x30' | 'sandbox' | 'bootcamp' | 'epic' | 'maps_training' | 'rts' | 'rts_1x1' | 'rts_bootcamp' | 'comp7'
+  battleGameplay: 'ctf' | 'domination' | 'assault' | 'nations' | 'ctf2' | 'domination2' | 'assault2' | 'fallout' | 'fallout2' | 'fallout3' | 'fallout4' | 'ctf30x30' | 'domination30x30' | 'sandbox' | 'bootcamp' | 'epic' | 'maps_training' | 'rts' | 'rts_1x1' | 'rts_bootcamp' | 'comp7' | 'other'
 
   /** название сервера */
   serverName: string
@@ -51,6 +54,9 @@ interface StaticBattleInfo {
 
   /** версия игры */
   gameVersion: string
+
+  /** версия мода */
+  modVersion: string
 }
 
 // Динамические данные о бое (могут изменяться во время боя), присутствуют во всех событиях для удобных селектов и фильтров
@@ -76,14 +82,8 @@ export interface OnBattleStart extends DynamicBattleInfo, EventWithoutToken {
   /** id арены из танков */
   arenaID: UInt64
 
-  /** id игрока из танков, нужен для прддержания уникальной сесии */
-  playerWotID: UInt32
-
   /** координата спавна */
   spawnPoint: Vector3
-
-  /** версия мода */
-  modVersion: string
 
   /** Момент входа в бой */
   battlePeriod: 'IDLE' | 'WAITING' | 'PREBATTLE' | 'BATTLE' | 'AFTERBATTLE'
@@ -118,7 +118,7 @@ type VehicleBattleResult = {
   damageBlockedByArmor: UInt16
   damageDealt: UInt16
   xp: UInt16
-  team: UInt16
+  team: UInt8
   damaged: UInt16
   damageAssistedStun: UInt16
   explosionHitsReceived: UInt16
@@ -127,9 +127,9 @@ type VehicleBattleResult = {
   shots: UInt16
   kills: UInt16
   lifeTime: UInt16
-  tankLevel: UInt8
-  tankType: 'LT' | 'MT' | 'HT' | 'SPG' | 'AT'
   tankTag: string
+  tankType: 'LT' | 'MT' | 'HT' | 'SPG' | 'AT'
+  tankLevel: UInt8
 }
 
 export interface OnBattleResult extends Event, DynamicBattleInfo {
@@ -142,7 +142,7 @@ export interface OnBattleResult extends Event, DynamicBattleInfo {
     result: 'win' | 'lose' | 'tie',
     winnerTeam: UInt16 | null,
     duration: UInt16,
-    playerTeam: UInt16,
+    playerTeam: UInt8,
     personal: VehicleBattleResult
     playersResults: (VehicleBattleResult & {
       bdid: UInt64,
@@ -155,8 +155,8 @@ export interface OnShot extends BattleEvent, DynamicBattleInfo {
   /** id выстрела уникальный для клиента */
   shotId: number,
 
-  /** Тег снаряда (ARMOR_PIERCING...) */
-  shellTag: string
+  /** Тип снаряда */
+  shellTag: 'HOLLOW_CHARGE' | 'HIGH_EXPLOSIVE' | 'ARMOR_PIERCING' | 'ARMOR_PIERCING_HE' | 'ARMOR_PIERCING_CR' | 'SMOKE' | 'FLAME'
   /**   */
   shellName: string,
 
@@ -165,11 +165,11 @@ export interface OnShot extends BattleEvent, DynamicBattleInfo {
   /** Среднее пробитие снаряда */
   shellPiercingPower: number,
   /** Калибр снаряда */
-  shellCaliber: UInt16,
+  shellCaliber: number,
   /** Скорость снаряла по ттх */
-  shellSpeed: number,
+  shellSpeed: UInt16,
   /** Максимальная дистанци полёта снаряда */
-  shellMaxDistance: integer,
+  shellMaxDistance: UInt16,
 
   /** Разброс орудия с учётом временных бафов (например оглушение) */
   gunDispersion: number,
@@ -188,35 +188,35 @@ export interface OnShot extends BattleEvent, DynamicBattleInfo {
   /** Пинг */
   ping: number,
   /** Частота кадров */
-  fps: integer,
+  fps: UInt16,
 
   // Параметры попадания
   /** ID корпуса танка по которому попал снаряд */
-  hitVehicleDescr: integer | null,
+  hitVehicleDescr: UInt32 | null,
   /** ID ходовой танка по которому попал снаряд */
-  hitChassisDescr: integer | null,
+  hitChassisDescr: UInt32 | null,
   /** ID башни танка по которому попал снаряд */
-  hitTurretDescr: integer | null,
+  hitTurretDescr: UInt32 | null,
   /** ID пушки танка по которому попал снаряд */
-  hitGunDescr: integer | null,
+  hitGunDescr: UInt32 | null,
   /** Yaw башни танка по которому попал снаряд */
   hitTurretYaw: number | null,
   /** Pitch башни танка по которому попал снаряд */
   hitTurretPitch: number | null,
   /** ID корпуса своего танка */
-  vehicleDescr: integer,
+  vehicleDescr: UInt32,
   /** ID ходовой своего танка */
-  chassisDescr: integer,
+  chassisDescr: UInt32,
   /** ID башни своего танка */
-  turretDescr: integer,
+  turretDescr: UInt32,
   /** ID пушки своего танка */
-  gunDescr: integer,
+  gunDescr: UInt32,
   /** Yaw башни совего танка  */
   turretYaw: number,
   /** Pitch башни совего танка */
   turretPitch: number,
   /** ID снаряда */
-  shellDescr: integer,
+  shellDescr: UInt32,
   /** Первый элемент массива `points` [Vehicle.showDamageFromShot](https://github.com/StranikS-Scan/WorldOfTanks-Decompiled/blob/ed9c58eecc460df6f293c60202f0f1ba26e65ab0/source/res/scripts/client/Vehicle.py#L349) */
   hitSegment: string | null,
 
@@ -247,7 +247,7 @@ export interface OnShot extends BattleEvent, DynamicBattleInfo {
   /** Результаты попадания */
   results: {
     /** Очерёдность попадания */
-    order: integer,
+    order: UInt16,
     /** Тег танка по которому попал */
     tankTag: string,
     /** Урон выстрелом */

@@ -4,6 +4,11 @@
     "OnBattleResult": {
       "additionalProperties": false,
       "properties": {
+        "accountDBID": {
+          "description": "ID аккаунта",
+          "minimum": 0,
+          "type": "integer"
+        },
         "arenaTag": {
           "description": "название карты",
           "type": "string"
@@ -31,12 +36,53 @@
             "rts",
             "rts_1x1",
             "rts_bootcamp",
-            "comp7"
+            "comp7",
+            "other"
           ],
           "type": "string"
         },
         "battleMode": {
           "description": "тип боя",
+          "enum": [
+            "UNKNOWN",
+            "REGULAR",
+            "TRAINING",
+            "TOURNAMENT",
+            "CLAN",
+            "CYBERSPORT",
+            "EVENT_BATTLES",
+            "GLOBAL_MAP",
+            "TOURNAMENT_REGULAR",
+            "TOURNAMENT_CLAN",
+            "FALLOUT_CLASSIC",
+            "FALLOUT_MULTITEAM",
+            "SORTIE_2",
+            "FORT_BATTLE_2",
+            "RANKED",
+            "BOOTCAMP",
+            "EPIC_RANDOM",
+            "EPIC_RANDOM_TRAINING",
+            "EVENT_BATTLES_2",
+            "EPIC_BATTLE",
+            "EPIC_BATTLE_TRAINING",
+            "BATTLE_ROYALE_SOLO",
+            "BATTLE_ROYALE_SQUAD",
+            "TOURNAMENT_EVENT",
+            "BOB",
+            "EVENT_RANDOM",
+            "BATTLE_ROYALE_TRN_SOLO",
+            "BATTLE_ROYALE_TRN_SQUAD",
+            "WEEKEND_BRAWL",
+            "MAPBOX",
+            "MAPS_TRAINING",
+            "RTS",
+            "RTS_1x1",
+            "RTS_BOOTCAMP",
+            "FUN_RANDOM",
+            "COMP7",
+            "WINBACK",
+            "VERSUS_AI"
+          ],
           "type": "string"
         },
         "eventName": {
@@ -51,6 +97,10 @@
           "type": "string"
         },
         "localtime": {
+          "type": "string"
+        },
+        "modVersion": {
+          "description": "версия мода",
           "type": "string"
         },
         "playerClan": {
@@ -217,9 +267,9 @@
                 "shots",
                 "kills",
                 "lifeTime",
-                "tankLevel",
+                "tankTag",
                 "tankType",
-                "tankTag"
+                "tankLevel"
               ],
               "type": "object"
             },
@@ -446,6 +496,7 @@
         }
       },
       "required": [
+        "accountDBID",
         "arenaTag",
         "battleGameplay",
         "battleMode",
@@ -453,6 +504,7 @@
         "gameVersion",
         "gunTag",
         "localtime",
+        "modVersion",
         "playerClan",
         "playerName",
         "raw",
@@ -470,6 +522,11 @@
     "OnBattleStart": {
       "additionalProperties": false,
       "properties": {
+        "accountDBID": {
+          "description": "ID аккаунта",
+          "minimum": 0,
+          "type": "integer"
+        },
         "arenaID": {
           "description": "id арены из танков",
           "minimum": 0,
@@ -502,12 +559,53 @@
             "rts",
             "rts_1x1",
             "rts_bootcamp",
-            "comp7"
+            "comp7",
+            "other"
           ],
           "type": "string"
         },
         "battleMode": {
           "description": "тип боя",
+          "enum": [
+            "UNKNOWN",
+            "REGULAR",
+            "TRAINING",
+            "TOURNAMENT",
+            "CLAN",
+            "CYBERSPORT",
+            "EVENT_BATTLES",
+            "GLOBAL_MAP",
+            "TOURNAMENT_REGULAR",
+            "TOURNAMENT_CLAN",
+            "FALLOUT_CLASSIC",
+            "FALLOUT_MULTITEAM",
+            "SORTIE_2",
+            "FORT_BATTLE_2",
+            "RANKED",
+            "BOOTCAMP",
+            "EPIC_RANDOM",
+            "EPIC_RANDOM_TRAINING",
+            "EVENT_BATTLES_2",
+            "EPIC_BATTLE",
+            "EPIC_BATTLE_TRAINING",
+            "BATTLE_ROYALE_SOLO",
+            "BATTLE_ROYALE_SQUAD",
+            "TOURNAMENT_EVENT",
+            "BOB",
+            "EVENT_RANDOM",
+            "BATTLE_ROYALE_TRN_SOLO",
+            "BATTLE_ROYALE_TRN_SQUAD",
+            "WEEKEND_BRAWL",
+            "MAPBOX",
+            "MAPS_TRAINING",
+            "RTS",
+            "RTS_1x1",
+            "RTS_BOOTCAMP",
+            "FUN_RANDOM",
+            "COMP7",
+            "WINBACK",
+            "VERSUS_AI"
+          ],
           "type": "string"
         },
         "battlePeriod": {
@@ -562,11 +660,6 @@
           "description": "ник игрока",
           "type": "string"
         },
-        "playerWotID": {
-          "description": "id игрока из танков, нужен для прддержания уникальной сесии",
-          "minimum": 0,
-          "type": "integer"
-        },
         "preBattleWaitTime": {
           "description": "Время в ожидания начала боя после загрузки",
           "type": "number"
@@ -618,6 +711,7 @@
         }
       },
       "required": [
+        "accountDBID",
         "arenaID",
         "arenaTag",
         "battleGameplay",
@@ -634,7 +728,6 @@
         "modVersion",
         "playerClan",
         "playerName",
-        "playerWotID",
         "preBattleWaitTime",
         "region",
         "serverName",
@@ -649,6 +742,11 @@
     "OnShot": {
       "additionalProperties": false,
       "properties": {
+        "accountDBID": {
+          "description": "ID аккаунта",
+          "minimum": 0,
+          "type": "integer"
+        },
         "arenaTag": {
           "description": "название карты",
           "type": "string"
@@ -684,12 +782,53 @@
             "rts",
             "rts_1x1",
             "rts_bootcamp",
-            "comp7"
+            "comp7",
+            "other"
           ],
           "type": "string"
         },
         "battleMode": {
           "description": "тип боя",
+          "enum": [
+            "UNKNOWN",
+            "REGULAR",
+            "TRAINING",
+            "TOURNAMENT",
+            "CLAN",
+            "CYBERSPORT",
+            "EVENT_BATTLES",
+            "GLOBAL_MAP",
+            "TOURNAMENT_REGULAR",
+            "TOURNAMENT_CLAN",
+            "FALLOUT_CLASSIC",
+            "FALLOUT_MULTITEAM",
+            "SORTIE_2",
+            "FORT_BATTLE_2",
+            "RANKED",
+            "BOOTCAMP",
+            "EPIC_RANDOM",
+            "EPIC_RANDOM_TRAINING",
+            "EVENT_BATTLES_2",
+            "EPIC_BATTLE",
+            "EPIC_BATTLE_TRAINING",
+            "BATTLE_ROYALE_SOLO",
+            "BATTLE_ROYALE_SQUAD",
+            "TOURNAMENT_EVENT",
+            "BOB",
+            "EVENT_RANDOM",
+            "BATTLE_ROYALE_TRN_SOLO",
+            "BATTLE_ROYALE_TRN_SQUAD",
+            "WEEKEND_BRAWL",
+            "MAPBOX",
+            "MAPS_TRAINING",
+            "RTS",
+            "RTS_1x1",
+            "RTS_BOOTCAMP",
+            "FUN_RANDOM",
+            "COMP7",
+            "WINBACK",
+            "VERSUS_AI"
+          ],
           "type": "string"
         },
         "battleTime": {
@@ -698,6 +837,7 @@
         },
         "chassisDescr": {
           "description": "ID ходовой своего танка",
+          "minimum": 0,
           "type": "integer"
         },
         "clientMarkerPoint": {
@@ -730,6 +870,7 @@
         },
         "fps": {
           "description": "Частота кадров",
+          "minimum": 0,
           "type": "integer"
         },
         "gameVersion": {
@@ -742,6 +883,7 @@
         },
         "gunDescr": {
           "description": "ID пушки своего танка",
+          "minimum": 0,
           "type": "integer"
         },
         "gunDispersion": {
@@ -776,6 +918,7 @@
         "hitChassisDescr": {
           "anyOf": [
             {
+              "minimum": 0,
               "type": "integer"
             },
             {
@@ -787,6 +930,7 @@
         "hitGunDescr": {
           "anyOf": [
             {
+              "minimum": 0,
               "type": "integer"
             },
             {
@@ -847,6 +991,7 @@
         "hitTurretDescr": {
           "anyOf": [
             {
+              "minimum": 0,
               "type": "integer"
             },
             {
@@ -872,6 +1017,7 @@
         "hitVehicleDescr": {
           "anyOf": [
             {
+              "minimum": 0,
               "type": "integer"
             },
             {
@@ -881,6 +1027,10 @@
           "description": "ID корпуса танка по которому попал снаряд"
         },
         "localtime": {
+          "type": "string"
+        },
+        "modVersion": {
+          "description": "версия мода",
           "type": "string"
         },
         "ping": {
@@ -932,6 +1082,7 @@
               },
               "order": {
                 "description": "Очерёдность попадания",
+                "minimum": 0,
                 "type": "integer"
               },
               "shotDamage": {
@@ -1005,8 +1156,7 @@
         },
         "shellCaliber": {
           "description": "Калибр снаряда",
-          "minimum": 0,
-          "type": "integer"
+          "type": "number"
         },
         "shellDamage": {
           "description": "Средний урон снаряда",
@@ -1014,10 +1164,12 @@
         },
         "shellDescr": {
           "description": "ID снаряда",
+          "minimum": 0,
           "type": "integer"
         },
         "shellMaxDistance": {
           "description": "Максимальная дистанци полёта снаряда",
+          "minimum": 0,
           "type": "integer"
         },
         "shellName": {
@@ -1029,10 +1181,20 @@
         },
         "shellSpeed": {
           "description": "Скорость снаряла по ттх",
-          "type": "number"
+          "minimum": 0,
+          "type": "integer"
         },
         "shellTag": {
-          "description": "Тег снаряда (ARMOR_PIERCING...)",
+          "description": "Тип снаряда",
+          "enum": [
+            "HOLLOW_CHARGE",
+            "HIGH_EXPLOSIVE",
+            "ARMOR_PIERCING",
+            "ARMOR_PIERCING_HE",
+            "ARMOR_PIERCING_CR",
+            "SMOKE",
+            "FLAME"
+          ],
           "type": "string"
         },
         "shotId": {
@@ -1123,6 +1285,7 @@
         },
         "turretDescr": {
           "description": "ID башни своего танка",
+          "minimum": 0,
           "type": "integer"
         },
         "turretPitch": {
@@ -1139,6 +1302,7 @@
         },
         "vehicleDescr": {
           "description": "ID корпуса своего танка",
+          "minimum": 0,
           "type": "integer"
         },
         "vehicleRotationSpeed": {
@@ -1151,6 +1315,7 @@
         }
       },
       "required": [
+        "accountDBID",
         "arenaTag",
         "autoAim",
         "battleDispersion",
@@ -1178,6 +1343,7 @@
         "hitTurretYaw",
         "hitVehicleDescr",
         "localtime",
+        "modVersion",
         "ping",
         "playerClan",
         "playerName",

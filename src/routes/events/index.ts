@@ -43,10 +43,11 @@ router.post('/OnBattleStart', async c => {
 
   if (!onBattleStartSchema(body)) {
     console.debug(onBattleStartSchema.errors);
+    console.debug(JSON.stringify(body));
     return c.json(Bun.env.DEBUG ? onBattleStartSchema.errors : '', 400)
   }
 
-  const cacheKey = `${body.playerWotID}-${body.arenaID}`
+  const cacheKey = `${body.accountDBID}-${body.arenaID}`
 
   const replay = await redis.get(cacheKey)
   if (replay) {
@@ -77,6 +78,7 @@ function isEventBody(body: BodyData): body is BodyData & {
 
 router.post('/send', async c => {
   const body = await c.req.json()
+
   try {
     if (isEventBody(body)) {
       for (const event of body.events) {

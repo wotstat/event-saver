@@ -27,11 +27,13 @@ export function unwrapDynamicBattleInfo(e: DynamicBattleInfo) {
   return {
     arenaTag: e.arenaTag,
     playerName: e.playerName,
+    accountDBID: e.accountDBID,
     battleMode: e.battleMode,
     battleGameplay: e.battleGameplay,
     serverName: e.serverName,
     region: e.region,
     gameVersion: e.gameVersion,
+    modVersion: e.modVersion,
     team: e.team,
     tankTag: e.tankTag,
     tankType: e.tankType,
