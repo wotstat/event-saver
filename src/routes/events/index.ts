@@ -41,7 +41,10 @@ async function processEvent(eventName: string, event: Event) {
 router.post('/OnBattleStart', async c => {
   const body = await c.req.json()
 
-  if (!onBattleStartSchema(body)) return c.json(Bun.env.DEBUG ? onBattleStartSchema.errors : '', 400)
+  if (!onBattleStartSchema(body)) {
+    console.debug(onBattleStartSchema.errors);
+    return c.json(Bun.env.DEBUG ? onBattleStartSchema.errors : '', 400)
+  }
 
   const cacheKey = `${body.playerWotID}-${body.arenaID}`
 
