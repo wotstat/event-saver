@@ -130,6 +130,10 @@ type VehicleBattleResult = {
   tankTag: string
   tankType: 'LT' | 'MT' | 'HT' | 'SPG' | 'AT'
   tankLevel: UInt8
+  killerIndex: integer
+  maxHealth: UInt16
+  health: UInt16
+  isAlive: boolean
 }
 
 export interface OnBattleResult extends Event, DynamicBattleInfo {
@@ -155,6 +159,9 @@ export interface OnShot extends BattleEvent, DynamicBattleInfo {
   /** id выстрела уникальный для клиента */
   shotId: number,
 
+  /** ХП игрока в момент выстрела */
+  health: UInt16,
+
   /** Тип снаряда */
   shellTag: 'HOLLOW_CHARGE' | 'HIGH_EXPLOSIVE' | 'ARMOR_PIERCING' | 'ARMOR_PIERCING_HE' | 'ARMOR_PIERCING_CR' | 'SMOKE' | 'FLAME'
   /**   */
@@ -162,6 +169,8 @@ export interface OnShot extends BattleEvent, DynamicBattleInfo {
 
   /** Средний урон снаряда */
   shellDamage: number,
+  /** Разброс урона снаряда +-25 */
+  damageRandomization: number,
   /** Среднее пробитие снаряда */
   shellPiercingPower: number,
   /** Калибр снаряда */

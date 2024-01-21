@@ -12,12 +12,14 @@ create table if not exists Event_OnShot
     localtime                   DateTime64(3)         comment 'Время события у клиента',
     dateTime                    DateTime64(3)         comment 'Время события на сервере',
     shotId                      UInt32                comment 'Id выстрела из танков',
+    health                      UInt32                comment 'ХП игрока в момент выстрела',
   ${dynamicBattleInfo},
     battleTime                  Int32                 comment 'Время относительно начала боя в мс',
     shellTag                  ${shellTag}             comment 'Тип снаряда',
     shellName                   String                comment 'Название снаряда',
-    shellDamage                 Decimal32(1)          comment 'Средний снаряда',
-    shellPiercingPower          Decimal32(1)          comment 'Среднее пробитие снаряда',
+    shellDamage                 Decimal32(1)          comment 'Средний урон снаряда',
+    damageRandomization         Decimal32(2)          comment 'Разброс урона +-25% <=> 0.25',
+    shellPiercingPower          UInt32                comment 'Среднее пробитие снаряда',
     shellCaliber                Float32               comment 'Калибр снаряда',
     shellSpeed                  UInt16                comment 'Скорость снаряда',
     shellMaxDistance            UInt16                comment 'Максимальная дистанция полета снаряда',
@@ -114,7 +116,11 @@ const VehicleBattleResult = `
   lifeTime            UInt16,
   tankTag             String,
   tankType          ${tankType},
-  tankLevel           UInt8`
+  tankLevel           UInt8,
+  killerIndex         Int8,
+  maxHealth           UInt16,
+  health              UInt16,
+  isAlive             boolean`
 
 
 const Event_OnBattleResult = `

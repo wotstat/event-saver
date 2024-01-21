@@ -32,6 +32,7 @@ export default function process(battleUUID: string, e: any) {
       onBattleStartId: battleUUID,
       dateTime: now(),
       localtime: e.localtime,
+      health: e.health,
 
       ballisticResultClient_r: clientBallistic.r,
       ballisticResultClient_theta: clientBallistic.theta,
@@ -42,6 +43,7 @@ export default function process(battleUUID: string, e: any) {
       shellTag: e.shellTag,
       shellName: e.shellName,
       shellDamage: e.shellDamage,
+      damageRandomization: e.damageRandomization,
       shellPiercingPower: e.shellPiercingPower,
       shellCaliber: e.shellCaliber,
       shellSpeed: e.shellSpeed,

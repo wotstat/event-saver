@@ -182,11 +182,25 @@
                   "minimum": 0,
                   "type": "integer"
                 },
+                "health": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "isAlive": {
+                  "type": "boolean"
+                },
+                "killerIndex": {
+                  "type": "integer"
+                },
                 "kills": {
                   "minimum": 0,
                   "type": "integer"
                 },
                 "lifeTime": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "maxHealth": {
                   "minimum": 0,
                   "type": "integer"
                 },
@@ -269,7 +283,11 @@
                 "lifeTime",
                 "tankTag",
                 "tankType",
-                "tankLevel"
+                "tankLevel",
+                "killerIndex",
+                "maxHealth",
+                "health",
+                "isAlive"
               ],
               "type": "object"
             },
@@ -333,11 +351,25 @@
                     "minimum": 0,
                     "type": "integer"
                   },
+                  "health": {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "isAlive": {
+                    "type": "boolean"
+                  },
+                  "killerIndex": {
+                    "type": "integer"
+                  },
                   "kills": {
                     "minimum": 0,
                     "type": "integer"
                   },
                   "lifeTime": {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "maxHealth": {
                     "minimum": 0,
                     "type": "integer"
                   },
@@ -411,8 +443,12 @@
                   "directHitsReceived",
                   "explosionHits",
                   "explosionHitsReceived",
+                  "health",
+                  "isAlive",
+                  "killerIndex",
                   "kills",
                   "lifeTime",
+                  "maxHealth",
                   "mileage",
                   "name",
                   "piercingEnemyHits",
@@ -865,6 +901,10 @@
           "description": "Клиентское сведение",
           "type": "number"
         },
+        "damageRandomization": {
+          "description": "Разброс урона снаряда +-25",
+          "type": "number"
+        },
         "eventName": {
           "type": "string"
         },
@@ -914,6 +954,11 @@
         "gunTag": {
           "description": "название пушки",
           "type": "string"
+        },
+        "health": {
+          "description": "ХП игрока в момент выстрела",
+          "minimum": 0,
+          "type": "integer"
         },
         "hitChassisDescr": {
           "anyOf": [
@@ -1325,6 +1370,7 @@
         "chassisDescr",
         "clientMarkerPoint",
         "clientShotDispersion",
+        "damageRandomization",
         "eventName",
         "fps",
         "gameVersion",
@@ -1333,6 +1379,7 @@
         "gunDispersion",
         "gunPoint",
         "gunTag",
+        "health",
         "hitChassisDescr",
         "hitGunDescr",
         "hitPoint",
