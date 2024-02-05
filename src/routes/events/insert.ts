@@ -2,7 +2,7 @@
 import { clickhouse } from '@/db/index'
 import type { ClickHouseSettings } from '@clickhouse/client-web'
 
-const prodSettings = {
+const asyncInsertSettings = {
   async_insert: 1,
   wait_for_async_insert: 0,
   async_insert_busy_timeout_ms: 500,
@@ -14,7 +14,7 @@ async function insertFunc(tableName: string, data: any, event: any) {
       table: tableName,
       values: data,
       format: 'JSONEachRow',
-      clickhouse_settings: Bun.env.DEBUG ? undefined : prodSettings
+      clickhouse_settings: Bun.env.ASYNC_INSERT ? asyncInsertSettings : undefined
     })
   } catch (e) {
     console.error(e)

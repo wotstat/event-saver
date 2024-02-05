@@ -1,13 +1,14 @@
 declare module "bun" {
   interface Env {
-    JWT_SECRET: string;
-    PORT?: string;
-    CLICKHOUSE_HOST: string;
-    CLICKHOUSE_USER: string;
-    CLICKHOUSE_PASSWORD: string;
-    CLICKHOUSE_DATABASE: string;
-    REDIS_HOST: string;
-    REDIS_BATTLE_TOKEN_LIFETIME: string;
-    DEBUG?: string;
+    readonly JWT_SECRET: string;
+    readonly PORT?: string;
+    readonly CLICKHOUSE_HOST: string;
+    readonly CLICKHOUSE_USER: string;
+    readonly CLICKHOUSE_PASSWORD: string;
+    readonly CLICKHOUSE_DATABASE: string;
+    readonly REDIS_HOST: string;
+    readonly REDIS_BATTLE_TOKEN_LIFETIME: string;
+    readonly DEBUG?: string;
+    readonly ASYNC_INSERT?: string;
   }
 }
