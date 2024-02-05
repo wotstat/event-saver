@@ -52,7 +52,11 @@ async function migrate(client: WebClickHouseClient) {
       console.info(`[Migration]: apply ${migrator.up}`);
 
       try {
-        await multistatementQuery(client, migrator.up)
+        await multistatementQuery(client, migrator.up, {
+          mutations_sync: '2'
+        })
+
+        console.log(`[Migration]: ${migrator.name} applied`);
 
         await client.insert({
           table: 'migrations',
@@ -62,7 +66,7 @@ async function migrate(client: WebClickHouseClient) {
             date: (new Date()).getTime(),
             order: ++lastOrder
           },
-          format: 'JSONEachRow'
+          format: 'JSONEachRow',
         })
       }
       catch (e) {

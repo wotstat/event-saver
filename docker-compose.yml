@@ -5,7 +5,7 @@ version: "3.7"
 services:
   clickhouse:
     container_name: clickhouse
-    image: clickhouse/clickhouse-server:23.12.2.59-alpine
+    image: clickhouse/clickhouse-server:24.1.2.5-alpine
     volumes:
       - ./clickhouse-dev/data:/var/lib/clickhouse
       - ./clickhouse-dev/log:/var/log/clickhouse-server
@@ -15,11 +15,29 @@ services:
     ports:
       - '8123:8123'
 
+  clickhouse-backup:
+    image: altinity/clickhouse-backup:latest
+    restart: always
+    volumes_from:
+      - clickhouse
+    depends_on:
+      - clickhouse
+    environment:
+      - REMOTE_STORAGE=s3
+      - API_LISTEN=0.0.0.0:7171
+      - CLICKHOUSE_HOST=clickhouse
+      - S3_BUCKET=wotstat-backup
+      - S3_ENDPOINT=https://storage.yandexcloud.net
+      - S3_REGION=ru-central1
+      - CLICKHOUSE_USERNAME=default
+      - CLICKHOUSE_PASSWORD=
+      - S3_ACCESS_KEY
+      - S3_SECRET_KEY
+    command: [ "sleep", "infinity" ]
+
   redis:
     container_name: redis
     image: 'redis:alpine'
-    ports:
-      - '6379:6379'
 
   app:
     container_name: app

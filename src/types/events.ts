@@ -41,10 +41,10 @@ interface StaticBattleInfo {
   playerClan: string
 
   /** тип боя */
-  battleMode: 'UNKNOWN' | 'REGULAR' | 'TRAINING' | 'TOURNAMENT' | 'CLAN' | 'CYBERSPORT' | 'EVENT_BATTLES' | 'GLOBAL_MAP' | 'TOURNAMENT_REGULAR' | 'TOURNAMENT_CLAN' | 'FALLOUT_CLASSIC' | 'FALLOUT_MULTITEAM' | 'SORTIE_2' | 'FORT_BATTLE_2' | 'RANKED' | 'BOOTCAMP' | 'EPIC_RANDOM' | 'EPIC_RANDOM_TRAINING' | 'EVENT_BATTLES_2' | 'EPIC_BATTLE' | 'EPIC_BATTLE_TRAINING' | 'BATTLE_ROYALE_SOLO' | 'BATTLE_ROYALE_SQUAD' | 'TOURNAMENT_EVENT' | 'BOB' | 'EVENT_RANDOM' | 'BATTLE_ROYALE_TRN_SOLO' | 'BATTLE_ROYALE_TRN_SQUAD' | 'WEEKEND_BRAWL' | 'MAPBOX' | 'MAPS_TRAINING' | 'RTS' | 'RTS_1x1' | 'RTS_BOOTCAMP' | 'FUN_RANDOM' | 'COMP7' | 'WINBACK' | 'VERSUS_AI'
+  battleMode: string
 
   /** режим игры */
-  battleGameplay: 'ctf' | 'domination' | 'assault' | 'nations' | 'ctf2' | 'domination2' | 'assault2' | 'fallout' | 'fallout2' | 'fallout3' | 'fallout4' | 'ctf30x30' | 'domination30x30' | 'sandbox' | 'bootcamp' | 'epic' | 'maps_training' | 'rts' | 'rts_1x1' | 'rts_bootcamp' | 'comp7' | 'other'
+  battleGameplay: string
 
   /** название сервера */
   serverName: string
@@ -134,6 +134,7 @@ type VehicleBattleResult = {
   maxHealth: UInt16
   health: UInt16
   isAlive: boolean
+  squadID: UInt8
 }
 
 export interface OnBattleResult extends Event, DynamicBattleInfo {
@@ -163,7 +164,7 @@ export interface OnShot extends BattleEvent, DynamicBattleInfo {
   health: UInt16,
 
   /** Тип снаряда */
-  shellTag: 'HOLLOW_CHARGE' | 'HIGH_EXPLOSIVE' | 'ARMOR_PIERCING' | 'ARMOR_PIERCING_HE' | 'ARMOR_PIERCING_CR' | 'SMOKE' | 'FLAME'
+  shellTag: string
   /**   */
   shellName: string,
 

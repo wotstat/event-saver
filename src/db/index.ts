@@ -1,4 +1,4 @@
-import { createClient } from '@clickhouse/client-web'
+import { createClient, type ClickHouseSettings } from '@clickhouse/client-web'
 import type { WebClickHouseClient } from '@clickhouse/client-web/dist/client'
 
 // declare module '@clickhouse/client-web' {
@@ -46,11 +46,17 @@ async function connect(options: { timeout?: number }) {
   return false;
 }
 
-async function multistatementQuery(client: WebClickHouseClient, query: string) {
-  const queries = query.split(';').filter(t => t.trim() != '')
+async function multistatementQuery(client: WebClickHouseClient, query: string, options?: ClickHouseSettings) {
+  const queries = query.split(';')
+    .map(t => t.replaceAll('\n', '').trim())
+    .filter(t => t != '')
+
   for (let i = 0; i < queries.length; i++) {
     const q = queries[i];
-    await client.query({ query: q });
+    await client.query({
+      query: q,
+      clickhouse_settings: options
+    });
   }
 }
 

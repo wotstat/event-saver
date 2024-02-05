@@ -3,7 +3,7 @@
   "module": "index.ts",
   "type": "module",
   "scripts": {
-    "dev:docker": "docker compose -f docker-compose.yml up --build",
+    "dev:docker": "docker compose down; docker compose up --build",
     "dev": "bun run --watch src/index.ts",
     "run": "bun run src/index.ts",
     "migrate": "bun src/db/migrate.ts",

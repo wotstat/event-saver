@@ -3,6 +3,7 @@
 
 clickhouse-dev/data
 clickhouse-dev/log
+docker-compose.override.yml
 
 # Logs
 
