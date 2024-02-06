@@ -177,7 +177,7 @@ export interface OnShot extends BattleEvent, DynamicBattleInfo {
   /** Калибр снаряда */
   shellCaliber: number,
   /** Скорость снаряла по ттх */
-  shellSpeed: UInt16,
+  shellSpeed: number,
   /** Максимальная дистанци полёта снаряда */
   shellMaxDistance: UInt16,
 
