@@ -1044,8 +1044,7 @@
         },
         "shellSpeed": {
           "description": "Скорость снаряла по ттх",
-          "minimum": 0,
-          "type": "integer"
+          "type": "number"
         },
         "shellTag": {
           "description": "Тип снаряда",
