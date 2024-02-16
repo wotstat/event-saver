@@ -7,6 +7,7 @@ const router = new Hono();
 router.get("/api", c => {
   return c.json({
     status: 'online',
+    time: new Date().toISOString(),
     version: '1.1.0',
     env: Bun.env.NODE_ENV
   })
