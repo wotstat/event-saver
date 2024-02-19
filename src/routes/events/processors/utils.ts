@@ -42,7 +42,9 @@ export function unwrapDynamicBattleInfo(e: DynamicBattleInfo) {
   }
 }
 
-export function unwrapSessionMeta(e: SessionMeta) {
+export function unwrapSessionMeta(e: Partial<SessionMeta>) {
+  if (e.sessionStart === undefined) return {}
+
   const r = {
     battleStarts: e.battleStarts,
     battleResults: e.battleResults,

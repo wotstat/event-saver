@@ -10,6 +10,8 @@ declare type UInt16 = integer
 declare type UInt8 = integer
 declare type Vector3 = { x: number, y: number, z: number }
 
+declare type AllowUndefined<T> = T | undefined
+
 interface EventWithoutToken {
   localtime: string
   eventName: string
@@ -52,6 +54,8 @@ export interface SessionMeta {
   /** Место в топе по опыту за последние 10 результатов */
   lastXpPlace: number[]
 }
+
+interface PartialSessionMeta extends Partial<SessionMeta> { }
 
 // Статические данные о бое (не изменяются), присутствуют во всех событиях для удобных селектов и фильтров
 interface StaticBattleInfo {
@@ -106,7 +110,7 @@ interface DynamicBattleInfo extends StaticBattleInfo {
   gunTag: string,
 }
 
-export interface OnBattleStart extends DynamicBattleInfo, EventWithoutToken, SessionMeta {
+export interface OnBattleStart extends DynamicBattleInfo, EventWithoutToken, PartialSessionMeta {
   /** id арены из танков */
   arenaID: UInt64
 
@@ -165,12 +169,12 @@ type VehicleBattleResult = {
   squadID: UInt8
 }
 
-export interface OnBattleResult extends Event, DynamicBattleInfo, SessionMeta {
+export interface OnBattleResult extends Event, DynamicBattleInfo, PartialSessionMeta {
   raw: string;
 
   result: {
     /** id арены из танков */
-    arenaID: UInt64
+    arenaID: AllowUndefined<UInt64>
     credits: integer,
     originalCredits: integer,
     teamHealth: UInt16[],
@@ -186,7 +190,7 @@ export interface OnBattleResult extends Event, DynamicBattleInfo, SessionMeta {
   }
 }
 
-export interface OnShot extends BattleEvent, DynamicBattleInfo, SessionMeta {
+export interface OnShot extends BattleEvent, DynamicBattleInfo, PartialSessionMeta {
   /** id выстрела уникальный для клиента */
   shotId: number,
 
