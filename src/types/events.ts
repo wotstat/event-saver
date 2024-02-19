@@ -10,6 +10,8 @@ declare type UInt16 = integer
 declare type UInt8 = integer
 declare type Vector3 = { x: number, y: number, z: number }
 
+declare type AllowUndefined<T> = T | undefined
+
 interface EventWithoutToken {
   localtime: string
   eventName: string
@@ -24,6 +26,36 @@ interface BattleEvent extends Event {
   /** Время относительно начала боя. Если событие до старта, время отрицательно */
   battleTime: number
 }
+
+export interface SessionMeta {
+  /** Количество начатых боёв */
+  sessionStart: string
+  /** сколько времени назад началась сессия */
+  sessionStartAgo: number
+  /** сколько времени назад начался прошлый бой */
+  lastBattleAgo: number
+  /** Количество начатых боёв */
+  battleStarts: number
+  /** Количество результатов */
+  battleResults: number
+  /** Число побед из результатов */
+  winCount: number
+  /** Количество выстрелов */
+  totalShots: number
+  /** Количество выстрелов с уроном */
+  totalShotsDamaged: number
+  /** Количество попавших выстрелов */
+  totalShotsHit: number
+
+  /** Последние 10 результатов это победы */
+  lastResult: ('win' | 'lose' | 'tie')[]
+  /** Место в топе по урону за последние 10 результатов */
+  lastDmgPlace: number[]
+  /** Место в топе по опыту за последние 10 результатов */
+  lastXpPlace: number[]
+}
+
+interface PartialSessionMeta extends Partial<SessionMeta> { }
 
 // Статические данные о бое (не изменяются), присутствуют во всех событиях для удобных селектов и фильтров
 interface StaticBattleInfo {
@@ -78,7 +110,7 @@ interface DynamicBattleInfo extends StaticBattleInfo {
   gunTag: string,
 }
 
-export interface OnBattleStart extends DynamicBattleInfo, EventWithoutToken {
+export interface OnBattleStart extends DynamicBattleInfo, EventWithoutToken, PartialSessionMeta {
   /** id арены из танков */
   arenaID: UInt64
 
@@ -137,10 +169,12 @@ type VehicleBattleResult = {
   squadID: UInt8
 }
 
-export interface OnBattleResult extends Event, DynamicBattleInfo {
+export interface OnBattleResult extends Event, DynamicBattleInfo, PartialSessionMeta {
   raw: string;
 
   result: {
+    /** id арены из танков */
+    arenaID: AllowUndefined<UInt64>
     credits: integer,
     originalCredits: integer,
     teamHealth: UInt16[],
@@ -156,7 +190,7 @@ export interface OnBattleResult extends Event, DynamicBattleInfo {
   }
 }
 
-export interface OnShot extends BattleEvent, DynamicBattleInfo {
+export interface OnShot extends BattleEvent, DynamicBattleInfo, PartialSessionMeta {
   /** id выстрела уникальный для клиента */
   shotId: number,
 
