@@ -1,4 +1,4 @@
-import type { DynamicBattleInfo, BattleEvent } from "@/types/events"
+import type { DynamicBattleInfo, BattleEvent, SessionMeta } from "@/types/events"
 
 export function now() {
   return (new Date()).getTime()
@@ -40,6 +40,24 @@ export function unwrapDynamicBattleInfo(e: DynamicBattleInfo) {
     tankLevel: e.tankLevel,
     gunTag: e.gunTag
   }
+}
+
+export function unwrapSessionMeta(e: SessionMeta) {
+  const r = {
+    battleStarts: e.battleStarts,
+    battleResults: e.battleResults,
+    winCount: e.winCount,
+    totalShots: e.totalShots,
+    totalShotsDamaged: e.totalShotsDamaged,
+    totalShotsHit: e.totalShotsHit,
+    lastResult: e.lastResult,
+    lastDmgPlace: e.lastDmgPlace,
+    lastXpPlace: e.lastXpPlace,
+    startTime: e.sessionStart,
+    lastBattleAgo: e.lastBattleAgo,
+    startAgo: e.sessionStartAgo
+  }
+  return Object.fromEntries(Object.entries(r).map(([k, v]) => [`session.${k}`, v]))
 }
 
 export function unwrapBattleEvent(e: BattleEvent) {

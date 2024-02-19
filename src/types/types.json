@@ -2,7 +2,6 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
     "OnBattleResult": {
-      "additionalProperties": false,
       "properties": {
         "accountDBID": {
           "description": "ID аккаунта",
@@ -21,6 +20,14 @@
           "description": "тип боя",
           "type": "string"
         },
+        "battleResults": {
+          "description": "Количество результатов",
+          "type": "number"
+        },
+        "battleStarts": {
+          "description": "Количество начатых боёв",
+          "type": "number"
+        },
         "eventName": {
           "type": "string"
         },
@@ -31,6 +38,36 @@
         "gunTag": {
           "description": "название пушки",
           "type": "string"
+        },
+        "lastBattleAgo": {
+          "description": "сколько времени назад начался прошлый бой",
+          "type": "number"
+        },
+        "lastDmgPlace": {
+          "description": "Место в топе по урону за последние 10 результатов",
+          "items": {
+            "type": "number"
+          },
+          "type": "array"
+        },
+        "lastResult": {
+          "description": "Последние 10 результатов это победы",
+          "items": {
+            "enum": [
+              "win",
+              "lose",
+              "tie"
+            ],
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "lastXpPlace": {
+          "description": "Место в топе по опыту за последние 10 результатов",
+          "items": {
+            "type": "number"
+          },
+          "type": "array"
         },
         "localtime": {
           "type": "string"
@@ -55,8 +92,12 @@
           "type": "string"
         },
         "result": {
-          "additionalProperties": false,
           "properties": {
+            "arenaID": {
+              "description": "id арены из танков",
+              "minimum": 0,
+              "type": "integer"
+            },
             "credits": {
               "type": "integer"
             },
@@ -68,7 +109,6 @@
               "type": "integer"
             },
             "personal": {
-              "additionalProperties": false,
               "properties": {
                 "damageAssistedRadio": {
                   "minimum": 0,
@@ -238,7 +278,6 @@
             },
             "playersResults": {
               "items": {
-                "additionalProperties": false,
                 "properties": {
                   "bdid": {
                     "minimum": 0,
@@ -441,6 +480,7 @@
             }
           },
           "required": [
+            "arenaID",
             "credits",
             "originalCredits",
             "teamHealth",
@@ -456,6 +496,14 @@
         "serverName": {
           "description": "название сервера",
           "type": "string"
+        },
+        "sessionStart": {
+          "description": "Количество начатых боёв",
+          "type": "string"
+        },
+        "sessionStartAgo": {
+          "description": "сколько времени назад началась сессия",
+          "type": "number"
         },
         "tankLevel": {
           "description": "уровень танка",
@@ -475,6 +523,22 @@
         },
         "token": {
           "type": "string"
+        },
+        "totalShots": {
+          "description": "Количество выстрелов",
+          "type": "number"
+        },
+        "totalShotsDamaged": {
+          "description": "Количество выстрелов с уроном",
+          "type": "number"
+        },
+        "totalShotsHit": {
+          "description": "Количество попавших выстрелов",
+          "type": "number"
+        },
+        "winCount": {
+          "description": "Число побед из результатов",
+          "type": "number"
         }
       },
       "required": [
@@ -482,9 +546,15 @@
         "arenaTag",
         "battleGameplay",
         "battleMode",
+        "battleResults",
+        "battleStarts",
         "eventName",
         "gameVersion",
         "gunTag",
+        "lastBattleAgo",
+        "lastDmgPlace",
+        "lastResult",
+        "lastXpPlace",
         "localtime",
         "modVersion",
         "playerClan",
@@ -493,16 +563,21 @@
         "region",
         "result",
         "serverName",
+        "sessionStart",
+        "sessionStartAgo",
         "tankLevel",
         "tankTag",
         "tankType",
         "team",
-        "token"
+        "token",
+        "totalShots",
+        "totalShotsDamaged",
+        "totalShotsHit",
+        "winCount"
       ],
       "type": "object"
     },
     "OnBattleStart": {
-      "additionalProperties": false,
       "properties": {
         "accountDBID": {
           "description": "ID аккаунта",
@@ -537,6 +612,14 @@
           ],
           "type": "string"
         },
+        "battleResults": {
+          "description": "Количество результатов",
+          "type": "number"
+        },
+        "battleStarts": {
+          "description": "Количество начатых боёв",
+          "type": "number"
+        },
         "battleTime": {
           "description": "Время относительно начала боя. Если событие до старта, время отрицательно",
           "type": "number"
@@ -558,6 +641,36 @@
         "inQueueWaitTime": {
           "description": "Время в очереди перед началом боя",
           "type": "number"
+        },
+        "lastBattleAgo": {
+          "description": "сколько времени назад начался прошлый бой",
+          "type": "number"
+        },
+        "lastDmgPlace": {
+          "description": "Место в топе по урону за последние 10 результатов",
+          "items": {
+            "type": "number"
+          },
+          "type": "array"
+        },
+        "lastResult": {
+          "description": "Последние 10 результатов это победы",
+          "items": {
+            "enum": [
+              "win",
+              "lose",
+              "tie"
+            ],
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "lastXpPlace": {
+          "description": "Место в топе по опыту за последние 10 результатов",
+          "items": {
+            "type": "number"
+          },
+          "type": "array"
         },
         "loadTime": {
           "description": "Время в загрузки карты",
@@ -590,8 +703,15 @@
           "description": "название сервера",
           "type": "string"
         },
+        "sessionStart": {
+          "description": "Количество начатых боёв",
+          "type": "string"
+        },
+        "sessionStartAgo": {
+          "description": "сколько времени назад началась сессия",
+          "type": "number"
+        },
         "spawnPoint": {
-          "additionalProperties": false,
           "description": "координата спавна",
           "properties": {
             "x": {
@@ -626,6 +746,22 @@
         "team": {
           "description": "команда игрока",
           "type": "integer"
+        },
+        "totalShots": {
+          "description": "Количество выстрелов",
+          "type": "number"
+        },
+        "totalShotsDamaged": {
+          "description": "Количество выстрелов с уроном",
+          "type": "number"
+        },
+        "totalShotsHit": {
+          "description": "Количество попавших выстрелов",
+          "type": "number"
+        },
+        "winCount": {
+          "description": "Число побед из результатов",
+          "type": "number"
         }
       },
       "required": [
@@ -635,12 +771,18 @@
         "battleGameplay",
         "battleMode",
         "battlePeriod",
+        "battleResults",
+        "battleStarts",
         "battleTime",
         "eventName",
         "gameVersion",
         "gameplayMask",
         "gunTag",
         "inQueueWaitTime",
+        "lastBattleAgo",
+        "lastDmgPlace",
+        "lastResult",
+        "lastXpPlace",
         "loadTime",
         "localtime",
         "modVersion",
@@ -649,16 +791,21 @@
         "preBattleWaitTime",
         "region",
         "serverName",
+        "sessionStart",
+        "sessionStartAgo",
         "spawnPoint",
         "tankLevel",
         "tankTag",
         "tankType",
-        "team"
+        "team",
+        "totalShots",
+        "totalShotsDamaged",
+        "totalShotsHit",
+        "winCount"
       ],
       "type": "object"
     },
     "OnShot": {
-      "additionalProperties": false,
       "properties": {
         "accountDBID": {
           "description": "ID аккаунта",
@@ -685,6 +832,14 @@
           "description": "тип боя",
           "type": "string"
         },
+        "battleResults": {
+          "description": "Количество результатов",
+          "type": "number"
+        },
+        "battleStarts": {
+          "description": "Количество начатых боёв",
+          "type": "number"
+        },
         "battleTime": {
           "description": "Время относительно начала боя. Если событие до старта, время отрицательно",
           "type": "number"
@@ -695,7 +850,6 @@
           "type": "integer"
         },
         "clientMarkerPoint": {
-          "additionalProperties": false,
           "description": "Координата клиентского маркера",
           "properties": {
             "x": {
@@ -749,7 +903,6 @@
           "type": "number"
         },
         "gunPoint": {
-          "additionalProperties": false,
           "description": "Координата пушки",
           "properties": {
             "x": {
@@ -805,7 +958,6 @@
         "hitPoint": {
           "anyOf": [
             {
-              "additionalProperties": false,
               "properties": {
                 "x": {
                   "type": "number"
@@ -889,6 +1041,36 @@
           ],
           "description": "ID корпуса танка по которому попал снаряд"
         },
+        "lastBattleAgo": {
+          "description": "сколько времени назад начался прошлый бой",
+          "type": "number"
+        },
+        "lastDmgPlace": {
+          "description": "Место в топе по урону за последние 10 результатов",
+          "items": {
+            "type": "number"
+          },
+          "type": "array"
+        },
+        "lastResult": {
+          "description": "Последние 10 результатов это победы",
+          "items": {
+            "enum": [
+              "win",
+              "lose",
+              "tie"
+            ],
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "lastXpPlace": {
+          "description": "Место в топе по опыту за последние 10 результатов",
+          "items": {
+            "type": "number"
+          },
+          "type": "array"
+        },
         "localtime": {
           "type": "string"
         },
@@ -915,7 +1097,6 @@
         "results": {
           "description": "Результаты попадания",
           "items": {
-            "additionalProperties": false,
             "properties": {
               "ammoBayDestroyed": {
                 "description": "Был ли взрыв БК",
@@ -989,7 +1170,6 @@
           "type": "boolean"
         },
         "serverMarkerPoint": {
-          "additionalProperties": false,
           "description": "Координата серверного маркера",
           "properties": {
             "x": {
@@ -1015,6 +1195,14 @@
         },
         "serverShotDispersion": {
           "description": "Серверное сведение",
+          "type": "number"
+        },
+        "sessionStart": {
+          "description": "Количество начатых боёв",
+          "type": "string"
+        },
+        "sessionStartAgo": {
+          "description": "сколько времени назад началась сессия",
           "type": "number"
         },
         "shellCaliber": {
@@ -1073,8 +1261,19 @@
         "token": {
           "type": "string"
         },
+        "totalShots": {
+          "description": "Количество выстрелов",
+          "type": "number"
+        },
+        "totalShotsDamaged": {
+          "description": "Количество выстрелов с уроном",
+          "type": "number"
+        },
+        "totalShotsHit": {
+          "description": "Количество попавших выстрелов",
+          "type": "number"
+        },
         "tracerEnd": {
-          "additionalProperties": false,
           "description": "Координата конца трассера",
           "properties": {
             "x": {
@@ -1095,7 +1294,6 @@
           "type": "object"
         },
         "tracerStart": {
-          "additionalProperties": false,
           "description": "Координата старта трассера",
           "properties": {
             "x": {
@@ -1116,7 +1314,6 @@
           "type": "object"
         },
         "tracerVel": {
-          "additionalProperties": false,
           "description": "Вектор начальной скорости трассера",
           "properties": {
             "x": {
@@ -1165,6 +1362,10 @@
         "vehicleSpeed": {
           "description": "Скорость танка в момент выстрела",
           "type": "number"
+        },
+        "winCount": {
+          "description": "Число побед из результатов",
+          "type": "number"
         }
       },
       "required": [
@@ -1174,6 +1375,8 @@
         "battleDispersion",
         "battleGameplay",
         "battleMode",
+        "battleResults",
+        "battleStarts",
         "battleTime",
         "chassisDescr",
         "clientMarkerPoint",
@@ -1197,6 +1400,10 @@
         "hitTurretPitch",
         "hitTurretYaw",
         "hitVehicleDescr",
+        "lastBattleAgo",
+        "lastDmgPlace",
+        "lastResult",
+        "lastXpPlace",
         "localtime",
         "modVersion",
         "ping",
@@ -1208,6 +1415,8 @@
         "serverMarkerPoint",
         "serverName",
         "serverShotDispersion",
+        "sessionStart",
+        "sessionStartAgo",
         "shellCaliber",
         "shellDamage",
         "shellDescr",
@@ -1222,6 +1431,9 @@
         "tankType",
         "team",
         "token",
+        "totalShots",
+        "totalShotsDamaged",
+        "totalShotsHit",
         "tracerEnd",
         "tracerStart",
         "tracerVel",
@@ -1231,7 +1443,89 @@
         "turretYaw",
         "vehicleDescr",
         "vehicleRotationSpeed",
-        "vehicleSpeed"
+        "vehicleSpeed",
+        "winCount"
+      ],
+      "type": "object"
+    },
+    "SessionMeta": {
+      "properties": {
+        "battleResults": {
+          "description": "Количество результатов",
+          "type": "number"
+        },
+        "battleStarts": {
+          "description": "Количество начатых боёв",
+          "type": "number"
+        },
+        "lastBattleAgo": {
+          "description": "сколько времени назад начался прошлый бой",
+          "type": "number"
+        },
+        "lastDmgPlace": {
+          "description": "Место в топе по урону за последние 10 результатов",
+          "items": {
+            "type": "number"
+          },
+          "type": "array"
+        },
+        "lastResult": {
+          "description": "Последние 10 результатов это победы",
+          "items": {
+            "enum": [
+              "win",
+              "lose",
+              "tie"
+            ],
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "lastXpPlace": {
+          "description": "Место в топе по опыту за последние 10 результатов",
+          "items": {
+            "type": "number"
+          },
+          "type": "array"
+        },
+        "sessionStart": {
+          "description": "Количество начатых боёв",
+          "type": "string"
+        },
+        "sessionStartAgo": {
+          "description": "сколько времени назад началась сессия",
+          "type": "number"
+        },
+        "totalShots": {
+          "description": "Количество выстрелов",
+          "type": "number"
+        },
+        "totalShotsDamaged": {
+          "description": "Количество выстрелов с уроном",
+          "type": "number"
+        },
+        "totalShotsHit": {
+          "description": "Количество попавших выстрелов",
+          "type": "number"
+        },
+        "winCount": {
+          "description": "Число побед из результатов",
+          "type": "number"
+        }
+      },
+      "required": [
+        "sessionStart",
+        "sessionStartAgo",
+        "lastBattleAgo",
+        "battleStarts",
+        "battleResults",
+        "winCount",
+        "totalShots",
+        "totalShotsDamaged",
+        "totalShotsHit",
+        "lastResult",
+        "lastDmgPlace",
+        "lastXpPlace"
       ],
       "type": "object"
     }

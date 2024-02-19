@@ -25,6 +25,34 @@ interface BattleEvent extends Event {
   battleTime: number
 }
 
+export interface SessionMeta {
+  /** Количество начатых боёв */
+  sessionStart: string
+  /** сколько времени назад началась сессия */
+  sessionStartAgo: number
+  /** сколько времени назад начался прошлый бой */
+  lastBattleAgo: number
+  /** Количество начатых боёв */
+  battleStarts: number
+  /** Количество результатов */
+  battleResults: number
+  /** Число побед из результатов */
+  winCount: number
+  /** Количество выстрелов */
+  totalShots: number
+  /** Количество выстрелов с уроном */
+  totalShotsDamaged: number
+  /** Количество попавших выстрелов */
+  totalShotsHit: number
+
+  /** Последние 10 результатов это победы */
+  lastResult: ('win' | 'lose' | 'tie')[]
+  /** Место в топе по урону за последние 10 результатов */
+  lastDmgPlace: number[]
+  /** Место в топе по опыту за последние 10 результатов */
+  lastXpPlace: number[]
+}
+
 // Статические данные о бое (не изменяются), присутствуют во всех событиях для удобных селектов и фильтров
 interface StaticBattleInfo {
 
@@ -78,7 +106,7 @@ interface DynamicBattleInfo extends StaticBattleInfo {
   gunTag: string,
 }
 
-export interface OnBattleStart extends DynamicBattleInfo, EventWithoutToken {
+export interface OnBattleStart extends DynamicBattleInfo, EventWithoutToken, SessionMeta {
   /** id арены из танков */
   arenaID: UInt64
 
@@ -137,10 +165,12 @@ type VehicleBattleResult = {
   squadID: UInt8
 }
 
-export interface OnBattleResult extends Event, DynamicBattleInfo {
+export interface OnBattleResult extends Event, DynamicBattleInfo, SessionMeta {
   raw: string;
 
   result: {
+    /** id арены из танков */
+    arenaID: UInt64
     credits: integer,
     originalCredits: integer,
     teamHealth: UInt16[],
@@ -156,7 +186,7 @@ export interface OnBattleResult extends Event, DynamicBattleInfo {
   }
 }
 
-export interface OnShot extends BattleEvent, DynamicBattleInfo {
+export interface OnShot extends BattleEvent, DynamicBattleInfo, SessionMeta {
   /** id выстрела уникальный для клиента */
   shotId: number,
 

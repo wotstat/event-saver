@@ -16,7 +16,7 @@ services:
       - '8123:8123'
 
   clickhouse-backup:
-    image: altinity/clickhouse-backup:latest
+    image: altinity/clickhouse-backup:2.4.29
     restart: always
     volumes_from:
       - clickhouse
