@@ -84,9 +84,6 @@
           "description": "ник игрока",
           "type": "string"
         },
-        "raw": {
-          "type": "string"
-        },
         "region": {
           "description": "регион игры",
           "type": "string"
@@ -552,7 +549,6 @@
         "modVersion",
         "playerClan",
         "playerName",
-        "raw",
         "region",
         "result",
         "serverName",
