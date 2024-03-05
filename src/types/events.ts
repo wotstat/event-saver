@@ -170,8 +170,6 @@ type VehicleBattleResult = {
 }
 
 export interface OnBattleResult extends Event, DynamicBattleInfo, PartialSessionMeta {
-  raw: string;
-
   result: {
     /** id арены из танков */
     arenaID: AllowUndefined<UInt64>
