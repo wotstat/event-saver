@@ -1,30 +1,12 @@
 import { createClient, type ClickHouseSettings } from '@clickhouse/client-web'
 import type { WebClickHouseClient } from '@clickhouse/client-web/dist/client'
 
-// declare module '@clickhouse/client-web' {
-//   interface ResultSet {
-//     json<T>(): Promise<{
-//       meta: {
-//         name: string,
-//         type: string
-//       }[]
-//       data: T,
-//       rows: number,
-//       statistics: {
-//         elapsed: number,
-//         rows_read: number,
-//         bytes_read: number
-//       }
-//     }>
-//   }
-// }
-
 const clickhouse = createClient({
   host: process.env.CLICKHOUSE_HOST,
   username: process.env.CLICKHOUSE_USER,
   password: process.env.CLICKHOUSE_PASSWORD,
   database: process.env.CLICKHOUSE_DATABASE,
-  request_timeout: 1000,
+  // request_timeout: 1000,
   keep_alive: { enabled: false },
 })
 
