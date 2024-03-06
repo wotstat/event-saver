@@ -17,5 +17,10 @@ CREATE QUOTA if not exists public
     FOR RANDOMIZED INTERVAL 1 DAY MAX queries = 5000, result_rows = '10M', execution_time = 600
 TO public;
 
-GRANT SELECT ON WOT.* TO public;
-REVOKE SELECT ON WOT.migrations FROM public;
+-- GRANT SELECT ON WOT.* TO public;
+-- REVOKE SELECT ON WOT.migrations FROM public;
+
+GRANT SELECT ON WOT.Event_OnBattleStart TO public;
+GRANT SELECT ON WOT.Event_OnBattleResult TO public;
+GRANT SELECT ON WOT.Event_OnShot TO public;
+GRANT SELECT ON WOT.description TO public;
