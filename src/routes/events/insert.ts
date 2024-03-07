@@ -5,7 +5,7 @@ import type { ClickHouseSettings } from '@clickhouse/client-web'
 const asyncInsertSettings = {
   async_insert: 1,
   wait_for_async_insert: 0,
-  async_insert_busy_timeout_ms: 500,
+  async_insert_busy_timeout_ms: 1000,
 } satisfies ClickHouseSettings
 
 async function insertFunc(tableName: string, data: any, event: any) {
