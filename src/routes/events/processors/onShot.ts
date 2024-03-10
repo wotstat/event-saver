@@ -15,17 +15,30 @@ export default function process(battleUUID: string, e: any) {
       tracerVelocity: e.tracerVel,
     }
 
-    const clientBallistic = BallisticCalculator.calculate({
-      ...shared,
-      markerPos: e.clientMarkerPoint,
-      dispersionAngle: e.clientShotDispersion,
-    })
+    let clientBallistic: ReturnType<typeof BallisticCalculator.calculate> | null = null
+    let serverBallistic: ReturnType<typeof BallisticCalculator.calculate> | null = null
 
-    const serverBallistic = BallisticCalculator.calculate({
-      ...shared,
-      markerPos: e.serverMarkerPoint,
-      dispersionAngle: e.serverShotDispersion,
-    })
+    try {
+      clientBallistic = BallisticCalculator.calculate({
+        ...shared,
+        markerPos: e.clientMarkerPoint,
+        dispersionAngle: e.clientShotDispersion,
+      })
+    } catch (error) {
+      console.error(`Error calculating client ballistic: ${error}`, e)
+    }
+
+    try {
+      serverBallistic = BallisticCalculator.calculate({
+        ...shared,
+        markerPos: e.serverMarkerPoint,
+        dispersionAngle: e.serverShotDispersion,
+      })
+    } catch (error) {
+      console.error(`Error calculating server ballistic: ${error}`, e)
+    }
+
+    if (clientBallistic === null || serverBallistic === null) return
 
     insert('Event_OnShot', {
       id: uuid(),
