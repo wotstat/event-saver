@@ -25,7 +25,7 @@ export default function process(battleUUID: string, e: any) {
         dispersionAngle: e.clientShotDispersion,
       })
     } catch (error) {
-      console.error(`Error calculating client ballistic: ${error}`, e)
+      console.error(`Error calculating client ballistic: ${error}. Event: ${JSON.stringify(e)}`)
     }
 
     try {
@@ -35,7 +35,7 @@ export default function process(battleUUID: string, e: any) {
         dispersionAngle: e.serverShotDispersion,
       })
     } catch (error) {
-      console.error(`Error calculating server ballistic: ${error}`, e)
+      console.error(`Error calculating server ballistic: ${error}. Event: ${JSON.stringify(e)}`)
     }
 
     if (clientBallistic === null || serverBallistic === null) return
