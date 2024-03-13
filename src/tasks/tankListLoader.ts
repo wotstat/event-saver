@@ -46,22 +46,42 @@ async function loadTankList() {
 
   if (data.length < 100) throw new Error("Tank list to low\n" + JSON.stringify(data));
 
-  await clickhouse.command({ query: 'alter table TankList delete where True', clickhouse_settings: { mutations_sync: '2' } })
-  await clickhouse.insert({
-    table: 'TankList',
-    values: data,
-    format: 'JSONEachRow'
-  })
+  // TODO: REMOVE IT AFTER BUN FIX INTERNAL ERRORS
+  try {
+    await clickhouse.command({ query: 'create table if not exists TankListTemp as TankList;', clickhouse_settings: { mutations_sync: '2' } })
+    await clickhouse.insert({
+      table: 'TankListTemp',
+      values: data,
+      format: 'JSONEachRow'
+    })
+
+    const insertedCount = await (await clickhouse.query({ query: 'select count() as c from TankListTemp' })).json() as any;
+
+    if (insertedCount.data[0].c != data.length) throw new Error(`Wrong table after inserting`);
+
+    await clickhouse.command({ query: 'alter table TankList delete where True', clickhouse_settings: { mutations_sync: '2' } })
+    await clickhouse.command({ query: 'insert into TankList select * from TankListTemp', clickhouse_settings: { mutations_sync: '2' } })
+  } catch (error) {
+    console.error(error);
+    throw error;
+  } finally {
+    await clickhouse.command({ query: 'drop table if exists TankListTemp', clickhouse_settings: { mutations_sync: '2' } })
+  }
 
   console.log(`Successfully load tank list: ${loadingTime} ms`);
 }
 
 export function start() {
   schedule('0 3 * * *', async () => {
-    try {
-      await loadTankList()
-    } catch (error) {
-      console.error(error);
+    let success = false
+    for (let i = 0; i < 3 && !success; i++) {
+      try {
+        console.log(`Try load tank list: ${i}`);
+        await loadTankList()
+        success = true
+      } catch (error) {
+        console.error(error);
+      }
     }
   });
 }
