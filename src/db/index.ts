@@ -6,7 +6,7 @@ const clickhouse = createClient({
   username: process.env.CLICKHOUSE_USER,
   password: process.env.CLICKHOUSE_PASSWORD,
   database: process.env.CLICKHOUSE_DATABASE,
-  // request_timeout: 1000,
+  request_timeout: 60000,
   keep_alive: { enabled: false },
 })
 
