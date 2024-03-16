@@ -53,7 +53,7 @@ async function migrate(client: WebClickHouseClient) {
 
       try {
         await multistatementQuery(client, migrator.up, {
-          mutations_sync: '2'
+          mutations_sync: '2',
         })
 
         console.log(`[Migration]: ${migrator.name} applied`);

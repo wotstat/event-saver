@@ -61,7 +61,7 @@ async function loadTankList() {
 }
 
 export function start() {
-  loadTankList()
+  // loadTankList()
 
   schedule('0 3 * * *', async () => {
     let success = false
