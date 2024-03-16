@@ -68,7 +68,7 @@ export default function process(battleUUID: string, e: any) {
       gravity: e.gravity,
       serverAim: e.serverAim,
       autoAim: e.autoAim,
-      ping: Math.max(Math.min(e.ping, 65535), 0),
+      ping: Math.max(Math.min(Math.round(e.ping * 1000), 65535), 0),
       fps: e.fps,
       hitVehicleDescr: e.hitVehicleDescr,
       hitChassisDescr: e.hitChassisDescr,
