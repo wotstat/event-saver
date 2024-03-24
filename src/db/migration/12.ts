@@ -155,17 +155,6 @@ const t = {
     length(results.order) > 0   as hit
   FROM Event_OnShot;
 
-  insert into accuracy_hit_points select
-    id, onBattleStartId,
-    battleMode, battleGameplay, tankLevel, tankType, tankTag,
-    ballisticResultClient_r     as r,
-    ballisticResultClient_theta as theta,
-    length(results.order) > 0   as hit
-  from Event_OnShot;
-
-
-
-
 
 
   alter table Event_OnShot
@@ -255,6 +244,14 @@ optimize table player_coverage_mv_tankLevel final;
 optimize table player_coverage_mv final;
 optimize table player_coverage_mv_tankLevel_tankType final;
 
+
+insert into accuracy_hit_points select
+  id, onBattleStartId,
+  battleMode, battleGameplay, tankLevel, tankType, tankTag,
+  ballisticResultClient_r     as r,
+  ballisticResultClient_theta as theta,
+  length(results.order) > 0   as hit
+from Event_OnShot;
 
 */
 
