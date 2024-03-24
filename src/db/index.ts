@@ -6,7 +6,7 @@ const clickhouse = createClient({
   username: process.env.CLICKHOUSE_USER,
   password: process.env.CLICKHOUSE_PASSWORD,
   database: process.env.CLICKHOUSE_DATABASE,
-  request_timeout: 60000,
+  request_timeout: 120000,
   keep_alive: { enabled: false },
 })
 
@@ -36,10 +36,14 @@ async function multistatementQuery(client: WebClickHouseClient, query: string, o
 
   for (let i = 0; i < queries.length; i++) {
     const q = queries[i];
+    console.log(`[Query]: ${q}`);
+
     await client.query({
       query: q,
       clickhouse_settings: options
     });
+
+    console.log(`Applied [${i}/${queries.length}]`);
   }
 }
 
