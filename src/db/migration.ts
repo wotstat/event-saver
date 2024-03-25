@@ -68,6 +68,8 @@ async function migrate(client: WebClickHouseClient) {
           },
           format: 'JSONEachRow',
         })
+
+        await new Promise(resolve => setTimeout(resolve, 1))
       }
       catch (e) {
         console.error(e);
