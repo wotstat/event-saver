@@ -5,7 +5,7 @@ version: "3.7"
 services:
   clickhouse:
     container_name: clickhouse
-    image: clickhouse/clickhouse-server:24.1.2.5-alpine
+    image: clickhouse/clickhouse-server:24.2.2-alpine
     volumes:
       - ./clickhouse-dev/data:/var/lib/clickhouse
       - ./clickhouse-dev/log:/var/log/clickhouse-server

@@ -303,7 +303,7 @@ export interface OnShot extends BattleEvent, DynamicBattleInfo, PartialSessionMe
     /** Был ли взрыв БК */
     ammoBayDestroyed: boolean,
     /** Флаги попадания [VEHICLE_HIT_FLAGS](https://github.com/StranikS-Scan/WorldOfTanks-Decompiled/blob/a301bd7678d1c9c1d618fdaa87fba91447989e91/source/res/scripts/common/constants.py#L1145)                        */
-    flags: UInt16,
+    flags: UInt32,
   }[],
 }
 
