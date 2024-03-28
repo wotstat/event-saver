@@ -103,11 +103,32 @@ interface DynamicBattleInfo extends StaticBattleInfo {
   /** типа танка */
   tankType: string
 
+  /** роль танка */
+  tankRole?: string
+
   /** уровень танка */
   tankLevel: integer
 
   /** название пушки */
   gunTag: string,
+
+  /** ХП союзной команды */
+  allyTeamHealth?: UInt8
+
+  /** ХП вражеской команды */
+  enemyTeamHealth?: UInt8
+
+  /** Максимальное ХП союзной команды */
+  allyTeamMaxHealth?: UInt8
+
+  /** Максимальное ХП вражеской команды */
+  enemyTeamMaxHealth?: UInt8
+
+  /** Количество фрагов союзников */
+  allyTramFragsCount?: UInt8
+
+  /** Количество фрагов врагов */
+  enemyTeamFragsCount?: UInt8
 }
 
 export interface OnBattleStart extends DynamicBattleInfo, EventWithoutToken, PartialSessionMeta {
@@ -160,7 +181,8 @@ type VehicleBattleResult = {
   kills: UInt16
   lifeTime: UInt16
   tankTag: string
-  tankType: 'LT' | 'MT' | 'HT' | 'SPG' | 'AT'
+  tankType: 'LT' | 'MT' | 'HT' | 'SPG' | 'AT',
+  tankRole?: string
   tankLevel: UInt8
   killerIndex: integer
   maxHealth: UInt16
