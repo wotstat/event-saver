@@ -8,6 +8,21 @@
           "minimum": 0,
           "type": "integer"
         },
+        "allyTeamHealth": {
+          "description": "ХП союзной команды",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "allyTeamMaxHealth": {
+          "description": "Максимальное ХП союзной команды",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "allyTramFragsCount": {
+          "description": "Количество фрагов союзников",
+          "minimum": 0,
+          "type": "integer"
+        },
         "arenaTag": {
           "description": "название карты",
           "type": "string"
@@ -27,6 +42,21 @@
         "battleStarts": {
           "description": "Количество начатых боёв",
           "type": "number"
+        },
+        "enemyTeamFragsCount": {
+          "description": "Количество фрагов врагов",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "enemyTeamHealth": {
+          "description": "ХП вражеской команды",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "enemyTeamMaxHealth": {
+          "description": "Максимальное ХП вражеской команды",
+          "minimum": 0,
+          "type": "integer"
         },
         "eventName": {
           "type": "string"
@@ -212,6 +242,9 @@
                   "minimum": 0,
                   "type": "integer"
                 },
+                "tankRole": {
+                  "type": "string"
+                },
                 "tankTag": {
                   "type": "string"
                 },
@@ -388,6 +421,9 @@
                     "minimum": 0,
                     "type": "integer"
                   },
+                  "tankRole": {
+                    "type": "string"
+                  },
                   "tankTag": {
                     "type": "string"
                   },
@@ -505,6 +541,10 @@
           "description": "уровень танка",
           "type": "integer"
         },
+        "tankRole": {
+          "description": "роль танка",
+          "type": "string"
+        },
         "tankTag": {
           "description": "название танка",
           "type": "string"
@@ -567,6 +607,21 @@
           "minimum": 0,
           "type": "integer"
         },
+        "allyTeamHealth": {
+          "description": "ХП союзной команды",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "allyTeamMaxHealth": {
+          "description": "Максимальное ХП союзной команды",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "allyTramFragsCount": {
+          "description": "Количество фрагов союзников",
+          "minimum": 0,
+          "type": "integer"
+        },
         "arenaID": {
           "description": "id арены из танков",
           "minimum": 0,
@@ -606,6 +661,21 @@
         "battleTime": {
           "description": "Время относительно начала боя. Если событие до старта, время отрицательно",
           "type": "number"
+        },
+        "enemyTeamFragsCount": {
+          "description": "Количество фрагов врагов",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "enemyTeamHealth": {
+          "description": "ХП вражеской команды",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "enemyTeamMaxHealth": {
+          "description": "Максимальное ХП вражеской команды",
+          "minimum": 0,
+          "type": "integer"
         },
         "eventName": {
           "type": "string"
@@ -718,6 +788,10 @@
           "description": "уровень танка",
           "type": "integer"
         },
+        "tankRole": {
+          "description": "роль танка",
+          "type": "string"
+        },
         "tankTag": {
           "description": "название танка",
           "type": "string"
@@ -780,6 +854,21 @@
       "properties": {
         "accountDBID": {
           "description": "ID аккаунта",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "allyTeamHealth": {
+          "description": "ХП союзной команды",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "allyTeamMaxHealth": {
+          "description": "Максимальное ХП союзной команды",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "allyTramFragsCount": {
+          "description": "Количество фрагов союзников",
           "minimum": 0,
           "type": "integer"
         },
@@ -847,6 +936,21 @@
         "damageRandomization": {
           "description": "Разброс урона снаряда +-25",
           "type": "number"
+        },
+        "enemyTeamFragsCount": {
+          "description": "Количество фрагов врагов",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "enemyTeamHealth": {
+          "description": "ХП вражеской команды",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "enemyTeamMaxHealth": {
+          "description": "Максимальное ХП вражеской команды",
+          "minimum": 0,
+          "type": "integer"
         },
         "eventName": {
           "type": "string"
@@ -1216,6 +1320,10 @@
         "tankLevel": {
           "description": "уровень танка",
           "type": "integer"
+        },
+        "tankRole": {
+          "description": "роль танка",
+          "type": "string"
         },
         "tankTag": {
           "description": "название танка",
