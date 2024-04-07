@@ -27,6 +27,7 @@ COPY --from=prerelease /app/package.json .
 COPY --from=prerelease /app/tsconfig.json tsconfig.json
 
 RUN apt update
+RUN apt install -y build-essential nghttp2 libnghttp2-dev libssl-dev
 RUN apt install -y git
 
 # run the app
