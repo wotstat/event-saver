@@ -286,7 +286,7 @@ async function load() {
 }
 
 export function start() {
-  load()
+  // load()
   schedule('0 4 * * *', async () => {
     load()
   });
