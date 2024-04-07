@@ -1,4 +1,4 @@
-FROM oven/bun:1.1.2 as base
+FROM oven/bun:1.1.2-alpine as base
 WORKDIR /app
 
 # install dependencies into temp directory
@@ -26,9 +26,7 @@ COPY --from=prerelease /app/src src
 COPY --from=prerelease /app/package.json .
 COPY --from=prerelease /app/tsconfig.json tsconfig.json
 
-RUN apt update
-RUN apt install -y build-essential nghttp2 libnghttp2-dev libssl-dev
-RUN apt install -y git
+RUN apk add --no-cache git
 
 # run the app
 USER bun
