@@ -1,8 +1,6 @@
 # Based on https://raw.githubusercontent.com/github/gitignore/main/Node.gitignore
 
-
-clickhouse-dev/data
-clickhouse-dev/log
+docker-volumes/
 docker-compose.override.yml
 
 # Logs

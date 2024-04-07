@@ -5,7 +5,7 @@ import routes from './routes';
 import { migrate } from './db/migration'
 import { connect, clickhouse } from './db/index'
 import { redis } from './redis/index'
-import { start as tankLoaderStart } from "./tasks/tankListLoader";
+import { start as taskStart } from "./tasks";
 
 const hono = new Hono();
 hono.use(cors());
@@ -26,7 +26,7 @@ try {
     redis.connect()
   ])
 
-  tankLoaderStart()
+  taskStart()
 
   console.log(`Server is listening on port ${Bun.env.PORT}`);
 }

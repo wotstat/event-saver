@@ -1,4 +1,4 @@
-FROM oven/bun:1.0.24 as base
+FROM oven/bun:1.1.2 as base
 WORKDIR /app
 
 # install dependencies into temp directory
@@ -25,6 +25,9 @@ COPY --from=install /temp/prod/node_modules node_modules
 COPY --from=prerelease /app/src src
 COPY --from=prerelease /app/package.json .
 COPY --from=prerelease /app/tsconfig.json tsconfig.json
+
+RUN apt update
+RUN apt install -y git
 
 # run the app
 USER bun
