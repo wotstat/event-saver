@@ -1,5 +1,5 @@
 import _Ajv, { type ValidateFunction } from "ajv"
-import type { OnBattleResult, OnBattleStart, OnShot } from "./events";
+import type { OnBattleResult, OnBattleStart, OnShot, OnLootboxOpen } from "./events";
 import types from './types.json' assert { type: "json" };
 
 export const Ajv = _Ajv as unknown as typeof _Ajv;
@@ -18,4 +18,5 @@ export function check<T>(schema: ValidateFunction<T>, data: any, t: (e: T) => vo
 export const onBattleResultSchema = ajv.compile<OnBattleResult>(types.definitions.OnBattleResult)
 export const onBattleStartSchema = ajv.compile<OnBattleStart>(types.definitions.OnBattleStart)
 export const onShotSchema = ajv.compile<OnShot>(types.definitions.OnShot)
+export const onLootboxOpenSchema = ajv.compile<OnLootboxOpen>(types.definitions.OnLootboxOpen)
 
