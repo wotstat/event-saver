@@ -850,6 +850,442 @@
       ],
       "type": "object"
     },
+    "OnLootboxOpen": {
+      "properties": {
+        "battleResults": {
+          "description": "Количество результатов",
+          "type": "number"
+        },
+        "battleStarts": {
+          "description": "Количество начатых боёв",
+          "type": "number"
+        },
+        "containerTag": {
+          "type": "string"
+        },
+        "eventName": {
+          "type": "string"
+        },
+        "lastBattleAgo": {
+          "description": "сколько времени назад начался прошлый бой",
+          "type": "number"
+        },
+        "lastDmgPlace": {
+          "description": "Место в топе по урону за последние 10 результатов",
+          "items": {
+            "type": "number"
+          },
+          "type": "array"
+        },
+        "lastResult": {
+          "description": "Последние 10 результатов это победы",
+          "items": {
+            "enum": [
+              "win",
+              "lose",
+              "tie"
+            ],
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "lastXpPlace": {
+          "description": "Место в топе по опыту за последние 10 результатов",
+          "items": {
+            "type": "number"
+          },
+          "type": "array"
+        },
+        "localtime": {
+          "type": "string"
+        },
+        "openCount": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "openGroup": {
+          "type": "string"
+        },
+        "parsed": {
+          "properties": {
+            "addedVehicles": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "berths": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "blueprints": {
+              "items": {
+                "items": [
+                  {
+                    "enum": [
+                      "VEHICLE",
+                      "NATION",
+                      "UNIVERSAL"
+                    ],
+                    "title": "type",
+                    "type": "string"
+                  },
+                  {
+                    "title": "specification",
+                    "type": "string"
+                  },
+                  {
+                    "minimum": 0,
+                    "title": "count",
+                    "type": "integer"
+                  }
+                ],
+                "maxItems": 3,
+                "minItems": 3,
+                "type": "array"
+              },
+              "type": "array"
+            },
+            "bonusTokens": {
+              "items": {
+                "items": [
+                  {
+                    "title": "tag",
+                    "type": "string"
+                  },
+                  {
+                    "minimum": 0,
+                    "title": "count",
+                    "type": "integer"
+                  }
+                ],
+                "maxItems": 2,
+                "minItems": 2,
+                "type": "array"
+              },
+              "type": "array"
+            },
+            "boosters": {
+              "items": {
+                "items": [
+                  {
+                    "title": "tag",
+                    "type": "string"
+                  },
+                  {
+                    "title": "time",
+                    "type": "number"
+                  },
+                  {
+                    "title": "value",
+                    "type": "number"
+                  },
+                  {
+                    "minimum": 0,
+                    "title": "count",
+                    "type": "integer"
+                  }
+                ],
+                "maxItems": 4,
+                "minItems": 4,
+                "type": "array"
+              },
+              "type": "array"
+            },
+            "bpcoin": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "credits": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "crewBooks": {
+              "items": {
+                "items": [
+                  {
+                    "title": "bookTag",
+                    "type": "string"
+                  },
+                  {
+                    "minimum": 0,
+                    "title": "count",
+                    "type": "integer"
+                  }
+                ],
+                "maxItems": 2,
+                "minItems": 2,
+                "type": "array"
+              },
+              "type": "array"
+            },
+            "crystal": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "currencies": {
+              "items": {
+                "items": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "minimum": 0,
+                    "title": "amount",
+                    "type": "integer"
+                  }
+                ],
+                "maxItems": 2,
+                "minItems": 2,
+                "type": "array"
+              },
+              "type": "array"
+            },
+            "customizations": {
+              "items": {
+                "items": [
+                  {
+                    "title": "type",
+                    "type": "string"
+                  },
+                  {
+                    "title": "tag",
+                    "type": "string"
+                  },
+                  {
+                    "minimum": 0,
+                    "title": "count",
+                    "type": "integer"
+                  }
+                ],
+                "maxItems": 3,
+                "minItems": 3,
+                "type": "array"
+              },
+              "type": "array"
+            },
+            "discounts": {
+              "items": {
+                "items": [
+                  {
+                    "title": "tag",
+                    "type": "string"
+                  },
+                  {
+                    "title": "value",
+                    "type": "number"
+                  }
+                ],
+                "maxItems": 2,
+                "minItems": 2,
+                "type": "array"
+              },
+              "type": "array"
+            },
+            "equip": {
+              "items": {
+                "items": [
+                  {
+                    "title": "tag",
+                    "type": "string"
+                  },
+                  {
+                    "minimum": 0,
+                    "title": "count",
+                    "type": "integer"
+                  }
+                ],
+                "maxItems": 2,
+                "minItems": 2,
+                "type": "array"
+              },
+              "type": "array"
+            },
+            "eventCoin": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "freeXP": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "gold": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "items": {
+              "items": {
+                "items": [
+                  {
+                    "title": "itemTag",
+                    "type": "string"
+                  },
+                  {
+                    "minimum": 0,
+                    "title": "count",
+                    "type": "integer"
+                  }
+                ],
+                "maxItems": 2,
+                "minItems": 2,
+                "type": "array"
+              },
+              "type": "array"
+            },
+            "lootboxesTokens": {
+              "items": {
+                "items": [
+                  {
+                    "title": "tag",
+                    "type": "string"
+                  },
+                  {
+                    "minimum": 0,
+                    "title": "count",
+                    "type": "integer"
+                  }
+                ],
+                "maxItems": 2,
+                "minItems": 2,
+                "type": "array"
+              },
+              "type": "array"
+            },
+            "premium": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "premium_plus": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "premium_vip": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "rentedVehicles": {
+              "items": {
+                "items": [
+                  {
+                    "title": "tankTag",
+                    "type": "string"
+                  },
+                  {
+                    "title": "rentType",
+                    "type": "string"
+                  },
+                  {
+                    "title": "rentValue",
+                    "type": "string"
+                  }
+                ],
+                "maxItems": 3,
+                "minItems": 3,
+                "type": "array"
+              },
+              "type": "array"
+            },
+            "selectableCrewbook": {
+              "items": {
+                "items": {
+                  "title": "crewbookName",
+                  "type": "string"
+                },
+                "maxItems": 1,
+                "minItems": 1,
+                "type": "array"
+              },
+              "type": "array"
+            },
+            "slots": {
+              "minimum": 0,
+              "type": "integer"
+            }
+          },
+          "required": [
+            "credits",
+            "gold",
+            "freeXP",
+            "crystal",
+            "eventCoin",
+            "bpcoin",
+            "currencies",
+            "premium",
+            "premium_plus",
+            "premium_vip",
+            "addedVehicles",
+            "rentedVehicles",
+            "slots",
+            "berths",
+            "items",
+            "crewBooks",
+            "boosters",
+            "discounts",
+            "equip",
+            "lootboxesTokens",
+            "bonusTokens",
+            "customizations",
+            "blueprints",
+            "selectableCrewbook"
+          ],
+          "type": "object"
+        },
+        "playerName": {
+          "description": "Ник игрока",
+          "type": "string"
+        },
+        "raw": {
+          "type": "string"
+        },
+        "sessionStart": {
+          "description": "Количество начатых боёв",
+          "type": "string"
+        },
+        "sessionStartAgo": {
+          "description": "сколько времени назад началась сессия",
+          "type": "number"
+        },
+        "totalShots": {
+          "description": "Количество выстрелов",
+          "type": "number"
+        },
+        "totalShotsDamaged": {
+          "description": "Количество выстрелов с уроном",
+          "type": "number"
+        },
+        "totalShotsHit": {
+          "description": "Количество попавших выстрелов",
+          "type": "number"
+        },
+        "winCount": {
+          "description": "Число побед из результатов",
+          "type": "number"
+        }
+      },
+      "required": [
+        "battleResults",
+        "battleStarts",
+        "containerTag",
+        "eventName",
+        "lastBattleAgo",
+        "lastDmgPlace",
+        "lastResult",
+        "lastXpPlace",
+        "localtime",
+        "openCount",
+        "openGroup",
+        "parsed",
+        "playerName",
+        "raw",
+        "sessionStart",
+        "sessionStartAgo",
+        "totalShots",
+        "totalShotsDamaged",
+        "totalShotsHit",
+        "winCount"
+      ],
+      "type": "object"
+    },
     "OnShot": {
       "properties": {
         "accountDBID": {

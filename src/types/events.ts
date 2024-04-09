@@ -27,6 +27,11 @@ interface BattleEvent extends Event {
   battleTime: number
 }
 
+interface HangarEvent extends EventWithoutToken {
+  /** Ник игрока */
+  playerName: string
+}
+
 export interface SessionMeta {
   /** Количество начатых боёв */
   sessionStart: string
@@ -329,5 +334,46 @@ export interface OnShot extends BattleEvent, DynamicBattleInfo, PartialSessionMe
   }[],
 }
 
+export interface OnLootboxOpen extends HangarEvent, SessionMeta {
+  containerTag: string,
+  openCount: UInt16,
+  openGroup: string,
+  parsed: {
+    credits: UInt16
+    gold: UInt16
+    freeXP: UInt16
+    crystal: UInt16
+    eventCoin: UInt16
+    bpcoin: UInt16
+    currencies: [string, amount: UInt16][]
 
-export type { Event, BattleEvent, DynamicBattleInfo, StaticBattleInfo }
+    premium: UInt16
+    premium_plus: UInt16
+    premium_vip: UInt16
+
+    addedVehicles: string[]
+    rentedVehicles: [tankTag: string, rentType: string, rentValue: string][]
+
+    slots: UInt16
+    berths: UInt16
+
+    items: [itemTag: string, count: UInt16][]
+    crewBooks: [bookTag: string, count: UInt16][]
+
+    boosters: [tag: string, time: number, value: number, count: UInt16][]
+    discounts: [tag: string, value: number][]
+    equip: [tag: string, count: UInt16][]
+
+    lootboxesTokens: [tag: string, count: UInt16][]
+    bonusTokens: [tag: string, count: UInt16][]
+
+    customizations: [type: string, tag: string, count: UInt16][]
+    blueprints: [type: 'VEHICLE' | 'NATION' | 'UNIVERSAL', specification: string, count: UInt16][]
+
+    selectableCrewbook: [crewbookName: string][]
+  },
+  raw: string
+}
+
+
+export type { Event, HangarEvent, BattleEvent, DynamicBattleInfo, StaticBattleInfo }

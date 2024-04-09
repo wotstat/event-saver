@@ -7,8 +7,8 @@ services:
     container_name: clickhouse
     image: clickhouse/clickhouse-server:24.2.2-alpine
     volumes:
-      - ./clickhouse-dev/data:/var/lib/clickhouse
-      - ./clickhouse-dev/log:/var/log/clickhouse-server
+      - ./docker-volumes/clickhouse-dev/data:/var/lib/clickhouse
+      - ./docker-volumes/clickhouse-dev/log:/var/log/clickhouse-server
       - ./clickhouse-dev/config/config.d:/etc/clickhouse-server/config.d
       - ./clickhouse-dev/config/users.d:/etc/clickhouse-server/users.d
       - ./clickhouse-dev/init:/docker-entrypoint-initdb.d
@@ -46,6 +46,7 @@ services:
       dockerfile: Dockerfile.dev
     volumes:
       - ./src:/app/src
+      - ./docker-volumes/wot-src-data:/app/wot-src
     ports:
       - 9000:9000
     depends_on:

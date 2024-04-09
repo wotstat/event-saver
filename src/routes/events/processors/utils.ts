@@ -1,4 +1,4 @@
-import type { DynamicBattleInfo, BattleEvent, SessionMeta } from "@/types/events"
+import type { DynamicBattleInfo, BattleEvent, HangarEvent, SessionMeta } from "@/types/events"
 
 export function now() {
   return (new Date()).getTime()
@@ -67,6 +67,12 @@ export function unwrapSessionMeta(e: Partial<SessionMeta>) {
     startAgo: e.sessionStartAgo
   }
   return Object.fromEntries(Object.entries(r).map(([k, v]) => [`session.${k}`, v]))
+}
+
+export function unwrapHangarEvent(e: HangarEvent) {
+  return {
+    playerName: e.playerName,
+  }
 }
 
 export function unwrapBattleEvent(e: BattleEvent) {
