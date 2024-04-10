@@ -15,11 +15,11 @@ function getQuery(table: string) {
 function getQueryGameVersion(table: string) {
   return `
   alter table ${table} add column if not exists gameVersion_parts Array(String) materialized extractAllGroups(gameVersion, '^(\\w+)\\_(\\d+)\\.(\\d+)(?:\\.(\\d+))?(?:_([0-9A-Za-z-.]+))?$')[1] comment 'Части версии игры prefix_major.minor.patch_identifier';
-  alter table ${table} add column if not exists gameVersion_prefix UInt16 materialized toUInt16(gameVersion_parts[2])   comment 'Часть версии игры PREFIX_major.minor.patch_identifier';
-  alter table ${table} add column if not exists gameVersion_major UInt16 materialized toUInt16(gameVersion_parts[2])    comment 'Часть версии игры prefix_MAJOR.minor.patch_identifier';
-  alter table ${table} add column if not exists gameVersion_minor UInt16 materialized toUInt16(gameVersion_parts[3])    comment 'Часть версии игры prefix_major.MINOR.patch_identifier';
-  alter table ${table} add column if not exists gameVersion_patch UInt16 materialized toUInt16(gameVersion_parts[4])    comment 'Часть версии игры prefix_major.minor.PATCH_identifier';
-  alter table ${table} add column if not exists gameVersion_identifier String materialized gameVersion_parts[5]         comment 'Часть версии игры prefix_major.minor.patch_IDENTIFIER';
+  alter table ${table} add column if not exists gameVersion_prefix UInt16 materialized toUInt16OrZero(gameVersion_parts[2])      comment 'Часть версии игры PREFIX_major.minor.patch_identifier';
+  alter table ${table} add column if not exists gameVersion_major UInt16 materialized toUInt16OrZero(gameVersion_parts[2])       comment 'Часть версии игры prefix_MAJOR.minor.patch_identifier';
+  alter table ${table} add column if not exists gameVersion_minor UInt16 materialized toUInt16OrZero(gameVersion_parts[3])       comment 'Часть версии игры prefix_major.MINOR.patch_identifier';
+  alter table ${table} add column if not exists gameVersion_patch UInt16 materialized toUInt16OrZero(gameVersion_parts[4])       comment 'Часть версии игры prefix_major.minor.PATCH_identifier';
+  alter table ${table} add column if not exists gameVersion_identifier UInt16 materialized toUInt16OrZero(gameVersion_parts[5])  comment 'Часть версии игры prefix_major.minor.patch_IDENTIFIER';
   alter table ${table} add column if not exists gameVersionComparable UInt32 materialized
     toUInt32(concat(leftPad(gameVersion_parts[2], 3, '0'), leftPad(gameVersion_parts[3], 3, '0'), leftPad(gameVersion_parts[4], 3, '0'), leftPad(gameVersion_parts[5], 3, '0'))) 
     comment 'Версия игры которую можно сравнивать на больше меньше';
@@ -28,7 +28,6 @@ function getQueryGameVersion(table: string) {
 
 function modVersionComparable(table: string) {
   return `
-  alter table ${table} drop column if exists modVersionComparable;
   alter table ${table} add column if not exists modVersionComparable UInt32 materialized 
   toUInt32(concat(leftPad(modVersion_parts[1], 3, '0'), leftPad(modVersion_parts[2], 3, '0'), leftPad(modVersion_parts[3], 3, '0'), leftPad(modVersion_parts[4], 3, '0')))  
   comment 'Версия игры которую можно сравнивать на больше меньше';
@@ -51,6 +50,10 @@ export default {
   ${getQueryGameVersion('Event_OnBattleStart')}
   ${getQueryGameVersion('Event_OnShot')}
   ${getQueryGameVersion('Event_OnLootboxOpen')}
+
+  alter table Event_OnBattleResult drop column if exists modVersionComparable;
+  alter table Event_OnBattleStart drop column if exists modVersionComparable;
+  alter table Event_OnShot drop column if exists modVersionComparable;
 
   ${modVersionComparable('Event_OnBattleResult')}
   ${modVersionComparable('Event_OnBattleStart')}
