@@ -1,5 +1,5 @@
 import { insert } from "../insert"
-import { now, unwrapHangarEvent, unwrapSessionMeta, unwrapVector3 } from './utils';
+import { now, unwrapEvent, unwrapHangarEvent, unwrapSessionMeta, unwrapVector3 } from './utils';
 
 import { check, onLootboxOpenSchema } from '@/types/validator';
 import { uuid } from "@/utils/uuid";
@@ -43,6 +43,9 @@ export default function process(e: any) {
       'rentedVehicles.tag': e.parsed.rentedVehicles.map(([tag, rentType, rentValue]) => tag),
       'rentedVehicles.rentType': e.parsed.rentedVehicles.map(([tag, rentType, rentValue]) => rentType),
       'rentedVehicles.rentValue': e.parsed.rentedVehicles.map(([tag, rentType, rentValue]) => rentValue),
+      'compensatedVehicles.tag': e.parsed.compensatedVehicles?.map(([tag, variant, gold]) => tag) ?? [],
+      'compensatedVehicles.variant': e.parsed.compensatedVehicles?.map(([tag, variant, gold]) => variant) ?? [],
+      'compensatedVehicles.gold': e.parsed.compensatedVehicles?.map(([tag, variant, gold]) => gold) ?? [],
 
       slots: e.parsed.slots,
       berths: e.parsed.berths,
@@ -81,8 +84,13 @@ export default function process(e: any) {
       'selectableCrewbook.tag': e.parsed.selectableCrewbook.map(([crewbookName]) => crewbookName),
 
       raw: raw,
+      rawString: e.raw,
       ...unwrapHangarEvent(e),
-      ...unwrapSessionMeta(e)
+      ...unwrapSessionMeta(e),
+      // ...unwrapEvent(e),
+      region: e.region ?? '',
+      gameVersion: e.gameVersion ?? '',
+      modVersion: e.modVersion ?? '1.3.1.0',
     }, e)
   })
 }

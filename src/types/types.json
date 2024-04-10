@@ -59,6 +59,7 @@
           "type": "integer"
         },
         "eventName": {
+          "description": "название ивента",
           "type": "string"
         },
         "gameVersion": {
@@ -100,6 +101,7 @@
           "type": "array"
         },
         "localtime": {
+          "description": "время события у игрока",
           "type": "string"
         },
         "modVersion": {
@@ -678,6 +680,7 @@
           "type": "integer"
         },
         "eventName": {
+          "description": "название ивента",
           "type": "string"
         },
         "gameVersion": {
@@ -730,6 +733,7 @@
           "type": "number"
         },
         "localtime": {
+          "description": "время события у игрока",
           "type": "string"
         },
         "modVersion": {
@@ -864,6 +868,11 @@
           "type": "string"
         },
         "eventName": {
+          "description": "название ивента",
+          "type": "string"
+        },
+        "gameVersion": {
+          "description": "версия игры",
           "type": "string"
         },
         "lastBattleAgo": {
@@ -897,6 +906,11 @@
           "type": "array"
         },
         "localtime": {
+          "description": "время события у игрока",
+          "type": "string"
+        },
+        "modVersion": {
+          "description": "версия мода",
           "type": "string"
         },
         "openCount": {
@@ -995,6 +1009,32 @@
             "bpcoin": {
               "minimum": 0,
               "type": "integer"
+            },
+            "compensatedVehicles": {
+              "items": {
+                "items": [
+                  {
+                    "title": "tankTag",
+                    "type": "string"
+                  },
+                  {
+                    "enum": [
+                      "rent",
+                      "normal"
+                    ],
+                    "title": "variant",
+                    "type": "string"
+                  },
+                  {
+                    "title": "gold",
+                    "type": "number"
+                  }
+                ],
+                "maxItems": 3,
+                "minItems": 3,
+                "type": "array"
+              },
+              "type": "array"
             },
             "credits": {
               "minimum": 0,
@@ -1231,10 +1271,14 @@
           "type": "object"
         },
         "playerName": {
-          "description": "Ник игрока",
+          "description": "ник игрока",
           "type": "string"
         },
         "raw": {
+          "type": "string"
+        },
+        "region": {
+          "description": "регион игры",
           "type": "string"
         },
         "sessionStart": {
@@ -1389,6 +1433,7 @@
           "type": "integer"
         },
         "eventName": {
+          "description": "название ивента",
           "type": "string"
         },
         "fps": {
@@ -1583,6 +1628,7 @@
           "type": "array"
         },
         "localtime": {
+          "description": "время события у игрока",
           "type": "string"
         },
         "modVersion": {
@@ -1948,87 +1994,6 @@
         "vehicleDescr",
         "vehicleRotationSpeed",
         "vehicleSpeed"
-      ],
-      "type": "object"
-    },
-    "SessionMeta": {
-      "properties": {
-        "battleResults": {
-          "description": "Количество результатов",
-          "type": "number"
-        },
-        "battleStarts": {
-          "description": "Количество начатых боёв",
-          "type": "number"
-        },
-        "lastBattleAgo": {
-          "description": "сколько времени назад начался прошлый бой",
-          "type": "number"
-        },
-        "lastDmgPlace": {
-          "description": "Место в топе по урону за последние 10 результатов",
-          "items": {
-            "type": "number"
-          },
-          "type": "array"
-        },
-        "lastResult": {
-          "description": "Последние 10 результатов это победы",
-          "items": {
-            "enum": [
-              "win",
-              "lose",
-              "tie"
-            ],
-            "type": "string"
-          },
-          "type": "array"
-        },
-        "lastXpPlace": {
-          "description": "Место в топе по опыту за последние 10 результатов",
-          "items": {
-            "type": "number"
-          },
-          "type": "array"
-        },
-        "sessionStart": {
-          "description": "Количество начатых боёв",
-          "type": "string"
-        },
-        "sessionStartAgo": {
-          "description": "сколько времени назад началась сессия",
-          "type": "number"
-        },
-        "totalShots": {
-          "description": "Количество выстрелов",
-          "type": "number"
-        },
-        "totalShotsDamaged": {
-          "description": "Количество выстрелов с уроном",
-          "type": "number"
-        },
-        "totalShotsHit": {
-          "description": "Количество попавших выстрелов",
-          "type": "number"
-        },
-        "winCount": {
-          "description": "Число побед из результатов",
-          "type": "number"
-        }
-      },
-      "required": [
-        "sessionStart",
-        "sessionStartAgo",
-        "lastBattleAgo",
-        "battleStarts",
-        "battleResults",
-        "winCount",
-        "totalShots",
-        "totalShotsDamaged",
-        "totalShotsHit",
-        "lastResult",
-        "lastDmgPlace",
-        "lastXpPlace"
       ],
       "type": "object"
     }

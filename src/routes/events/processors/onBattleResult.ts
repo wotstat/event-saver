@@ -1,6 +1,6 @@
 import type { OnBattleResult } from "@/types/events";
 import { insert } from "../insert"
-import { now, unwrapDynamicBattleInfo, unwrapSessionMeta } from './utils';
+import { now, unwrapDynamicBattleInfo, unwrapEvent, unwrapSessionMeta } from './utils';
 
 import { check, onBattleResultSchema } from '@/types/validator';
 import { uuid } from "@/utils/uuid";
@@ -40,7 +40,8 @@ export default function process(battleUUID: string, e: any) {
       ...unwrapVehicleBattleResult('personal', r.personal),
       ...unwrapPlayersResults(r.playersResults),
       ...unwrapDynamicBattleInfo(e),
-      ...unwrapSessionMeta(e)
+      ...unwrapSessionMeta(e),
+      ...unwrapEvent(e),
     }, e)
   })
 }
