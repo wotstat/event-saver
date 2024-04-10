@@ -37,14 +37,15 @@ function modVersionComparable(table: string) {
 export default {
   name: "18",
   up: `
-  alter table Event_OnLootboxOpen add column compensatedVehicles.tag Array(String) comment 'Теги компенсированных танков';
-  alter table Event_OnLootboxOpen add column compensatedVehicles.variant Array(String) comment 'Варианты компенсированных танков';
-  alter table Event_OnLootboxOpen add column compensatedVehicles.gold Array(UInt32) comment 'Золото компенсированных танков';
+  alter table Event_OnLootboxOpen add column if not exists compensatedVehicles.tag Array(String) comment 'Теги компенсированных танков';
+  alter table Event_OnLootboxOpen add column if not exists compensatedVehicles.variant Array(String) comment 'Варианты компенсированных танков';
+  alter table Event_OnLootboxOpen add column if not exists compensatedVehicles.gold Array(UInt32) comment 'Золото компенсированных танков';
+  alter table Event_OnLootboxOpen add column if not exists rawString String comment 'Сырые данные события в строке' CODEC(ZSTD(10));
 
   alter table Event_OnLootboxOpen add column if not exists region LowCardinality(String) comment 'Регион';
   alter table Event_OnLootboxOpen add column if not exists gameVersion LowCardinality(String) comment 'Версия игры';
   alter table Event_OnLootboxOpen add column if not exists modVersion LowCardinality(String) comment 'Версия мода';
-
+  
   ${getQuery('Event_OnLootboxOpen')}
   ${getQueryGameVersion('Event_OnBattleResult')}
   ${getQueryGameVersion('Event_OnBattleStart')}
