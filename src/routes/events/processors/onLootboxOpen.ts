@@ -43,9 +43,9 @@ export default function process(e: any) {
       'rentedVehicles.tag': e.parsed.rentedVehicles.map(([tag, rentType, rentValue]) => tag),
       'rentedVehicles.rentType': e.parsed.rentedVehicles.map(([tag, rentType, rentValue]) => rentType),
       'rentedVehicles.rentValue': e.parsed.rentedVehicles.map(([tag, rentType, rentValue]) => rentValue),
-      'compensatedVehicles.tag': e.parsed.compensatedVehicles.map(([tag, variant, gold]) => tag),
-      'compensatedVehicles.variant': e.parsed.compensatedVehicles.map(([tag, variant, gold]) => variant),
-      'compensatedVehicles.gold': e.parsed.compensatedVehicles.map(([tag, variant, gold]) => gold),
+      'compensatedVehicles.tag': e.parsed.compensatedVehicles?.map(([tag, variant, gold]) => tag) ?? [],
+      'compensatedVehicles.variant': e.parsed.compensatedVehicles?.map(([tag, variant, gold]) => variant) ?? [],
+      'compensatedVehicles.gold': e.parsed.compensatedVehicles?.map(([tag, variant, gold]) => gold) ?? [],
 
       slots: e.parsed.slots,
       berths: e.parsed.berths,
