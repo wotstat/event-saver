@@ -41,7 +41,25 @@ interface BattleEvent extends TokenEvent {
   battleTime: number
 }
 
-interface HangarEvent extends Event {
+interface OldEvent {
+  /** название ивента */
+  eventName: string
+
+  /** время события у игрока */
+  localtime: string
+
+  /** регион игры */
+  region?: string
+
+  /** версия игры */
+  gameVersion?: string
+
+  /** версия мода */
+  modVersion?: string
+
+}
+
+interface HangarEvent extends OldEvent {
   /** ник игрока */
   playerName: string
 }
