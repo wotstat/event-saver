@@ -90,7 +90,7 @@ export default function process(e: any) {
       // ...unwrapEvent(e),
       region: e.region ?? '',
       gameVersion: e.gameVersion ?? '',
-      modVersion: e.modVersion ?? '',
+      modVersion: e.modVersion ?? '1.3.1.0',
     }, e)
   })
 }
