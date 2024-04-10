@@ -1,5 +1,5 @@
 import { insert } from "../insert"
-import { now, unwrapBattleEvent, unwrapDynamicBattleInfo, unwrapSessionMeta, unwrapVector3 } from './utils';
+import { now, unwrapBattleEvent, unwrapDynamicBattleInfo, unwrapEvent, unwrapSessionMeta, unwrapVector3 } from './utils';
 import { BallisticCalculator } from "@/utils/ballisticCalc";
 
 import { check, onShotSchema } from '@/types/validator';
@@ -105,7 +105,8 @@ export default function process(battleUUID: string, e: any) {
       'results.flags': e.results.map(r => r.flags),
       ...unwrapDynamicBattleInfo(e),
       ...unwrapBattleEvent(e),
-      ...unwrapSessionMeta(e)
+      ...unwrapSessionMeta(e),
+      ...unwrapEvent(e),
     }, e)
   })
 }

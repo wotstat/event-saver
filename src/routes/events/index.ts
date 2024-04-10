@@ -1,6 +1,6 @@
 import { Hono } from "hono"
 
-import type { Event, HangarEvent } from '@/types/events'
+import type { TokenEvent, HangarEvent } from '@/types/events'
 import OnBattleResult from './processors/onBattleResult'
 import OnBattleStart from './processors/onBattleStart'
 import OnShot from './processors/onShot'
@@ -31,7 +31,7 @@ const supportedHangarEvents = {
 }
 
 
-async function processEvent(eventName: string, event: Event) {
+async function processEvent(eventName: string, event: TokenEvent) {
   if (eventName in supportedEvents) {
     const token = event.token
     try {
@@ -78,7 +78,7 @@ router.post('/OnBattleStart', async c => {
 })
 
 
-function isEventBody(body: any): body is { events: (Event | HangarEvent)[] } {
+function isEventBody(body: any): body is { events: (TokenEvent | HangarEvent)[] } {
   if (typeof body !== 'object' || body === null) return false
 
   return 'events' in body &&

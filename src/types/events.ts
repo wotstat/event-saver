@@ -12,27 +12,41 @@ declare type Vector3 = { x: number, y: number, z: number }
 
 declare type AllowUndefined<T> = T | undefined
 
-interface EventWithoutToken {
-  localtime: string
+
+interface Event {
+  /** название ивента */
   eventName: string
+
+  /** время события у игрока */
+  localtime: string
+
+  /** регион игры */
+  region: string
+
+  /** версия игры */
+  gameVersion: string
+
+  /** версия мода */
+  modVersion: string
+
 }
 
 
-interface Event extends EventWithoutToken {
+interface TokenEvent extends Event {
   token: string
 }
 
-interface BattleEvent extends Event {
+interface BattleEvent extends TokenEvent {
   /** Время относительно начала боя. Если событие до старта, время отрицательно */
   battleTime: number
 }
 
-interface HangarEvent extends EventWithoutToken {
-  /** Ник игрока */
+interface HangarEvent extends Event {
+  /** ник игрока */
   playerName: string
 }
 
-export interface SessionMeta {
+interface SessionMeta {
   /** Количество начатых боёв */
   sessionStart: string
   /** сколько времени назад началась сессия */
@@ -71,9 +85,6 @@ interface StaticBattleInfo {
   /** ID аккаунта */
   accountDBID: UInt64
 
-  /** ник игрока */
-  playerName: string
-
   /** клан игрока */
   playerClan: string
 
@@ -86,14 +97,9 @@ interface StaticBattleInfo {
   /** название сервера */
   serverName: string
 
-  /** регион игры */
-  region: string
+  /** ник игрока */
+  playerName: string
 
-  /** версия игры */
-  gameVersion: string
-
-  /** версия мода */
-  modVersion: string
 }
 
 // Динамические данные о бое (могут изменяться во время боя), присутствуют во всех событиях для удобных селектов и фильтров
@@ -136,7 +142,7 @@ interface DynamicBattleInfo extends StaticBattleInfo {
   enemyTeamFragsCount?: UInt8
 }
 
-export interface OnBattleStart extends DynamicBattleInfo, EventWithoutToken, PartialSessionMeta {
+export interface OnBattleStart extends DynamicBattleInfo, Event, PartialSessionMeta {
   /** id арены из танков */
   arenaID: UInt64
 
@@ -196,7 +202,7 @@ type VehicleBattleResult = {
   squadID: UInt8
 }
 
-export interface OnBattleResult extends Event, DynamicBattleInfo, PartialSessionMeta {
+export interface OnBattleResult extends TokenEvent, DynamicBattleInfo, PartialSessionMeta {
   result: {
     /** id арены из танков */
     arenaID: AllowUndefined<UInt64>
@@ -353,6 +359,7 @@ export interface OnLootboxOpen extends HangarEvent, SessionMeta {
 
     addedVehicles: string[]
     rentedVehicles: [tankTag: string, rentType: string, rentValue: string][]
+    compensationVehicles: [tankTag: string, variant: 'rent' | 'normal', gold: number][]
 
     slots: UInt16
     berths: UInt16
@@ -376,4 +383,4 @@ export interface OnLootboxOpen extends HangarEvent, SessionMeta {
 }
 
 
-export type { Event, HangarEvent, BattleEvent, DynamicBattleInfo, StaticBattleInfo }
+export type { Event, TokenEvent, HangarEvent, BattleEvent, SessionMeta, DynamicBattleInfo, StaticBattleInfo }
