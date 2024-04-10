@@ -359,7 +359,7 @@ export interface OnLootboxOpen extends HangarEvent, SessionMeta {
 
     addedVehicles: string[]
     rentedVehicles: [tankTag: string, rentType: string, rentValue: string][]
-    compensationVehicles: [tankTag: string, variant: 'rent' | 'normal', gold: number][]
+    compensatedVehicles: [tankTag: string, variant: 'rent' | 'normal', gold: number][]
 
     slots: UInt16
     berths: UInt16

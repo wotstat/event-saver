@@ -1010,7 +1010,7 @@
               "minimum": 0,
               "type": "integer"
             },
-            "compensationVehicles": {
+            "compensatedVehicles": {
               "items": {
                 "items": [
                   {
@@ -1255,7 +1255,7 @@
             "premium_vip",
             "addedVehicles",
             "rentedVehicles",
-            "compensationVehicles",
+            "compensatedVehicles",
             "slots",
             "berths",
             "items",
