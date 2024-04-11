@@ -8,6 +8,11 @@
           "minimum": 0,
           "type": "integer"
         },
+        "allyTeamFragsCount": {
+          "description": "Количество фрагов союзников",
+          "minimum": 0,
+          "type": "integer"
+        },
         "allyTeamHealth": {
           "description": "ХП союзной команды",
           "minimum": 0,
@@ -19,7 +24,6 @@
           "type": "integer"
         },
         "allyTramFragsCount": {
-          "description": "Количество фрагов союзников",
           "minimum": 0,
           "type": "integer"
         },
@@ -609,6 +613,11 @@
           "minimum": 0,
           "type": "integer"
         },
+        "allyTeamFragsCount": {
+          "description": "Количество фрагов союзников",
+          "minimum": 0,
+          "type": "integer"
+        },
         "allyTeamHealth": {
           "description": "ХП союзной команды",
           "minimum": 0,
@@ -620,7 +629,6 @@
           "type": "integer"
         },
         "allyTramFragsCount": {
-          "description": "Количество фрагов союзников",
           "minimum": 0,
           "type": "integer"
         },
@@ -1337,6 +1345,11 @@
           "minimum": 0,
           "type": "integer"
         },
+        "allyTeamFragsCount": {
+          "description": "Количество фрагов союзников",
+          "minimum": 0,
+          "type": "integer"
+        },
         "allyTeamHealth": {
           "description": "ХП союзной команды",
           "minimum": 0,
@@ -1348,7 +1361,6 @@
           "type": "integer"
         },
         "allyTramFragsCount": {
-          "description": "Количество фрагов союзников",
           "minimum": 0,
           "type": "integer"
         },
