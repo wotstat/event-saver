@@ -49,7 +49,7 @@ export function unwrapDynamicBattleInfo(e: DynamicBattleInfo) {
     enemyTeamHealth: e.enemyTeamHealth ?? 0,
     allyTeamMaxHealth: e.allyTeamMaxHealth ?? 0,
     enemyTeamMaxHealth: e.enemyTeamMaxHealth ?? 0,
-    allyTramFragsCount: e.allyTramFragsCount ?? 0,
+    allyTeamFragsCount: e.allyTeamFragsCount ?? e.allyTramFragsCount ?? 0, // TODO: remove
     enemyTeamFragsCount: e.enemyTeamFragsCount ?? 0,
   }
 }
