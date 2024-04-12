@@ -211,7 +211,7 @@ export namespace BallisticCalculator {
    * shotTime - время полета снаряда
    * targetNormal - нормаль к поверхности цели
    */
-  function сreateTrajectory(target: Vector3, velocity: number, gravity: number): {
+  function createTrajectory(target: Vector3, velocity: number, gravity: number): {
     velocity: Vector3,
     length: number,
     shotTime: number,
@@ -324,33 +324,41 @@ export namespace BallisticCalculator {
    * @param options.dispersionAngle угол разброса
    * @returns Полярные координаты попадания снаряда внутри круга разброса
    */
-  export function calculate(options: { gravity: number, gunPos: Vector3, markerPos: Vector3, tracerStart: Vector3, tracerVelocity: Vector3, dispersionAngle: number }): Polar {
-    const { gravity, gunPos, markerPos, tracerStart, tracerVelocity, dispersionAngle } = options;
+  export function calculate(options: {
+    gravity: number,
+    shellSpeed: number,
+    gunPos: Vector3,
+    markerPos: Vector3,
+    tracerStart: Vector3,
+    tracerVelocity: Vector3,
+    dispersionAngle: number
+  }): Polar {
+    const { gravity, shellSpeed, gunPos, markerPos, tracerStart, tracerVelocity, dispersionAngle } = options;
 
     var marker = Vector3.subtract(markerPos, gunPos);
 
-    const trajectory = сreateTrajectory(marker, Vector3.magnitude(tracerVelocity), gravity);
+    const trajectory = createTrajectory(marker, shellSpeed, gravity);
 
     const planeIntersection = Plane.intersection(
       { normal: Vector3.normalize(trajectory.targetNormal), point: markerPos },
       { normal: Vector3.normalize(Vector3.cross(Vector3.up, tracerVelocity)), point: tracerStart }
     );
 
-    const lineIntersrction = intersectLineTrajectory3D(tracerVelocity,
+    const lineIntersection = intersectLineTrajectory3D(tracerVelocity,
       gravity,
       Vector3.subtract(planeIntersection.point, tracerStart),
       planeIntersection.normal);
 
 
-    const dist1 = Vector3.distance(markerPos, Vector3.add(lineIntersrction.res1, tracerStart));
-    const dist2 = Vector3.distance(markerPos, Vector3.add(lineIntersrction.res2, tracerStart));
+    const dist1 = Vector3.distance(markerPos, Vector3.add(lineIntersection.res1, tracerStart));
+    const dist2 = Vector3.distance(markerPos, Vector3.add(lineIntersection.res2, tracerStart));
     if (Number.isNaN(dist1) && Number.isNaN(dist2)) throw new Error("Couldn't find intersection points");
 
 
-    let nearestPoint = lineIntersrction.res1;
-    if (Number.isNaN(dist1)) nearestPoint = lineIntersrction.res2;
-    else if (Number.isNaN(dist2)) nearestPoint = lineIntersrction.res1;
-    else nearestPoint = dist1 < dist2 ? lineIntersrction.res1 : lineIntersrction.res2;
+    let nearestPoint = lineIntersection.res1;
+    if (Number.isNaN(dist1)) nearestPoint = lineIntersection.res2;
+    else if (Number.isNaN(dist2)) nearestPoint = lineIntersection.res1;
+    else nearestPoint = dist1 < dist2 ? lineIntersection.res1 : lineIntersection.res2;
 
     nearestPoint = Vector3.add(tracerStart, nearestPoint);
 

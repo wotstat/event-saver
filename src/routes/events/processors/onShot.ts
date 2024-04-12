@@ -11,6 +11,7 @@ export default function process(battleUUID: string, e: any) {
     const shared = {
       gravity: -e.gravity,
       gunPos: e.gunPoint,
+      shellSpeed: e.shellSpeed * 0.8,
       tracerStart: e.tracerStart,
       tracerVelocity: e.tracerVel,
     }
