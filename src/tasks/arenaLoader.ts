@@ -231,6 +231,8 @@ async function load() {
 
   await clone()
 
+  await $`git fetch`
+
   for (const branch of BRANCHES) {
     await $`git checkout ${branch}`
 
