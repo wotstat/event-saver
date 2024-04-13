@@ -4,6 +4,6 @@ import { start as s2 } from "./tankListLoader";
 
 
 export function start() {
-  // s1()
+  s1()
   // s2()
 }

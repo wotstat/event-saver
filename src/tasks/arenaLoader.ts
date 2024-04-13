@@ -247,7 +247,7 @@ async function load() {
 
     const v2t = (t: { x: number, y: number }) => ([t.x, t.y])
 
-    const ins = res.map(t => ({
+    const insertValues = res.map(t => ({
       region: branch,
       gameVersionFull: version,
       gameVersion: parts.join('.'),
@@ -275,7 +275,7 @@ async function load() {
     console.log('Inserting...');
     await clickhouse.insert({
       table: 'Arenas',
-      values: ins,
+      values: insertValues,
       format: 'JSONEachRow'
     })
     console.log(`Inserted ${branch}`);
@@ -286,7 +286,7 @@ async function load() {
 }
 
 export function start() {
-  // load()
+  load()
   schedule('0 4 * * *', async () => {
     load()
   });
