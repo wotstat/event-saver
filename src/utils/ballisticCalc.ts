@@ -145,7 +145,7 @@ export namespace BallisticCalculator {
    * @param g гравитация
    * @param v скорость снаряда
    */
-  function сalcVelocity(target: Vector2, g: number, v: number): Vector2 {
+  function calcVelocity(target: Vector2, g: number, v: number): Vector2 {
 
     const x = target.x;
     const y = target.y;
@@ -155,7 +155,8 @@ export namespace BallisticCalculator {
       Vy = -v * y * 1.0 / Math.sqrt(x * x + y * y);
     }
     else {
-      Vy = Math.sqrt(2.0) * Math.sqrt(((v * v) * (x * x) + (v * v) * (y * y) * 2.0 - (x * x) * Math.sqrt(v * v * v * v - (g * g) * (x * x) + g * (v * v) * y * 2.0) - g * (x * x) * y) / (x * x + y * y)) * (-1.0 / 2.0);
+      const inner = Math.max(0, (v * v) * (x * x) + (v * v) * (y * y) * 2.0 - (x * x) * Math.sqrt(v * v * v * v - (g * g) * (x * x) + g * (v * v) * y * 2.0) - g * (x * x) * y)
+      Vy = Math.sqrt(2.0) * Math.sqrt(inner / (x * x + y * y)) * (-1.0 / 2.0);
     }
 
     const Vx = Math.sqrt(v * v - Vy * Vy);
@@ -220,7 +221,7 @@ export namespace BallisticCalculator {
 
     const x = Vector2.magnitude({ x: target.x, y: target.z });
     const y = target.y;
-    const v = сalcVelocity({ x, y }, gravity, velocity);
+    const v = calcVelocity({ x, y }, gravity, velocity);
 
     const shotTime = x / v.x;
     const normal = Vector2.invert(Vector2.normalize({ x: v.x, y: v.y + gravity * shotTime }));
