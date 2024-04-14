@@ -1,43 +1,7 @@
-import { clickhouse } from "@/db";
-import { schedule } from "node-cron";
-import { $ } from 'bun'
+import { clickhouse } from "@/db"
+import { GetText } from "./GetText"
 import { parseStringPromise } from 'xml2js'
-
-class GetText {
-
-  private transitions: Map<string, string>
-
-  constructor(po: string) {
-    const translations = po.split('msgid');
-
-    const parsed = translations
-      .filter(t => t.includes('msgstr'))
-      .map(t => {
-        const splitted = t.split('msgstr');
-        const msgid = splitted[0].trim().slice(1, -1);
-
-        const lines = splitted[1]
-          .split('\n')
-          .map(l => l.trim())
-          .filter(l => l.length > 0)
-          .map(l => l.slice(1, -1))
-          .filter(l => l.length > 0);
-
-        const msgstr = lines.join('\n');
-
-        return {
-          msgid,
-          msgstr
-        }
-      })
-
-    this.transitions = new Map(parsed.map(t => [t.msgid, t.msgstr]))
-  }
-
-  public getTranslation(msg: string) {
-    return this.transitions.get(msg) ?? msg
-  }
-}
+import type { GameVersion } from "."
 
 type XML<T> = {
   root: T
@@ -92,26 +56,6 @@ type Arena = {
   }
 }
 
-
-const BRANCHES = ['EU', 'NA', 'RU', 'CN', 'ASIA']
-
-async function clone() {
-  console.log('Checking git init...');
-  const files = await $`ls -la . | grep .git`.text()
-  const checkGitInit = files.includes('.git')
-  if (checkGitInit) {
-    const res = await $`git rev-parse --is-inside-work-tree`.text()
-    if (res.trim() == 'true') {
-      await $`git fetch && git pull --ff-only`.quiet()
-      console.log('Git is init');
-      return
-    }
-  }
-
-  console.log('Cloning...');
-  await $`git clone https://github.com/IzeBerg/wot-src.git /app/wot-src`
-}
-
 function vec2(str: string) {
   const [x, y] = str.split(' ')
   return { x: parseFloat(x), y: parseFloat(y) }
@@ -123,9 +67,10 @@ function bboxParser(bbox: BoundingBox) {
   return { bottomLeft, upperRight }
 }
 
-async function process() {
-  const data = await Bun.file('/app/wot-src/sources/res/scripts/arena_defs/_list_.xml').text()
-  const i18n = new GetText(await Bun.file('/app/wot-src/sources/res/text/lc_messages/arenas.po').text())
+
+async function process(root: string) {
+  const data = await Bun.file(`${root}/sources/res/scripts/arena_defs/_list_.xml`).text()
+  const i18n = new GetText(await Bun.file(`${root}/sources/res/text/lc_messages/arenas.po`).text())
 
   const arenas = await parseStringPromise(data, { explicitArray: false }) as XML<ArenasList>
   const result: {
@@ -145,9 +90,9 @@ async function process() {
 
   for (const arena of arenas.root.map) {
     if (arena.isDevelopment || arena.isHangar) continue
-    if (!await Bun.file(`/app/wot-src/sources/res/scripts/arena_defs/${arena.name}.xml`).exists()) continue
+    if (!await Bun.file(`${root}/sources/res/scripts/arena_defs/${arena.name}.xml`).exists()) continue
 
-    const data = await Bun.file(`/app/wot-src/sources/res/scripts/arena_defs/${arena.name}.xml`).text()
+    const data = await Bun.file(`${root}/sources/res/scripts/arena_defs/${arena.name}.xml`).text()
     const meta = (await parseStringPromise(data, { explicitArray: false, trim: true }) as XML<Arena>).root
 
     const name = i18n.getTranslation(meta.name.replace('#arenas:', ''))
@@ -226,70 +171,42 @@ async function process() {
   return result
 }
 
-async function load() {
-  $.cwd('/app/wot-src')
 
-  await clone()
+export async function load(root: string, region: string, version: GameVersion) {
+  const res = await process(root)
 
-  await $`git fetch`
+  const v2t = (t: { x: number, y: number }) => ([t.x, t.y])
 
-  for (const branch of BRANCHES) {
-    await $`git checkout ${branch}`
+  const insertValues = res.map(t => ({
+    region,
+    gameVersionFull: version.full,
+    gameVersion: version.version,
+    gameVersionHash: version.hash,
+    tag: t.tag,
+    gameplay: t.gameplay,
+    datetime: Math.round(new Date().getTime() / 1000),
+    gameVersionComp: version.comparable,
+    id: t.id,
+    name: t.name,
+    season: t.season,
+    winnerIfTimeout: t.winnerIfTimeout,
+    winnerIfExtermination: t.winnerIfExtermination,
+    'bbox.bottomLeft': v2t(t.bbox.bottomLeft),
+    'bbox.upperRight': v2t(t.bbox.upperRight),
+    'base.team': t.base?.map(t => t.team) ?? [],
+    'base.positions': t.base?.map(t => t.positions.map(v2t)) ?? [],
+    'spawn.team': t.spawn?.map(t => t.team) ?? [],
+    'spawn.positions': t.spawn?.map(t => t.pos.map(v2t)) ?? [],
+    control: t.control?.map(v2t) ?? [],
+    'poi.position': t.poi?.map(t => v2t(t.position)) ?? [],
+    'poi.type': t.poi?.map(t => t.type) ?? [],
+  }))
 
-    const versionMeta = await parseStringPromise(await Bun.file('/app/wot-src/sources/version.xml').text(), { explicitArray: false, trim: true })
-    const version = versionMeta['version.xml'].version
-
-    const main = version.split(' ')[0] as string
-    const hash = version.split(' ')[1].replace('#', '')
-
-    const parts = main.split('.').slice(1)
-    const comp = Number.parseInt(parts.map(t => t.padStart(2, '0')).join('')) * 1e5 + Number.parseInt(hash)
-
-    const res = await process()
-
-    const v2t = (t: { x: number, y: number }) => ([t.x, t.y])
-
-    const insertValues = res.map(t => ({
-      region: branch,
-      gameVersionFull: version,
-      gameVersion: parts.join('.'),
-      gameVersionHash: hash,
-      tag: t.tag,
-      gameplay: t.gameplay,
-      datetime: Math.round(new Date().getTime() / 1000),
-      gameVersionComp: comp,
-      id: t.id,
-      name: t.name,
-      season: t.season,
-      winnerIfTimeout: t.winnerIfTimeout,
-      winnerIfExtermination: t.winnerIfExtermination,
-      'bbox.bottomLeft': v2t(t.bbox.bottomLeft),
-      'bbox.upperRight': v2t(t.bbox.upperRight),
-      'base.team': t.base?.map(t => t.team) ?? [],
-      'base.positions': t.base?.map(t => t.positions.map(v2t)) ?? [],
-      'spawn.team': t.spawn?.map(t => t.team) ?? [],
-      'spawn.positions': t.spawn?.map(t => t.pos.map(v2t)) ?? [],
-      control: t.control?.map(v2t) ?? [],
-      'poi.position': t.poi?.map(t => v2t(t.position)) ?? [],
-      'poi.type': t.poi?.map(t => t.type) ?? [],
-    }))
-
-    console.log('Inserting...');
-    await clickhouse.insert({
-      table: 'Arenas',
-      values: insertValues,
-      format: 'JSONEachRow'
-    })
-    console.log(`Inserted ${branch}`);
-  }
-
-  console.log('Load arenas done');
-
-}
-
-export function start() {
-  load()
-  schedule('0 4 * * *', async () => {
-    load()
-  });
+  console.log('Inserting arenas...');
+  await clickhouse.insert({
+    table: 'Arenas',
+    values: insertValues,
+    format: 'JSONEachRow'
+  })
+  console.log(`Arena inserted for: ${region}`);
 }

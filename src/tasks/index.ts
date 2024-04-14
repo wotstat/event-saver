@@ -1,5 +1,5 @@
 
-import { start as s1 } from './arenaLoader'
+import { start as s1 } from './srcLoader'
 import { start as s2 } from "./tankListLoader";
 
 
