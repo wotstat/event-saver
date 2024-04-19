@@ -23,10 +23,6 @@
           "minimum": 0,
           "type": "integer"
         },
-        "allyTramFragsCount": {
-          "minimum": 0,
-          "type": "integer"
-        },
         "arenaTag": {
           "description": "название карты",
           "type": "string"
@@ -299,6 +295,7 @@
                 "lifeTime",
                 "tankTag",
                 "tankType",
+                "tankRole",
                 "tankLevel",
                 "killerIndex",
                 "maxHealth",
@@ -482,6 +479,7 @@
                   "stunDuration",
                   "stunned",
                   "tankLevel",
+                  "tankRole",
                   "tankTag",
                   "tankType",
                   "team",
@@ -585,9 +583,15 @@
       },
       "required": [
         "accountDBID",
+        "allyTeamFragsCount",
+        "allyTeamHealth",
+        "allyTeamMaxHealth",
         "arenaTag",
         "battleGameplay",
         "battleMode",
+        "enemyTeamFragsCount",
+        "enemyTeamHealth",
+        "enemyTeamMaxHealth",
         "eventName",
         "gameVersion",
         "gunTag",
@@ -599,6 +603,7 @@
         "result",
         "serverName",
         "tankLevel",
+        "tankRole",
         "tankTag",
         "tankType",
         "team",
@@ -625,10 +630,6 @@
         },
         "allyTeamMaxHealth": {
           "description": "Максимальное ХП союзной команды",
-          "minimum": 0,
-          "type": "integer"
-        },
-        "allyTramFragsCount": {
           "minimum": 0,
           "type": "integer"
         },
@@ -835,12 +836,18 @@
       },
       "required": [
         "accountDBID",
+        "allyTeamFragsCount",
+        "allyTeamHealth",
+        "allyTeamMaxHealth",
         "arenaID",
         "arenaTag",
         "battleGameplay",
         "battleMode",
         "battlePeriod",
         "battleTime",
+        "enemyTeamFragsCount",
+        "enemyTeamHealth",
+        "enemyTeamMaxHealth",
         "eventName",
         "gameVersion",
         "gameplayMask",
@@ -856,6 +863,7 @@
         "serverName",
         "spawnPoint",
         "tankLevel",
+        "tankRole",
         "tankTag",
         "tankType",
         "team"
@@ -1263,6 +1271,7 @@
             "premium_vip",
             "addedVehicles",
             "rentedVehicles",
+            "compensatedVehicles",
             "slots",
             "berths",
             "items",
@@ -1319,16 +1328,19 @@
         "battleStarts",
         "containerTag",
         "eventName",
+        "gameVersion",
         "lastBattleAgo",
         "lastDmgPlace",
         "lastResult",
         "lastXpPlace",
         "localtime",
+        "modVersion",
         "openCount",
         "openGroup",
         "parsed",
         "playerName",
         "raw",
+        "region",
         "sessionStart",
         "sessionStartAgo",
         "totalShots",
@@ -1357,10 +1369,6 @@
         },
         "allyTeamMaxHealth": {
           "description": "Максимальное ХП союзной команды",
-          "minimum": 0,
-          "type": "integer"
-        },
-        "allyTramFragsCount": {
           "minimum": 0,
           "type": "integer"
         },
@@ -1943,6 +1951,9 @@
       },
       "required": [
         "accountDBID",
+        "allyTeamFragsCount",
+        "allyTeamHealth",
+        "allyTeamMaxHealth",
         "arenaTag",
         "autoAim",
         "battleDispersion",
@@ -1953,6 +1964,9 @@
         "clientMarkerPoint",
         "clientShotDispersion",
         "damageRandomization",
+        "enemyTeamFragsCount",
+        "enemyTeamHealth",
+        "enemyTeamMaxHealth",
         "eventName",
         "fps",
         "gameVersion",
@@ -1992,6 +2006,7 @@
         "shellTag",
         "shotId",
         "tankLevel",
+        "tankRole",
         "tankTag",
         "tankType",
         "team",

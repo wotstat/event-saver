@@ -87,10 +87,7 @@ export default function process(e: any) {
       rawString: e.raw,
       ...unwrapHangarEvent(e),
       ...unwrapSessionMeta(e),
-      // ...unwrapEvent(e),
-      region: e.region ?? '',
-      gameVersion: e.gameVersion ?? '',
-      modVersion: e.modVersion ?? '1.3.1.0',
+      ...unwrapEvent(e)
     }, e)
   })
 }

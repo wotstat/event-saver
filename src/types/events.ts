@@ -31,7 +31,6 @@ interface Event {
 
 }
 
-
 interface TokenEvent extends Event {
   token: string
 }
@@ -49,13 +48,13 @@ interface OldEvent {
   localtime: string
 
   /** регион игры */
-  region?: string
+  region: string
 
   /** версия игры */
-  gameVersion?: string
+  gameVersion: string
 
   /** версия мода */
-  modVersion?: string
+  modVersion: string
 
 }
 
@@ -133,7 +132,7 @@ interface DynamicBattleInfo extends StaticBattleInfo {
   tankType: string
 
   /** роль танка */
-  tankRole?: string
+  tankRole: string
 
   /** уровень танка */
   tankLevel: integer
@@ -142,23 +141,22 @@ interface DynamicBattleInfo extends StaticBattleInfo {
   gunTag: string,
 
   /** ХП союзной команды */
-  allyTeamHealth?: UInt8
+  allyTeamHealth: UInt8
 
   /** ХП вражеской команды */
-  enemyTeamHealth?: UInt8
+  enemyTeamHealth: UInt8
 
   /** Максимальное ХП союзной команды */
-  allyTeamMaxHealth?: UInt8
+  allyTeamMaxHealth: UInt8
 
   /** Максимальное ХП вражеской команды */
-  enemyTeamMaxHealth?: UInt8
+  enemyTeamMaxHealth: UInt8
 
   /** Количество фрагов союзников */
-  allyTeamFragsCount?: UInt8
-  allyTramFragsCount?: UInt8 // TODO: remove
+  allyTeamFragsCount: UInt8
 
   /** Количество фрагов врагов */
-  enemyTeamFragsCount?: UInt8
+  enemyTeamFragsCount: UInt8
 }
 
 export interface OnBattleStart extends DynamicBattleInfo, Event, PartialSessionMeta {
@@ -212,7 +210,7 @@ type VehicleBattleResult = {
   lifeTime: UInt16
   tankTag: string
   tankType: 'LT' | 'MT' | 'HT' | 'SPG' | 'AT',
-  tankRole?: string
+  tankRole: string
   tankLevel: UInt8
   killerIndex: integer
   maxHealth: UInt16
@@ -378,7 +376,7 @@ export interface OnLootboxOpen extends HangarEvent, SessionMeta {
 
     addedVehicles: string[]
     rentedVehicles: [tankTag: string, rentType: string, rentValue: string][]
-    compensatedVehicles?: [tankTag: string, variant: 'rent' | 'normal', gold: number][]
+    compensatedVehicles: [tankTag: string, variant: 'rent' | 'normal', gold: number][]
 
     slots: UInt16
     berths: UInt16
