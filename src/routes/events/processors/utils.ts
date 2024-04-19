@@ -35,22 +35,23 @@ export function unwrapDynamicBattleInfo(e: DynamicBattleInfo) {
   return {
     arenaTag: e.arenaTag,
     playerName: e.playerName,
+    playerClan: e.playerClan,
     accountDBID: e.accountDBID,
     battleMode: e.battleMode,
     battleGameplay: e.battleGameplay,
     serverName: e.serverName,
     team: e.team,
     tankTag: e.tankTag,
-    tankRole: e.tankRole ?? '',
+    tankRole: e.tankRole,
     tankType: e.tankType,
     tankLevel: e.tankLevel,
     gunTag: e.gunTag,
-    allyTeamHealth: e.allyTeamHealth ?? 0,
-    enemyTeamHealth: e.enemyTeamHealth ?? 0,
-    allyTeamMaxHealth: e.allyTeamMaxHealth ?? 0,
-    enemyTeamMaxHealth: e.enemyTeamMaxHealth ?? 0,
-    allyTeamFragsCount: e.allyTeamFragsCount ?? e.allyTramFragsCount ?? 0, // TODO: remove
-    enemyTeamFragsCount: e.enemyTeamFragsCount ?? 0,
+    allyTeamHealth: e.allyTeamHealth,
+    enemyTeamHealth: e.enemyTeamHealth,
+    allyTeamMaxHealth: e.allyTeamMaxHealth,
+    enemyTeamMaxHealth: e.enemyTeamMaxHealth,
+    allyTeamFragsCount: e.allyTeamFragsCount,
+    enemyTeamFragsCount: e.enemyTeamFragsCount,
   }
 }
 
