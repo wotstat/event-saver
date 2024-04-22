@@ -153,7 +153,10 @@ interface DynamicBattleInfo extends StaticBattleInfo {
   enemyTeamMaxHealth: UInt8
 
   /** Количество фрагов союзников */
-  allyTeamFragsCount: UInt8
+  allyTeamFragsCount?: UInt8
+
+  // TODO: remove this later
+  allyTramFragsCount?: UInt8
 
   /** Количество фрагов врагов */
   enemyTeamFragsCount: UInt8

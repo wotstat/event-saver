@@ -50,7 +50,7 @@ export function unwrapDynamicBattleInfo(e: DynamicBattleInfo) {
     enemyTeamHealth: e.enemyTeamHealth,
     allyTeamMaxHealth: e.allyTeamMaxHealth,
     enemyTeamMaxHealth: e.enemyTeamMaxHealth,
-    allyTeamFragsCount: e.allyTeamFragsCount,
+    allyTeamFragsCount: e.allyTramFragsCount ?? e.allyTeamFragsCount ?? 0,
     enemyTeamFragsCount: e.enemyTeamFragsCount,
   }
 }

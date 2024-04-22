@@ -23,6 +23,10 @@
           "minimum": 0,
           "type": "integer"
         },
+        "allyTramFragsCount": {
+          "minimum": 0,
+          "type": "integer"
+        },
         "arenaTag": {
           "description": "название карты",
           "type": "string"
@@ -583,7 +587,6 @@
       },
       "required": [
         "accountDBID",
-        "allyTeamFragsCount",
         "allyTeamHealth",
         "allyTeamMaxHealth",
         "arenaTag",
@@ -630,6 +633,10 @@
         },
         "allyTeamMaxHealth": {
           "description": "Максимальное ХП союзной команды",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "allyTramFragsCount": {
           "minimum": 0,
           "type": "integer"
         },
@@ -836,7 +843,6 @@
       },
       "required": [
         "accountDBID",
-        "allyTeamFragsCount",
         "allyTeamHealth",
         "allyTeamMaxHealth",
         "arenaID",
@@ -1369,6 +1375,10 @@
         },
         "allyTeamMaxHealth": {
           "description": "Максимальное ХП союзной команды",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "allyTramFragsCount": {
           "minimum": 0,
           "type": "integer"
         },
@@ -1951,7 +1961,6 @@
       },
       "required": [
         "accountDBID",
-        "allyTeamFragsCount",
         "allyTeamHealth",
         "allyTeamMaxHealth",
         "arenaTag",
