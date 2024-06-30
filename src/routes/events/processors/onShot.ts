@@ -45,7 +45,6 @@ export default function process(battleUUID: string, e: any) {
       id: uuid(),
       onBattleStartId: battleUUID,
       dateTime: now(),
-      localtime: e.localtime,
       health: e.health,
 
       ballisticResultClient_r: clientBallistic.r,
