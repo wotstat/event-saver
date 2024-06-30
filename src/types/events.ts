@@ -40,25 +40,7 @@ interface BattleEvent extends TokenEvent {
   battleTime: number
 }
 
-interface OldEvent {
-  /** название ивента */
-  eventName: string
-
-  /** время события у игрока */
-  localtime: string
-
-  /** регион игры */
-  region: string
-
-  /** версия игры */
-  gameVersion: string
-
-  /** версия мода */
-  modVersion: string
-
-}
-
-interface HangarEvent extends OldEvent {
+interface HangarEvent extends Event {
   /** ник игрока */
   playerName: string
 }
@@ -153,10 +135,7 @@ interface DynamicBattleInfo extends StaticBattleInfo {
   enemyTeamMaxHealth: UInt8
 
   /** Количество фрагов союзников */
-  allyTeamFragsCount?: UInt8
-
-  // TODO: remove this later
-  allyTramFragsCount?: UInt8
+  allyTeamFragsCount: UInt8
 
   /** Количество фрагов врагов */
   enemyTeamFragsCount: UInt8

@@ -28,6 +28,7 @@ export function unwrapEvent(e: Event) {
     region: e.region,
     gameVersion: e.gameVersion,
     modVersion: e.modVersion,
+    localeTime: e.localtime,
   }
 }
 
@@ -50,7 +51,7 @@ export function unwrapDynamicBattleInfo(e: DynamicBattleInfo) {
     enemyTeamHealth: e.enemyTeamHealth,
     allyTeamMaxHealth: e.allyTeamMaxHealth,
     enemyTeamMaxHealth: e.enemyTeamMaxHealth,
-    allyTeamFragsCount: e.allyTramFragsCount ?? e.allyTeamFragsCount ?? 0,
+    allyTeamFragsCount: e.allyTeamFragsCount,
     enemyTeamFragsCount: e.enemyTeamFragsCount,
   }
 }
