@@ -23,6 +23,8 @@ export default function process(e: any) {
       dateTime: now(),
 
       containerTag: e.containerTag,
+      openByTag: e.openByTag ?? e.containerTag,
+      isOpenSuccess: e.isOpenSuccess ?? true,
       openCount: e.openCount,
       openGroup: e.openGroup,
 
