@@ -341,6 +341,8 @@ export interface OnShot extends BattleEvent, DynamicBattleInfo, PartialSessionMe
 
 export interface OnLootboxOpen extends HangarEvent, SessionMeta {
   containerTag: string,
+  openByTag?: string,
+  isOpenSuccess?: boolean,
   openCount: UInt16,
   openGroup: string,
   parsed: {
