@@ -139,6 +139,10 @@
             },
             "personal": {
               "properties": {
+                "brPlace": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
                 "damageAssistedRadio": {
                   "minimum": 0,
                   "type": "integer"
@@ -313,6 +317,10 @@
               "items": {
                 "properties": {
                   "bdid": {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "brPlace": {
                     "minimum": 0,
                     "type": "integer"
                   },
@@ -891,6 +899,9 @@
           "description": "версия игры",
           "type": "string"
         },
+        "isOpenSuccess": {
+          "type": "boolean"
+        },
         "lastBattleAgo": {
           "description": "сколько времени назад начался прошлый бой",
           "type": "number"
@@ -927,6 +938,9 @@
         },
         "modVersion": {
           "description": "версия мода",
+          "type": "string"
+        },
+        "openByTag": {
           "type": "string"
         },
         "openCount": {
