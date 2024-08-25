@@ -139,10 +139,6 @@
             },
             "personal": {
               "properties": {
-                "brPlace": {
-                  "minimum": 0,
-                  "type": "integer"
-                },
                 "damageAssistedRadio": {
                   "minimum": 0,
                   "type": "integer"
@@ -222,6 +218,10 @@
                   "type": "integer"
                 },
                 "piercingsReceived": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "playerRank": {
                   "minimum": 0,
                   "type": "integer"
                 },
@@ -320,10 +320,6 @@
                     "minimum": 0,
                     "type": "integer"
                   },
-                  "brPlace": {
-                    "minimum": 0,
-                    "type": "integer"
-                  },
                   "damageAssistedRadio": {
                     "minimum": 0,
                     "type": "integer"
@@ -406,6 +402,10 @@
                     "type": "integer"
                   },
                   "piercingsReceived": {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "playerRank": {
                     "minimum": 0,
                     "type": "integer"
                   },

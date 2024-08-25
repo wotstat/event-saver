@@ -199,7 +199,7 @@ type VehicleBattleResult = {
   health: UInt16
   isAlive: boolean
   squadID: UInt8
-  brPlace?: UInt8
+  playerRank?: UInt8
 }
 
 export interface OnBattleResult extends TokenEvent, DynamicBattleInfo, PartialSessionMeta {
