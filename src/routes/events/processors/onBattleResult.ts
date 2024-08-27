@@ -6,7 +6,10 @@ import { check, onBattleResultSchema } from '@/types/validator';
 import { uuid } from "@/utils/uuid";
 
 function unwrapVehicleBattleResult(prefix: string, res: OnBattleResult['result']['personal']) {
-  return Object.fromEntries(Object.entries(res).map(([k, v]) => [`${prefix}.${k}`, v]))
+  return {
+    [`${prefix}.playerRank`]: 0,
+    ...Object.fromEntries(Object.entries(res).map(([k, v]) => [`${prefix}.${k}`, v]))
+  }
 }
 
 function unwrapPlayersResults(results: OnBattleResult['result']['playersResults']) {
