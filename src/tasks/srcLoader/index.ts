@@ -62,6 +62,7 @@ export async function load() {
     console.log(`\nCheckout to ${branch}`);
 
     await $`git checkout ${branch}`
+    await $`git pull --ff-only`.quiet()
 
     const version = await parseGameVersion(root)
 
