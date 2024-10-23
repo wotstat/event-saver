@@ -344,6 +344,9 @@ export interface OnLootboxOpen extends HangarEvent, SessionMeta {
   containerTag: string,
   openByTag?: string,
   isOpenSuccess?: boolean,
+  claimed?: boolean,
+  rerollCount?: UInt8,
+
   openCount: UInt16,
   openGroup: string,
   parsed: {
