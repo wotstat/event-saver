@@ -85,6 +85,8 @@ export default function process(e: any) {
 
       'selectableCrewbook.tag': e.parsed.selectableCrewbook.map(([crewbookName]) => crewbookName),
 
+      claimed: e.claimed ?? true,
+      rerollCount: e.rerollCount ?? 0,
       raw: raw,
       rawString: e.raw,
       ...unwrapHangarEvent(e),

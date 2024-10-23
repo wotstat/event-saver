@@ -888,6 +888,9 @@
           "description": "Количество начатых боёв",
           "type": "number"
         },
+        "claimed": {
+          "type": "boolean"
+        },
         "containerTag": {
           "type": "string"
         },
@@ -1311,6 +1314,10 @@
         "region": {
           "description": "регион игры",
           "type": "string"
+        },
+        "rerollCount": {
+          "minimum": 0,
+          "type": "integer"
         },
         "sessionStart": {
           "description": "Количество начатых боёв",
