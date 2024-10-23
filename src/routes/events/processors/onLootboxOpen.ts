@@ -1,3 +1,4 @@
+import { modVersionComparator } from "@/utils/utils";
 import { insert } from "../insert"
 import { now, unwrapEvent, unwrapHangarEvent, unwrapSessionMeta, unwrapVector3 } from './utils';
 
@@ -5,9 +6,13 @@ import { check, onLootboxOpenSchema } from '@/types/validator';
 import { uuid } from "@/utils/uuid";
 
 
+
+const comparator = modVersionComparator('1.4.3.0')
+
 export default function process(e: any) {
 
   check(onLootboxOpenSchema, e, async (e) => {
+    if (comparator(e.modVersion) < 0) return
 
     let raw = {}
 
