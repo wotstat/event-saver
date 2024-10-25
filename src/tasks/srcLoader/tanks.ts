@@ -18,8 +18,19 @@ type Tank = {
   level: string
 }
 
+function isTank(obj: unknown): obj is Tank {
+  if (typeof obj !== 'object' || obj === null) return false
+  if (!('id' in obj)) return false
+  if (!('userString' in obj)) return false
+  if (!('description' in obj)) return false
+  if (!('price' in obj)) return false
+  if (!('tags' in obj)) return false
+  if (!('level' in obj)) return false
+  return true
+}
+
 type TankList = {
-  [key: string]: Tank
+  [key: string]: unknown
 }
 
 const i18nCache = new Map<string, GetText>()
@@ -30,7 +41,7 @@ async function getLocalizedString(root: string, tag: string) {
     i18nCache.set(target, new GetText(await Bun.file(`${root}/sources/res/text/lc_messages/${target.replace('#', '')}.po`).text()))
   }
 
-  return i18nCache.get(target)!.getTranslation(key)
+  return i18nCache.get(target)!.getTranslation(key, '')
 }
 
 const typeSet = new Set(['lightTank', 'mediumTank', 'heavyTank', 'AT-SPG', 'SPG'] as const)
@@ -52,6 +63,7 @@ function getRoleFromTags(tags: string[]) {
 
 async function process(root: string) {
 
+  i18nCache.clear()
   const glob = new Glob(`${root}/sources/res/scripts/item_defs/vehicles/*/list.xml`);
 
   const result: {
@@ -70,19 +82,22 @@ async function process(root: string) {
     const data = await Bun.file(file).text()
     const parsed = await parseStringPromise(data, { explicitArray: false }) as XML<TankList>
 
-    const tanks = await Promise.all(Object.entries(parsed.root).map(async ([key, value]) => {
-      const tags = value.tags.split(' ')
-      const userString = await getLocalizedString(root, value.userString)
-      return {
-        tag: `${nation}:${key}`,
-        nation,
-        type: getTypeFromTags(tags),
-        role: getRoleFromTags(tags) ?? '',
-        level: Number.parseInt(value.level),
-        userString,
-        shortUserString: value.shortUserString ? await getLocalizedString(root, value.shortUserString) : userString,
-      }
-    }))
+    const tanks = await Promise.all(Object.entries(parsed.root)
+      .filter(([key, value]) => isTank(value))
+      .map(async ([key, value]) => {
+        const tank = value as Tank
+        const tags = tank.tags.split(' ')
+        const userString = await getLocalizedString(root, tank.userString)
+        return {
+          tag: `${nation}:${key}`,
+          nation,
+          type: getTypeFromTags(tags),
+          role: getRoleFromTags(tags) ?? '',
+          level: Number.parseInt(tank.level),
+          userString,
+          shortUserString: tank.shortUserString ? await getLocalizedString(root, tank.shortUserString) : userString,
+        }
+      }))
 
     result.push(...tanks)
   }
@@ -107,7 +122,7 @@ export async function load(root: string, region: string, version: GameVersion) {
 
   console.log('Inserting tanks...');
   await clickhouse.insert({
-    table: 'Tanks',
+    table: 'Vehicles',
     values: insertValues,
     format: 'JSONEachRow'
   })

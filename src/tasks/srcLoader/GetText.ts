@@ -29,8 +29,8 @@ export class GetText {
     this.transitions = new Map(parsed.map(t => [t.msgid, t.msgstr]))
   }
 
-  public getTranslation(msg: string) {
-    return this.transitions.get(msg) ?? msg
+  public getTranslation(msg: string, fallback?: string) {
+    return this.transitions.get(msg) ?? fallback ?? msg
   }
 
   public getAll() {
