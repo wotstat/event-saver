@@ -72,8 +72,8 @@ async function process(root: string) {
     type: string,
     role: string,
     level: number,
-    userString: string,
-    shortUserString: string
+    name: string,
+    shortName: string
   }[] = []
 
   for (const file of glob.scanSync()) {
@@ -94,8 +94,8 @@ async function process(root: string) {
           type: getTypeFromTags(tags),
           role: getRoleFromTags(tags) ?? '',
           level: Number.parseInt(tank.level),
-          userString,
-          shortUserString: tank.shortUserString ? await getLocalizedString(root, tank.shortUserString) : userString,
+          name: userString,
+          shortName: tank.shortUserString ? await getLocalizedString(root, tank.shortUserString) : userString,
         }
       }))
 
