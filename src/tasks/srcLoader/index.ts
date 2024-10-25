@@ -5,6 +5,7 @@ import { load as loadArenas } from "./arenas";
 import { load as loadLootbox } from "./lootbox";
 import { load as loadArtefacts } from "./artefacts";
 import { load as loadCustomization } from "./customization";
+import { load as loadTanks } from "./tanks";
 import { parseStringPromise } from 'xml2js';
 
 export type GameVersion = {
@@ -33,6 +34,7 @@ async function parseGameVersion(root: string): Promise<GameVersion> {
 }
 
 const BRANCHES = ['EU', 'NA', 'RU', 'CN', 'ASIA']
+const root = '/app/wot-src'
 
 async function clone() {
   console.log('Checking git init...');
@@ -48,11 +50,10 @@ async function clone() {
   }
 
   console.log('Cloning...');
-  await $`git clone https://github.com/IzeBerg/wot-src.git /app/wot-src`
+  await $`git clone https://github.com/IzeBerg/wot-src.git ${root}`
 }
 
 export async function load() {
-  const root = '/app/wot-src'
   $.cwd(root)
 
   await clone()
@@ -66,6 +67,7 @@ export async function load() {
 
     const version = await parseGameVersion(root)
 
+    await loadTanks(root, branch, version)
     await loadArenas(root, branch, version)
     await loadLootbox(root, branch, version)
     await loadArtefacts(root, branch, version)

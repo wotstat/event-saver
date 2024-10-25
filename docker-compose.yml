@@ -46,7 +46,7 @@ services:
       dockerfile: Dockerfile.dev
     volumes:
       - ./src:/app/src
-      - ./docker-volumes/wot-src-data:/app/wot-src
+      - ../EventSaver-docker-volumes/wot-src-data:/app/wot-src
     ports:
       - 9000:9000
     depends_on:
