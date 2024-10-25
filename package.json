@@ -11,22 +11,22 @@
     "generateJsonSchema": "bunx ts-json-schema-generator --no-type-check --additional-properties true --path ./src/types/events.ts --out ./src/types/types.json"
   },
   "dependencies": {
-    "@clickhouse/client-web": "^0.2.8",
-    "ajv": "^8.12.0",
-    "fast-jwt": "^4.0.0",
-    "hono": "^3.12.5",
+    "@clickhouse/client-web": "^1.7.0",
+    "ajv": "^8.17.1",
+    "fast-jwt": "^4.0.5",
+    "hono": "^4.6.6",
     "node-cron": "^3.0.3",
-    "redis": "^4.6.12",
-    "uuid": "^9.0.1",
+    "redis": "^4.7.0",
+    "uuid": "^10.0.0",
     "xml2js": "^0.6.2"
   },
   "devDependencies": {
-    "@types/bun": "latest",
+    "@types/bun": "^1.1.12",
     "@types/node-cron": "^3.0.11",
-    "@types/uuid": "^9.0.7",
+    "@types/uuid": "^10.0.0",
     "@types/xml2js": "^0.4.14"
   },
   "peerDependencies": {
-    "typescript": "^5.0.0"
+    "typescript": "^5.6.3"
   }
 }

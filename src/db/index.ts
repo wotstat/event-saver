@@ -2,7 +2,7 @@ import { createClient, type ClickHouseSettings } from '@clickhouse/client-web'
 import type { WebClickHouseClient } from '@clickhouse/client-web/dist/client'
 
 const clickhouse = createClient({
-  host: process.env.CLICKHOUSE_HOST,
+  url: process.env.CLICKHOUSE_HOST,
   username: process.env.CLICKHOUSE_USER,
   password: process.env.CLICKHOUSE_PASSWORD,
   database: process.env.CLICKHOUSE_DATABASE,
