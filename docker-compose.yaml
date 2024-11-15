@@ -1,11 +1,11 @@
 # docker compose down; docker compose up --build --remove-orphans;
 
-version: "3.7"
-
 services:
   redis:
     container_name: redis
     image: 'redis:alpine'
+    networks:
+      - bridge
 
   event-saver:
     container_name: event-saver
@@ -18,7 +18,7 @@ services:
       - redis
     environment:
       - PORT=9000
-      - CLICKHOUSE_HOST=http://host.docker.internal:8123
+      - CLICKHOUSE_HOST=http://172.17.0.1:8123
       - CLICKHOUSE_DATABASE=WOT
       - CLICKHOUSE_USER
       - CLICKHOUSE_PASSWORD
@@ -26,3 +26,13 @@ services:
       - REDIS_HOST=redis
     extra_hosts:
       - "host.docker.internal:host-gateway"
+    networks:
+      bridge:
+        ipv4_address: 172.25.0.10
+
+networks:
+  bridge:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.25.0.0/16
