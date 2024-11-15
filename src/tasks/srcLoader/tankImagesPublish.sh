@@ -1,8 +1,8 @@
 #!/bin/bash
-# Copy to /gui-part/gui/maps/icons/vehicle/tankImagesPublish.sh
+# Copy to /gui-part root with ./gui folder
 
 aws --endpoint-url=https://storage.yandexcloud.net/ \
-  s3 cp ./ s3://static.wotstat.info/vehicles/preview \
+  s3 cp ./gui/maps/icons/vehicle s3://static.wotstat.info/vehicles/preview \
   --recursive \
   --exclude "*" \
   --include "*.png" \

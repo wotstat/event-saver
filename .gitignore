@@ -107,7 +107,6 @@ web_modules/
 .env.development.local
 .env.test.local
 .env.production.local
-.env.local
 
 # parcel-bundler cache (https://parceljs.org/)
 
@@ -176,3 +175,4 @@ dist
 
 # Finder (MacOS) folder config
 .DS_Store
+docker-compose.override.yaml
