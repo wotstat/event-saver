@@ -1,17 +1,14 @@
 # docker compose down; docker compose up --build --remove-orphans;
-
-version: "3.7"
-
 services:
   clickhouse:
     container_name: clickhouse
     image: clickhouse/clickhouse-server:24.2.2-alpine
     volumes:
-      - ./docker-volumes/clickhouse-dev/data:/var/lib/clickhouse
-      - ./docker-volumes/clickhouse-dev/log:/var/log/clickhouse-server
-      - ./clickhouse-dev/config/config.d:/etc/clickhouse-server/config.d
-      - ./clickhouse-dev/config/users.d:/etc/clickhouse-server/users.d
-      - ./clickhouse-dev/init:/docker-entrypoint-initdb.d
+      - ./docker-volumes/clickhouse-local/data:/var/lib/clickhouse
+      - ./docker-volumes/clickhouse-local/log:/var/log/clickhouse-server
+      - ./clickhouse-local/config/config.d:/etc/clickhouse-server/config.d
+      - ./clickhouse-local/config/users.d:/etc/clickhouse-server/users.d
+      - ./clickhouse-local/init:/docker-entrypoint-initdb.d
     ports:
       - '8123:8123'
 
@@ -40,15 +37,14 @@ services:
     image: 'redis:alpine'
 
   app:
-    container_name: app
+    container_name: event-saver
     restart: always
     build:
       dockerfile: Dockerfile.dev
     volumes:
       - ./src:/app/src
-      - ../EventSaver-docker-volumes/wot-src-data:/app/wot-src
     ports:
-      - 9000:9000
+      - 9100:9000
     depends_on:
       - clickhouse
       - redis
@@ -57,7 +53,6 @@ services:
       - CLICKHOUSE_HOST=http://clickhouse:8123
       - CLICKHOUSE_USER=default
       - CLICKHOUSE_PASSWORD=
-      - WG_API_KEY=
       - CLICKHOUSE_DATABASE=WOT
       - JWT_SECRET=JWT_SECRET
       - REDIS_HOST=redis

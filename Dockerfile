@@ -1,4 +1,4 @@
-FROM oven/bun:1.1.2-alpine as base
+FROM oven/bun:alpine as base
 WORKDIR /app
 
 # install dependencies into temp directory
@@ -26,9 +26,8 @@ COPY --from=prerelease /app/src src
 COPY --from=prerelease /app/package.json .
 COPY --from=prerelease /app/tsconfig.json tsconfig.json
 
-RUN apk add --no-cache git
+# RUN apk add --no-cache git
 
 # run the app
 USER bun
-EXPOSE 3000/tcp
 ENTRYPOINT [ "bun", "run", "src/index.ts" ]

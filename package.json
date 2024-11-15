@@ -3,11 +3,7 @@
   "module": "index.ts",
   "type": "module",
   "scripts": {
-    "dev:docker": "docker compose down; docker compose up --build",
-    "dev": "bun run --watch src/index.ts",
-    "run": "bun run src/index.ts",
-    "migrate": "bun src/db/migrate.ts",
-    "rollback": "bun src/db/rollback.ts",
+    "dev:docker": "docker compose -p event-saver down; docker compose -p event-saver -f docker-compose.local.yaml up --build --remove-orphans",
     "generateJsonSchema": "bunx ts-json-schema-generator --no-type-check --additional-properties true --path ./src/types/events.ts --out ./src/types/types.json"
   },
   "dependencies": {

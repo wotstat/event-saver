@@ -10,6 +10,5 @@ declare module "bun" {
     readonly REDIS_BATTLE_TOKEN_LIFETIME: string;
     readonly DEBUG?: string;
     readonly ASYNC_INSERT?: string;
-    readonly WG_API_KEY?: string;
   }
 }

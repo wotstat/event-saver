@@ -22,11 +22,11 @@ try {
   console.log('Connecting to Redis...');
 
   await Promise.all([
-    migrate(clickhouse),
+    // migrate(clickhouse),
     redis.connect()
   ])
 
-  taskStart()
+  // taskStart()
 
   console.log(`Server is listening on port ${Bun.env.PORT}`);
 }
