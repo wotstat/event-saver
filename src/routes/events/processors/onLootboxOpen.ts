@@ -80,6 +80,9 @@ export default function process(e: any) {
       'bonus.tag': e.parsed.bonusTokens.map(([tag, count]) => tag),
       'bonus.count': e.parsed.bonusTokens.map(([tag, count]) => count),
 
+      'extra.tag': e.parsed.extraTokens?.map(([tag, count]) => tag) ?? [],
+      'extra.count': e.parsed.extraTokens?.map(([tag, count]) => count) ?? [],
+
       'customizations.type': e.parsed.customizations.map(([type, tag, count]) => type),
       'customizations.tag': e.parsed.customizations.map(([type, tag, count]) => tag),
       'customizations.count': e.parsed.customizations.map(([type, tag, count]) => count),
@@ -89,6 +92,9 @@ export default function process(e: any) {
       'blueprints.count': e.parsed.blueprints.map(([type, specification, count]) => count),
 
       'selectableCrewbook.tag': e.parsed.selectableCrewbook.map(([crewbookName]) => crewbookName),
+
+      'toys.tag': e.parsed.toys?.map(([tag, count]) => tag) ?? [],
+      'toys.count': e.parsed.toys?.map(([tag, count]) => count) ?? [],
 
       claimed: e.claimed ?? true,
       rerollCount: e.rerollCount ?? 0,

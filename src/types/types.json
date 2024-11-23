@@ -1178,6 +1178,25 @@
               "minimum": 0,
               "type": "integer"
             },
+            "extraTokens": {
+              "items": {
+                "items": [
+                  {
+                    "title": "tag",
+                    "type": "string"
+                  },
+                  {
+                    "minimum": 0,
+                    "title": "count",
+                    "type": "integer"
+                  }
+                ],
+                "maxItems": 2,
+                "minItems": 2,
+                "type": "array"
+              },
+              "type": "array"
+            },
             "freeXP": {
               "minimum": 0,
               "type": "integer"
@@ -1273,6 +1292,25 @@
             "slots": {
               "minimum": 0,
               "type": "integer"
+            },
+            "toys": {
+              "items": {
+                "items": [
+                  {
+                    "title": "toyTag",
+                    "type": "string"
+                  },
+                  {
+                    "minimum": 0,
+                    "title": "count",
+                    "type": "integer"
+                  }
+                ],
+                "maxItems": 2,
+                "minItems": 2,
+                "type": "array"
+              },
+              "type": "array"
             }
           },
           "required": [
