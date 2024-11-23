@@ -57,7 +57,7 @@ export default function process(battleUUID: string, e: any) {
       shellName: e.shellName,
       shellDamage: e.shellDamage,
       damageRandomization: e.damageRandomization,
-      shellPiercingPower: e.shellPiercingPower,
+      shellPiercingPower: Math.round(e.shellPiercingPower),
       shellCaliber: e.shellCaliber,
       shellSpeed: e.shellSpeed,
       shellMaxDistance: e.shellMaxDistance,
