@@ -378,11 +378,14 @@ export interface OnLootboxOpen extends HangarEvent, SessionMeta {
 
     lootboxesTokens: [tag: string, count: UInt16][]
     bonusTokens: [tag: string, count: UInt16][]
+    extraTokens?: [tag: string, count: UInt16][]
 
     customizations: [type: string, tag: string, count: UInt16][]
     blueprints: [type: 'VEHICLE' | 'NATION' | 'UNIVERSAL', specification: string, count: UInt16][]
 
     selectableCrewbook: [crewbookName: string][]
+
+    toys?: [toyTag: string, count: UInt16][]
   },
   raw: string
 }
