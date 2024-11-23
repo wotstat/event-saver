@@ -238,7 +238,7 @@ export interface OnShot extends BattleEvent, DynamicBattleInfo, PartialSessionMe
   /** Разброс урона снаряда +-25 */
   damageRandomization: number,
   /** Среднее пробитие снаряда */
-  shellPiercingPower: UInt32,
+  shellPiercingPower: number,
   /** Калибр снаряда */
   shellCaliber: number,
   /** Скорость снаряла по ттх */

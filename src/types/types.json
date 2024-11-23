@@ -1864,8 +1864,7 @@
         },
         "shellPiercingPower": {
           "description": "Среднее пробитие снаряда",
-          "minimum": 0,
-          "type": "integer"
+          "type": "number"
         },
         "shellSpeed": {
           "description": "Скорость снаряла по ттх",
