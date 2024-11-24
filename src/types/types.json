@@ -1043,6 +1043,29 @@
               "minimum": 0,
               "type": "integer"
             },
+            "compensatedToys": {
+              "items": {
+                "items": [
+                  {
+                    "title": "toyTag",
+                    "type": "string"
+                  },
+                  {
+                    "title": "compensationCurrency",
+                    "type": "string"
+                  },
+                  {
+                    "minimum": 0,
+                    "title": "count",
+                    "type": "integer"
+                  }
+                ],
+                "maxItems": 3,
+                "minItems": 3,
+                "type": "array"
+              },
+              "type": "array"
+            },
             "compensatedVehicles": {
               "items": {
                 "items": [
