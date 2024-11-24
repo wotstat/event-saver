@@ -386,6 +386,7 @@ export interface OnLootboxOpen extends HangarEvent, SessionMeta {
     selectableCrewbook: [crewbookName: string][]
 
     toys?: [toyTag: string, count: UInt16][]
+    compensatedToys?: [toyTag: string, compensationCurrency: string, count: UInt16][]
   },
   raw: string
 }
