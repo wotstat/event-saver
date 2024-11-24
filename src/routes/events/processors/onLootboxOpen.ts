@@ -95,9 +95,9 @@ export default function process(e: any) {
 
       'toys.tag': e.parsed.toys?.map(([tag, count]) => tag) ?? [],
       'toys.count': e.parsed.toys?.map(([tag, count]) => count) ?? [],
-      'compensatedToys.tag': e.parsed.compensatedVehicles?.map(([tag, currency, count]) => tag) ?? [],
-      'compensatedToys.currency': e.parsed.compensatedVehicles?.map(([tag, currency, count]) => currency) ?? [],
-      'compensatedToys.count': e.parsed.compensatedVehicles?.map(([tag, currency, count]) => count) ?? [],
+      'compensatedToys.tag': e.parsed.compensatedToys?.map(([tag, currency, count]) => tag) ?? [],
+      'compensatedToys.currency': e.parsed.compensatedToys?.map(([tag, currency, count]) => currency) ?? [],
+      'compensatedToys.count': e.parsed.compensatedToys?.map(([tag, currency, count]) => count) ?? [],
 
       claimed: e.claimed ?? true,
       rerollCount: e.rerollCount ?? 0,
