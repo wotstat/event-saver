@@ -2,10 +2,8 @@ import { Hono } from "hono";
 import { cors } from 'hono/cors'
 
 import routes from './routes';
-import { migrate } from './db/migration'
-import { connect, clickhouse } from './db/index'
+import { connect } from './db/index'
 import { redis } from './redis/index'
-import { start as taskStart } from "./tasks";
 
 const hono = new Hono();
 hono.use(cors());
@@ -20,13 +18,7 @@ try {
   }
 
   console.log('Connecting to Redis...');
-
-  await Promise.all([
-    // migrate(clickhouse),
-    redis.connect()
-  ])
-
-  // taskStart()
+  redis.connect()
 
   console.log(`Server is listening on port ${Bun.env.PORT}`);
 }

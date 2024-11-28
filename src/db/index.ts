@@ -1,5 +1,4 @@
-import { createClient, type ClickHouseSettings } from '@clickhouse/client-web'
-import type { WebClickHouseClient } from '@clickhouse/client-web/dist/client'
+import { createClient, type ClickHouseSettings } from '@clickhouse/client'
 
 const clickhouse = createClient({
   url: process.env.CLICKHOUSE_HOST,
@@ -7,7 +6,6 @@ const clickhouse = createClient({
   password: process.env.CLICKHOUSE_PASSWORD,
   database: process.env.CLICKHOUSE_DATABASE,
   request_timeout: 120000,
-  keep_alive: { enabled: false },
 })
 
 async function connect(options: { timeout?: number }) {
@@ -29,23 +27,4 @@ async function connect(options: { timeout?: number }) {
   return false;
 }
 
-async function multistatementQuery(client: WebClickHouseClient, query: string, options?: ClickHouseSettings) {
-  const queries = query.split(';')
-    .map(t => t.replaceAll('\n', '').trim())
-    .filter(t => t != '')
-
-  for (let i = 0; i < queries.length; i++) {
-    const q = queries[i];
-    console.log(`[Query]: ${q}`);
-
-    await client.query({
-      query: q,
-      clickhouse_settings: options
-    });
-
-    console.log(`Applied [${i}/${queries.length}]`);
-  }
-}
-
-
-export { clickhouse, multistatementQuery, connect }
+export { clickhouse, connect }

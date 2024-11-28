@@ -1,6 +1,6 @@
 
 import { clickhouse } from '@/db/index'
-import type { ClickHouseSettings } from '@clickhouse/client-web'
+import type { ClickHouseSettings } from '@clickhouse/client'
 
 const asyncInsertSettings = {
   async_insert: 1,
