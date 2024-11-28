@@ -7,7 +7,7 @@
     "generateJsonSchema": "bunx ts-json-schema-generator --no-type-check --additional-properties true --path ./src/types/events.ts --out ./src/types/types.json"
   },
   "dependencies": {
-    "@clickhouse/client-web": "^1.7.0",
+    "@clickhouse/client": "^1.8.1",
     "ajv": "^8.17.1",
     "fast-jwt": "^4.0.5",
     "hono": "^4.6.6",
