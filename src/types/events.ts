@@ -101,8 +101,15 @@ interface StaticBattleInfo {
 
 }
 
+// Дополнительная информация внутри боя
+interface BattleExtra {
+  extra?: {
+    bob?: BOB25Extra
+  }
+}
+
 // Динамические данные о бое (могут изменяться во время боя), присутствуют во всех событиях для удобных селектов и фильтров
-interface DynamicBattleInfo extends StaticBattleInfo {
+interface DynamicBattleInfo extends StaticBattleInfo, BattleExtra {
 
   /** команда игрока */
   team: integer
@@ -141,29 +148,17 @@ interface DynamicBattleInfo extends StaticBattleInfo {
   enemyTeamFragsCount: UInt8
 }
 
-export interface OnBattleStart extends DynamicBattleInfo, Event, PartialSessionMeta {
-  /** id арены из танков */
-  arenaID: UInt64
+type BOB25Extra = {
+  allySkill: string
+  enemySkill: string
+  allyBloggerId: number
+  enemyBloggerId: number
 
-  /** координата спавна */
-  spawnPoint: Vector3
+  personalLevel: number,
 
-  /** Момент входа в бой */
-  battlePeriod: 'IDLE' | 'WAITING' | 'PREBATTLE' | 'BATTLE' | 'AFTERBATTLE'
-
-  /** Время в загрузки карты */
-  loadTime: number
-
-  /** Время в ожидания начала боя после загрузки  */
-  preBattleWaitTime: number
-
-  /** Время в очереди перед началом боя */
-  inQueueWaitTime: number
-
-  gameplayMask: integer
-
-  /** Время относительно начала боя. Если событие до старта, время отрицательно */
-  battleTime: number
+  stats: {
+    [key in '1' | '2' | '3' | '4']?: { score: number, rank: number }
+  }
 }
 
 type VehicleBattleResult = {
@@ -200,6 +195,31 @@ type VehicleBattleResult = {
   isAlive: boolean
   squadID: UInt8
   playerRank?: UInt8
+}
+
+export interface OnBattleStart extends DynamicBattleInfo, Event, PartialSessionMeta {
+  /** id арены из танков */
+  arenaID: UInt64
+
+  /** координата спавна */
+  spawnPoint: Vector3
+
+  /** Момент входа в бой */
+  battlePeriod: 'IDLE' | 'WAITING' | 'PREBATTLE' | 'BATTLE' | 'AFTERBATTLE'
+
+  /** Время в загрузки карты */
+  loadTime: number
+
+  /** Время в ожидания начала боя после загрузки  */
+  preBattleWaitTime: number
+
+  /** Время в очереди перед началом боя */
+  inQueueWaitTime: number
+
+  gameplayMask: integer
+
+  /** Время относительно начала боя. Если событие до старта, время отрицательно */
+  battleTime: number
 }
 
 export interface OnBattleResult extends TokenEvent, DynamicBattleInfo, PartialSessionMeta {
