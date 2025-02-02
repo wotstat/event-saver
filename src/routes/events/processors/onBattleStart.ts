@@ -10,7 +10,7 @@ export default function process(battleUUID: string, e: OnBattleStart) {
     dateTime: now(),
     arenaId: e.arenaID,
     loadBattlePeriod: e.battlePeriod,
-    inQueueWaitTime: secToMs(e.inQueueWaitTime),
+    inQueueWaitTime: Math.max(0, secToMs(e.inQueueWaitTime)),
     loadTime: secToMs(e.loadTime),
     preBattleWaitTime: secToMs(e.preBattleWaitTime),
     gameplayMask: e.gameplayMask,
