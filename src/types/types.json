@@ -65,97 +65,174 @@
         "extra": {
           "properties": {
             "bob": {
-              "properties": {
-                "allyBloggerId": {
-                  "type": "number"
-                },
-                "allySkill": {
-                  "type": "string"
-                },
-                "enemyBloggerId": {
-                  "type": "number"
-                },
-                "enemySkill": {
-                  "type": "string"
-                },
-                "personalLevel": {
-                  "type": "number"
-                },
-                "stats": {
+              "anyOf": [
+                {
                   "properties": {
-                    "1": {
-                      "properties": {
-                        "rank": {
-                          "type": "number"
-                        },
-                        "score": {
-                          "type": "number"
-                        }
-                      },
-                      "required": [
-                        "score",
-                        "rank"
-                      ],
-                      "type": "object"
+                    "allyBloggerId": {
+                      "type": "number"
                     },
-                    "2": {
-                      "properties": {
-                        "rank": {
-                          "type": "number"
-                        },
-                        "score": {
-                          "type": "number"
-                        }
-                      },
-                      "required": [
-                        "score",
-                        "rank"
-                      ],
-                      "type": "object"
+                    "allySkill": {
+                      "type": "string"
                     },
-                    "3": {
-                      "properties": {
-                        "rank": {
-                          "type": "number"
-                        },
-                        "score": {
-                          "type": "number"
-                        }
-                      },
-                      "required": [
-                        "score",
-                        "rank"
-                      ],
-                      "type": "object"
+                    "enemyBloggerId": {
+                      "type": "number"
                     },
-                    "4": {
+                    "enemySkill": {
+                      "type": "string"
+                    },
+                    "personalLevel": {
+                      "type": "number"
+                    },
+                    "stats": {
                       "properties": {
-                        "rank": {
-                          "type": "number"
+                        "1": {
+                          "properties": {
+                            "rank": {
+                              "type": "number"
+                            },
+                            "score": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "score",
+                            "rank"
+                          ],
+                          "type": "object"
                         },
-                        "score": {
-                          "type": "number"
+                        "2": {
+                          "properties": {
+                            "rank": {
+                              "type": "number"
+                            },
+                            "score": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "score",
+                            "rank"
+                          ],
+                          "type": "object"
+                        },
+                        "3": {
+                          "properties": {
+                            "rank": {
+                              "type": "number"
+                            },
+                            "score": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "score",
+                            "rank"
+                          ],
+                          "type": "object"
+                        },
+                        "4": {
+                          "properties": {
+                            "rank": {
+                              "type": "number"
+                            },
+                            "score": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "score",
+                            "rank"
+                          ],
+                          "type": "object"
                         }
                       },
-                      "required": [
-                        "score",
-                        "rank"
-                      ],
                       "type": "object"
                     }
                   },
+                  "required": [
+                    "allySkill",
+                    "enemySkill",
+                    "allyBloggerId",
+                    "enemyBloggerId",
+                    "personalLevel",
+                    "stats"
+                  ],
+                  "type": "object"
+                },
+                {
+                  "properties": {
+                    "stats": {
+                      "properties": {
+                        "1": {
+                          "properties": {
+                            "rank": {
+                              "type": "number"
+                            },
+                            "score": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "score",
+                            "rank"
+                          ],
+                          "type": "object"
+                        },
+                        "2": {
+                          "properties": {
+                            "rank": {
+                              "type": "number"
+                            },
+                            "score": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "score",
+                            "rank"
+                          ],
+                          "type": "object"
+                        },
+                        "3": {
+                          "properties": {
+                            "rank": {
+                              "type": "number"
+                            },
+                            "score": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "score",
+                            "rank"
+                          ],
+                          "type": "object"
+                        },
+                        "4": {
+                          "properties": {
+                            "rank": {
+                              "type": "number"
+                            },
+                            "score": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "score",
+                            "rank"
+                          ],
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "stats"
+                  ],
                   "type": "object"
                 }
-              },
-              "required": [
-                "allySkill",
-                "enemySkill",
-                "allyBloggerId",
-                "enemyBloggerId",
-                "personalLevel",
-                "stats"
-              ],
-              "type": "object"
+              ]
             }
           },
           "type": "object"
@@ -801,97 +878,174 @@
         "extra": {
           "properties": {
             "bob": {
-              "properties": {
-                "allyBloggerId": {
-                  "type": "number"
-                },
-                "allySkill": {
-                  "type": "string"
-                },
-                "enemyBloggerId": {
-                  "type": "number"
-                },
-                "enemySkill": {
-                  "type": "string"
-                },
-                "personalLevel": {
-                  "type": "number"
-                },
-                "stats": {
+              "anyOf": [
+                {
                   "properties": {
-                    "1": {
-                      "properties": {
-                        "rank": {
-                          "type": "number"
-                        },
-                        "score": {
-                          "type": "number"
-                        }
-                      },
-                      "required": [
-                        "score",
-                        "rank"
-                      ],
-                      "type": "object"
+                    "allyBloggerId": {
+                      "type": "number"
                     },
-                    "2": {
-                      "properties": {
-                        "rank": {
-                          "type": "number"
-                        },
-                        "score": {
-                          "type": "number"
-                        }
-                      },
-                      "required": [
-                        "score",
-                        "rank"
-                      ],
-                      "type": "object"
+                    "allySkill": {
+                      "type": "string"
                     },
-                    "3": {
-                      "properties": {
-                        "rank": {
-                          "type": "number"
-                        },
-                        "score": {
-                          "type": "number"
-                        }
-                      },
-                      "required": [
-                        "score",
-                        "rank"
-                      ],
-                      "type": "object"
+                    "enemyBloggerId": {
+                      "type": "number"
                     },
-                    "4": {
+                    "enemySkill": {
+                      "type": "string"
+                    },
+                    "personalLevel": {
+                      "type": "number"
+                    },
+                    "stats": {
                       "properties": {
-                        "rank": {
-                          "type": "number"
+                        "1": {
+                          "properties": {
+                            "rank": {
+                              "type": "number"
+                            },
+                            "score": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "score",
+                            "rank"
+                          ],
+                          "type": "object"
                         },
-                        "score": {
-                          "type": "number"
+                        "2": {
+                          "properties": {
+                            "rank": {
+                              "type": "number"
+                            },
+                            "score": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "score",
+                            "rank"
+                          ],
+                          "type": "object"
+                        },
+                        "3": {
+                          "properties": {
+                            "rank": {
+                              "type": "number"
+                            },
+                            "score": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "score",
+                            "rank"
+                          ],
+                          "type": "object"
+                        },
+                        "4": {
+                          "properties": {
+                            "rank": {
+                              "type": "number"
+                            },
+                            "score": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "score",
+                            "rank"
+                          ],
+                          "type": "object"
                         }
                       },
-                      "required": [
-                        "score",
-                        "rank"
-                      ],
                       "type": "object"
                     }
                   },
+                  "required": [
+                    "allySkill",
+                    "enemySkill",
+                    "allyBloggerId",
+                    "enemyBloggerId",
+                    "personalLevel",
+                    "stats"
+                  ],
+                  "type": "object"
+                },
+                {
+                  "properties": {
+                    "stats": {
+                      "properties": {
+                        "1": {
+                          "properties": {
+                            "rank": {
+                              "type": "number"
+                            },
+                            "score": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "score",
+                            "rank"
+                          ],
+                          "type": "object"
+                        },
+                        "2": {
+                          "properties": {
+                            "rank": {
+                              "type": "number"
+                            },
+                            "score": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "score",
+                            "rank"
+                          ],
+                          "type": "object"
+                        },
+                        "3": {
+                          "properties": {
+                            "rank": {
+                              "type": "number"
+                            },
+                            "score": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "score",
+                            "rank"
+                          ],
+                          "type": "object"
+                        },
+                        "4": {
+                          "properties": {
+                            "rank": {
+                              "type": "number"
+                            },
+                            "score": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "score",
+                            "rank"
+                          ],
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "stats"
+                  ],
                   "type": "object"
                 }
-              },
-              "required": [
-                "allySkill",
-                "enemySkill",
-                "allyBloggerId",
-                "enemyBloggerId",
-                "personalLevel",
-                "stats"
-              ],
-              "type": "object"
+              ]
             }
           },
           "type": "object"
@@ -1737,97 +1891,174 @@
         "extra": {
           "properties": {
             "bob": {
-              "properties": {
-                "allyBloggerId": {
-                  "type": "number"
-                },
-                "allySkill": {
-                  "type": "string"
-                },
-                "enemyBloggerId": {
-                  "type": "number"
-                },
-                "enemySkill": {
-                  "type": "string"
-                },
-                "personalLevel": {
-                  "type": "number"
-                },
-                "stats": {
+              "anyOf": [
+                {
                   "properties": {
-                    "1": {
-                      "properties": {
-                        "rank": {
-                          "type": "number"
-                        },
-                        "score": {
-                          "type": "number"
-                        }
-                      },
-                      "required": [
-                        "score",
-                        "rank"
-                      ],
-                      "type": "object"
+                    "allyBloggerId": {
+                      "type": "number"
                     },
-                    "2": {
-                      "properties": {
-                        "rank": {
-                          "type": "number"
-                        },
-                        "score": {
-                          "type": "number"
-                        }
-                      },
-                      "required": [
-                        "score",
-                        "rank"
-                      ],
-                      "type": "object"
+                    "allySkill": {
+                      "type": "string"
                     },
-                    "3": {
-                      "properties": {
-                        "rank": {
-                          "type": "number"
-                        },
-                        "score": {
-                          "type": "number"
-                        }
-                      },
-                      "required": [
-                        "score",
-                        "rank"
-                      ],
-                      "type": "object"
+                    "enemyBloggerId": {
+                      "type": "number"
                     },
-                    "4": {
+                    "enemySkill": {
+                      "type": "string"
+                    },
+                    "personalLevel": {
+                      "type": "number"
+                    },
+                    "stats": {
                       "properties": {
-                        "rank": {
-                          "type": "number"
+                        "1": {
+                          "properties": {
+                            "rank": {
+                              "type": "number"
+                            },
+                            "score": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "score",
+                            "rank"
+                          ],
+                          "type": "object"
                         },
-                        "score": {
-                          "type": "number"
+                        "2": {
+                          "properties": {
+                            "rank": {
+                              "type": "number"
+                            },
+                            "score": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "score",
+                            "rank"
+                          ],
+                          "type": "object"
+                        },
+                        "3": {
+                          "properties": {
+                            "rank": {
+                              "type": "number"
+                            },
+                            "score": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "score",
+                            "rank"
+                          ],
+                          "type": "object"
+                        },
+                        "4": {
+                          "properties": {
+                            "rank": {
+                              "type": "number"
+                            },
+                            "score": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "score",
+                            "rank"
+                          ],
+                          "type": "object"
                         }
                       },
-                      "required": [
-                        "score",
-                        "rank"
-                      ],
                       "type": "object"
                     }
                   },
+                  "required": [
+                    "allySkill",
+                    "enemySkill",
+                    "allyBloggerId",
+                    "enemyBloggerId",
+                    "personalLevel",
+                    "stats"
+                  ],
+                  "type": "object"
+                },
+                {
+                  "properties": {
+                    "stats": {
+                      "properties": {
+                        "1": {
+                          "properties": {
+                            "rank": {
+                              "type": "number"
+                            },
+                            "score": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "score",
+                            "rank"
+                          ],
+                          "type": "object"
+                        },
+                        "2": {
+                          "properties": {
+                            "rank": {
+                              "type": "number"
+                            },
+                            "score": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "score",
+                            "rank"
+                          ],
+                          "type": "object"
+                        },
+                        "3": {
+                          "properties": {
+                            "rank": {
+                              "type": "number"
+                            },
+                            "score": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "score",
+                            "rank"
+                          ],
+                          "type": "object"
+                        },
+                        "4": {
+                          "properties": {
+                            "rank": {
+                              "type": "number"
+                            },
+                            "score": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "score",
+                            "rank"
+                          ],
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "stats"
+                  ],
                   "type": "object"
                 }
-              },
-              "required": [
-                "allySkill",
-                "enemySkill",
-                "allyBloggerId",
-                "enemyBloggerId",
-                "personalLevel",
-                "stats"
-              ],
-              "type": "object"
+              ]
             }
           },
           "type": "object"

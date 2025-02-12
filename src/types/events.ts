@@ -148,6 +148,7 @@ interface DynamicBattleInfo extends StaticBattleInfo, BattleExtra {
   enemyTeamFragsCount: UInt8
 }
 
+type BOB25Stats = { [key in '1' | '2' | '3' | '4']?: { score: number, rank: number } }
 type BOB25Extra = {
   allySkill: string
   enemySkill: string
@@ -156,9 +157,9 @@ type BOB25Extra = {
 
   personalLevel: number,
 
-  stats: {
-    [key in '1' | '2' | '3' | '4']?: { score: number, rank: number }
-  }
+  stats: BOB25Stats
+} | {
+  stats: BOB25Stats
 }
 
 type VehicleBattleResult = {
