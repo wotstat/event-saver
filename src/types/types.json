@@ -1547,6 +1547,10 @@
               },
               "type": "array"
             },
+            "equipCoin": {
+              "minimum": 0,
+              "type": "integer"
+            },
             "eventCoin": {
               "minimum": 0,
               "type": "integer"
@@ -1692,6 +1696,7 @@
             "freeXP",
             "crystal",
             "eventCoin",
+            "equipCoin",
             "bpcoin",
             "currencies",
             "premium",

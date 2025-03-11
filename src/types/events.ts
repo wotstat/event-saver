@@ -376,7 +376,9 @@ export interface OnLootboxOpen extends HangarEvent, SessionMeta {
     freeXP: UInt16
     crystal: UInt16
     eventCoin: UInt16
+    equipCoin: UInt16
     bpcoin: UInt16
+
     currencies: [string, amount: UInt16][]
 
     premium: UInt16

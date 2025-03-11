@@ -38,6 +38,7 @@ export default function process(e: any) {
       freeXP: e.parsed.freeXP,
       crystal: e.parsed.crystal,
       eventCoin: e.parsed.eventCoin,
+      equipCoin: e.parsed.equipCoin,
       bpcoin: e.parsed.bpcoin,
       'currencies.tag': e.parsed.currencies.map(([tag, amount]) => tag),
       'currencies.amount': e.parsed.currencies.map(([tag, amount]) => amount),
