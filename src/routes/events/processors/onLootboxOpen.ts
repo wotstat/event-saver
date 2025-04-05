@@ -1,6 +1,6 @@
 import { modVersionComparator } from "@/utils/utils";
 import { insert } from "../insert"
-import { now, unwrapEvent, unwrapHangarEvent, unwrapSessionMeta, unwrapVector3 } from './utils';
+import { now, unwrapEvent, unwrapHangarEvent, unwrapServerInfo, unwrapSessionMeta, unwrapVector3 } from './utils';
 
 import { check, onLootboxOpenSchema } from '@/types/validator';
 import { uuid } from "@/utils/uuid";
@@ -106,7 +106,8 @@ export default function process(e: any) {
       rawString: e.raw,
       ...unwrapHangarEvent(e),
       ...unwrapSessionMeta(e),
-      ...unwrapEvent(e)
+      ...unwrapEvent(e),
+      ...unwrapServerInfo(e),
     }, e)
   })
 }

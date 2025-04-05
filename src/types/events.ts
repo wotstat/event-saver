@@ -73,6 +73,17 @@ interface SessionMeta {
   lastXpPlace: number[]
 }
 
+interface ServerInfo {
+  /** название сервера */
+  serverName?: string
+
+  /** онлайн на сервере */
+  serverOnline?: number
+
+  /** онлайн в регионе */
+  regionOnline?: number
+}
+
 interface PartialSessionMeta extends Partial<SessionMeta> { }
 
 // Статические данные о бое (не изменяются), присутствуют во всех событиях для удобных селектов и фильтров
@@ -92,9 +103,6 @@ interface StaticBattleInfo {
 
   /** режим игры */
   battleGameplay: string
-
-  /** название сервера */
-  serverName: string
 
   /** ник игрока */
   playerName: string
@@ -198,7 +206,7 @@ type VehicleBattleResult = {
   playerRank?: UInt8
 }
 
-export interface OnBattleStart extends DynamicBattleInfo, Event, PartialSessionMeta {
+export interface OnBattleStart extends DynamicBattleInfo, Event, PartialSessionMeta, ServerInfo {
   /** id арены из танков */
   arenaID: UInt64
 
@@ -223,7 +231,7 @@ export interface OnBattleStart extends DynamicBattleInfo, Event, PartialSessionM
   battleTime: number
 }
 
-export interface OnBattleResult extends TokenEvent, DynamicBattleInfo, PartialSessionMeta {
+export interface OnBattleResult extends TokenEvent, DynamicBattleInfo, PartialSessionMeta, ServerInfo {
   result: {
     /** id арены из танков */
     arenaID: AllowUndefined<UInt64>
@@ -242,7 +250,7 @@ export interface OnBattleResult extends TokenEvent, DynamicBattleInfo, PartialSe
   }
 }
 
-export interface OnShot extends BattleEvent, DynamicBattleInfo, PartialSessionMeta {
+export interface OnShot extends BattleEvent, DynamicBattleInfo, PartialSessionMeta, ServerInfo {
   /** id выстрела уникальный для клиента */
   shotId: number,
 
@@ -361,7 +369,7 @@ export interface OnShot extends BattleEvent, DynamicBattleInfo, PartialSessionMe
   }[],
 }
 
-export interface OnLootboxOpen extends HangarEvent, SessionMeta {
+export interface OnLootboxOpen extends HangarEvent, SessionMeta, ServerInfo {
   containerTag: string,
   openByTag?: string,
   isOpenSuccess?: boolean,
@@ -415,4 +423,4 @@ export interface OnLootboxOpen extends HangarEvent, SessionMeta {
 }
 
 
-export type { Event, TokenEvent, HangarEvent, BattleEvent, SessionMeta, DynamicBattleInfo, StaticBattleInfo }
+export type { Event, TokenEvent, HangarEvent, BattleEvent, SessionMeta, DynamicBattleInfo, StaticBattleInfo, ServerInfo }

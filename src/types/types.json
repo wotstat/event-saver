@@ -295,6 +295,10 @@
           "description": "регион игры",
           "type": "string"
         },
+        "regionOnline": {
+          "description": "онлайн в регионе",
+          "type": "number"
+        },
         "result": {
           "properties": {
             "arenaID": {
@@ -716,6 +720,10 @@
           "description": "название сервера",
           "type": "string"
         },
+        "serverOnline": {
+          "description": "онлайн на сервере",
+          "type": "number"
+        },
         "sessionStart": {
           "description": "Количество начатых боёв",
           "type": "string"
@@ -784,7 +792,6 @@
         "playerName",
         "region",
         "result",
-        "serverName",
         "tankLevel",
         "tankRole",
         "tankTag",
@@ -1123,9 +1130,17 @@
           "description": "регион игры",
           "type": "string"
         },
+        "regionOnline": {
+          "description": "онлайн в регионе",
+          "type": "number"
+        },
         "serverName": {
           "description": "название сервера",
           "type": "string"
+        },
+        "serverOnline": {
+          "description": "онлайн на сервере",
+          "type": "number"
         },
         "sessionStart": {
           "description": "Количество начатых боёв",
@@ -1218,7 +1233,6 @@
         "playerName",
         "preBattleWaitTime",
         "region",
-        "serverName",
         "spawnPoint",
         "tankLevel",
         "tankRole",
@@ -1731,9 +1745,21 @@
           "description": "регион игры",
           "type": "string"
         },
+        "regionOnline": {
+          "description": "онлайн в регионе",
+          "type": "number"
+        },
         "rerollCount": {
           "minimum": 0,
           "type": "integer"
+        },
+        "serverName": {
+          "description": "название сервера",
+          "type": "string"
+        },
+        "serverOnline": {
+          "description": "онлайн на сервере",
+          "type": "number"
         },
         "sessionStart": {
           "description": "Количество начатых боёв",
@@ -2283,6 +2309,10 @@
           "description": "регион игры",
           "type": "string"
         },
+        "regionOnline": {
+          "description": "онлайн в регионе",
+          "type": "number"
+        },
         "results": {
           "description": "Результаты попадания",
           "items": {
@@ -2381,6 +2411,10 @@
         "serverName": {
           "description": "название сервера",
           "type": "string"
+        },
+        "serverOnline": {
+          "description": "онлайн на сервере",
+          "type": "number"
         },
         "serverShotDispersion": {
           "description": "Серверное сведение",
@@ -2606,7 +2640,6 @@
         "results",
         "serverAim",
         "serverMarkerPoint",
-        "serverName",
         "serverShotDispersion",
         "shellCaliber",
         "shellDamage",

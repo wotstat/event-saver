@@ -1,4 +1,4 @@
-import type { Event, DynamicBattleInfo, BattleEvent, HangarEvent, SessionMeta } from "@/types/events"
+import type { Event, DynamicBattleInfo, BattleEvent, HangarEvent, SessionMeta, ServerInfo } from "@/types/events"
 
 export function now() {
   return (new Date()).getTime()
@@ -32,6 +32,14 @@ export function unwrapEvent(e: Event) {
   }
 }
 
+export function unwrapServerInfo(e: ServerInfo) {
+  return {
+    serverName: e.serverName ?? '',
+    serverOnline: e.serverOnline ?? 0,
+    regionOnline: e.regionOnline ?? 0,
+  }
+}
+
 export function unwrapDynamicBattleInfo(e: DynamicBattleInfo) {
   return {
     arenaTag: e.arenaTag,
@@ -40,7 +48,6 @@ export function unwrapDynamicBattleInfo(e: DynamicBattleInfo) {
     accountDBID: e.accountDBID,
     battleMode: e.battleMode,
     battleGameplay: e.battleGameplay,
-    serverName: e.serverName,
     team: e.team,
     tankTag: e.tankTag,
     tankRole: e.tankRole,
