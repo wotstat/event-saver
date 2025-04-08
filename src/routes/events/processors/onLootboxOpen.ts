@@ -102,7 +102,7 @@ export default function process(e: any) {
 
       claimed: e.claimed ?? true,
       rerollCount: e.rerollCount ?? 0,
-      raw: raw,
+      raw: {},
       rawString: e.raw,
       ...unwrapHangarEvent(e),
       ...unwrapSessionMeta(e),
