@@ -418,6 +418,8 @@ export interface OnLootboxOpen extends HangarEvent, SessionMeta, ServerInfo {
 
     toys?: [toyTag: string, count: UInt16][]
     compensatedToys?: [toyTag: string, compensationCurrency: string, count: UInt16][]
+
+    entitlements?: [tag: string, count: UInt16][]
   },
   raw: string
 }

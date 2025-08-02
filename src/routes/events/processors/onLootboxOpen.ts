@@ -23,6 +23,27 @@ export default function process(e: any) {
       console.error('Failed to parse parsed field', e)
     }
 
+
+    // TODO: remove this when mod updated
+    let rawEntitlementsTags: string[] = []
+    let rawEntitlementsCount: number[] = []
+    try {
+      if ('entitlements' in raw && typeof raw.entitlements === 'object' && raw.entitlements !== null) {
+        const entitlements = raw.entitlements
+        const keys = Object.keys(entitlements)
+        rawEntitlementsTags = keys
+        rawEntitlementsCount = keys.map(k => {
+          const v = entitlements[k as keyof typeof entitlements] as unknown
+          if (typeof v === 'object' && v !== null && 'count' in v && typeof v.count === 'number') return v.count
+          return 0
+        })
+      }
+    } catch (error) {
+      rawEntitlementsTags = []
+      rawEntitlementsCount = []
+    }
+    // ==========END==========
+
     insert('Event_OnLootboxOpen', {
       id: uuid(),
       dateTime: now(),
@@ -99,6 +120,9 @@ export default function process(e: any) {
       'compensatedToys.tag': e.parsed.compensatedToys?.map(([tag, currency, count]) => tag) ?? [],
       'compensatedToys.currency': e.parsed.compensatedToys?.map(([tag, currency, count]) => currency) ?? [],
       'compensatedToys.count': e.parsed.compensatedToys?.map(([tag, currency, count]) => count) ?? [],
+
+      'entitlements.tag': e.parsed.entitlements?.map(([tag, count]) => tag) ?? rawEntitlementsTags,
+      'entitlements.count': e.parsed.entitlements?.map(([tag, count]) => count) ?? rawEntitlementsCount,
 
       claimed: e.claimed ?? true,
       rerollCount: e.rerollCount ?? 0,

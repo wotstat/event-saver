@@ -1542,6 +1542,25 @@
               },
               "type": "array"
             },
+            "entitlements": {
+              "items": {
+                "items": [
+                  {
+                    "title": "tag",
+                    "type": "string"
+                  },
+                  {
+                    "minimum": 0,
+                    "title": "count",
+                    "type": "integer"
+                  }
+                ],
+                "maxItems": 2,
+                "minItems": 2,
+                "type": "array"
+              },
+              "type": "array"
+            },
             "equip": {
               "items": {
                 "items": [

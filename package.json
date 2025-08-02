@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev:docker": "docker compose -p event-saver down; docker compose -p event-saver -f docker-compose.local.yaml up --build --remove-orphans",
-    "generateJsonSchema": "bunx ts-json-schema-generator --no-type-check --additional-properties true --path ./src/types/events.ts --out ./src/types/types.json"
+    "generateJsonSchema": "bunx ts-json-schema-generator --no-type-check --additional-properties --path ./src/types/events.ts --out ./src/types/types.json"
   },
   "dependencies": {
     "@clickhouse/client": "^1.8.1",
