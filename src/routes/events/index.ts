@@ -5,6 +5,7 @@ import OnBattleResult from './processors/onBattleResult'
 import OnBattleStart from './processors/onBattleStart'
 import OnShot from './processors/onShot'
 import OnLootboxOpen from './processors/onLootboxOpen'
+import OnMoeInfo from './processors/onMoeInfo'
 
 import { redis } from '@/redis/index'
 
@@ -28,6 +29,7 @@ const supportedEvents = {
 
 const supportedHangarEvents = {
   'OnLootboxOpen': OnLootboxOpen,
+  'OnMoeInfo': OnMoeInfo
 }
 
 

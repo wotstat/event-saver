@@ -424,5 +424,16 @@ export interface OnLootboxOpen extends HangarEvent, SessionMeta, ServerInfo {
   raw: string
 }
 
+export interface MoeInfo extends HangarEvent {
+  /** Тег танка */
+  tankTag: string
+
+  /** количество боёв */
+  battleCount: UInt32
+
+  /** планка на отметку 0%, 20%, 40%, 55%, 65%, 75%, 85%, 95%, 100% */
+  moeDistribution: [number, number, number, number, number, number, number, number, number]
+}
+
 
 export type { Event, TokenEvent, HangarEvent, BattleEvent, SessionMeta, DynamicBattleInfo, StaticBattleInfo, ServerInfo }
