@@ -283,8 +283,13 @@ export interface OnShot extends BattleEvent, DynamicBattleInfo, PartialSessionMe
   serverShotDispersion: number,
   /** Клиентское сведение */
   clientShotDispersion: number,
+
+  // TODO: Force acceleration after 1.28 update
   /** Гравитация */
-  gravity: number,
+  gravity?: number,
+  /** Ускорение */
+  acceleration?: Vector3,
+
   /** Используется ли серверный прицел */
   serverAim: boolean,
   /** Используется автоприцел */

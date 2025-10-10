@@ -1892,6 +1892,26 @@
     },
     "OnShot": {
       "properties": {
+        "acceleration": {
+          "description": "Ускорение",
+          "properties": {
+            "x": {
+              "type": "number"
+            },
+            "y": {
+              "type": "number"
+            },
+            "z": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "x",
+            "y",
+            "z"
+          ],
+          "type": "object"
+        },
         "accountDBID": {
           "description": "ID аккаунта",
           "minimum": 0,
@@ -2693,7 +2713,6 @@
         "eventName",
         "fps",
         "gameVersion",
-        "gravity",
         "gunDescr",
         "gunDispersion",
         "gunPoint",

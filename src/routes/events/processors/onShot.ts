@@ -8,8 +8,10 @@ import { uuid } from "@/utils/uuid";
 export default function process(battleUUID: string, e: any) {
   check(onShotSchema, e, (e) => {
 
+    const gravity = e.gravity ?? -(e.acceleration?.y ?? 0)
+
     const shared = {
-      gravity: -e.gravity,
+      gravity: -gravity,
       gunPos: e.gunPoint,
       shellSpeed: e.shellSpeed * 0.8,
       tracerStart: e.tracerStart,
@@ -65,7 +67,8 @@ export default function process(battleUUID: string, e: any) {
       battleDispersion: e.battleDispersion,
       serverShotDispersion: e.serverShotDispersion,
       clientShotDispersion: e.clientShotDispersion,
-      gravity: e.gravity,
+      gravity: gravity,
+      ...unwrapVector3('acceleration', e.acceleration ?? { x: 0, y: -gravity, z: 0 }),
       serverAim: e.serverAim,
       autoAim: e.autoAim,
       ping: Math.max(Math.min(Math.round(e.ping * 1000), 65535), 0),
