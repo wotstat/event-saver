@@ -392,7 +392,7 @@ export interface OnLootboxOpen extends HangarEvent, SessionMeta, ServerInfo {
     equipCoin: UInt16
     bpcoin: UInt16
 
-    currencies: [string, amount: UInt16][]
+    currencies?: [string, amount: UInt16][]
 
     premium: UInt16
     premium_plus: UInt16
