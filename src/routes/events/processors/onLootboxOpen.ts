@@ -33,10 +33,12 @@ export default function process(e: any) {
     } else {
       try {
         const parsedString = JSON.parse(e.raw)
-        parsedString.currencies.forEach(([tag, amount]: [string, { count: number }]) => {
-          currenciesTag.push(tag)
-          currenciesAmount.push(amount.count)
-        })
+        if (parsedString.currencies) {
+          parsedString.currencies.forEach(([tag, amount]: [string, { count: number }]) => {
+            currenciesTag.push(tag)
+            currenciesAmount.push(amount.count)
+          })
+        }
       } catch (e) {
         console.error('Failed to parse currencies from raw field', e)
       }
