@@ -1316,10 +1316,6 @@
         "containerTag": {
           "type": "string"
         },
-        "dateTime": {
-          "minimum": 0,
-          "type": "integer"
-        },
         "eventName": {
           "description": "название ивента",
           "type": "string"
