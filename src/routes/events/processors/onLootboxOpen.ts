@@ -47,7 +47,7 @@ export default function process(e: any) {
 
     insert('Event_OnLootboxOpen', {
       id: uuid(),
-      dateTime: now(),
+      dateTime: e.dateTime ?? now(),
 
       containerTag: e.containerTag,
       openByTag: e.openByTag ?? e.containerTag,
