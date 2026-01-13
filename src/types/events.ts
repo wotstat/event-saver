@@ -1,13 +1,13 @@
 /** @asType integer */
-declare type integer = number
+declare type Int32 = number
 /** @minimum 0*/
-declare type UInt32 = integer
+declare type UInt32 = Int32
 /** @minimum 0*/
-declare type UInt64 = integer
+declare type UInt64 = Int32
 /** @minimum 0*/
-declare type UInt16 = integer
+declare type UInt16 = Int32
 /** @minimum 0*/
-declare type UInt8 = integer
+declare type UInt8 = Int32
 declare type Vector3 = { x: number, y: number, z: number }
 
 declare type AllowUndefined<T> = T | undefined
@@ -120,7 +120,7 @@ interface BattleExtra {
 interface DynamicBattleInfo extends StaticBattleInfo, BattleExtra {
 
   /** команда игрока */
-  team: integer
+  team: Int32
 
   /** название танка */
   tankTag: string
@@ -132,7 +132,7 @@ interface DynamicBattleInfo extends StaticBattleInfo, BattleExtra {
   tankRole: string
 
   /** уровень танка */
-  tankLevel: integer
+  tankLevel: Int32
 
   /** название пушки */
   gunTag: string,
@@ -198,12 +198,13 @@ type VehicleBattleResult = {
   tankType: 'LT' | 'MT' | 'HT' | 'SPG' | 'AT',
   tankRole: string
   tankLevel: UInt8
-  killerIndex: integer
+  killerIndex: Int32
   maxHealth: UInt16
   health: UInt16
   isAlive: boolean
   squadID: UInt8
   playerRank?: UInt8
+  comp7PrestigePoints?: UInt16
 }
 
 export interface OnBattleStart extends DynamicBattleInfo, Event, PartialSessionMeta, ServerInfo {
@@ -225,20 +226,43 @@ export interface OnBattleStart extends DynamicBattleInfo, Event, PartialSessionM
   /** Время в очереди перед началом боя */
   inQueueWaitTime: number
 
-  gameplayMask: integer
+  gameplayMask: Int32
 
   /** Время относительно начала боя. Если событие до старта, время отрицательно */
   battleTime: number
+}
+
+export type Currencies = {
+  originalCredits: Int32,
+  originalCrystal: Int32,
+  subtotalCredits: Int32,
+  autoRepairCost: Int32,
+  autoLoadCredits: Int32,
+  autoLoadGold: Int32,
+  autoEquipCredits: Int32,
+  autoEquipGold: Int32,
+  autoEquipCrystals: Int32,
+  piggyBank: Int32,
+}
+
+type Comp7 = {
+  ratingDelta: Int32,
+  rating: UInt16,
+  qualBattleIndex: UInt8,
+  qualActive: boolean,
 }
 
 export interface OnBattleResult extends TokenEvent, DynamicBattleInfo, PartialSessionMeta, ServerInfo {
   result: {
     /** id арены из танков */
     arenaID: AllowUndefined<UInt64>
-    credits: integer,
-    originalCredits: integer,
+    /** deprecated */
+    credits?: Int32,
+    /** deprecated */
+    originalCredits?: Int32,
     teamHealth: UInt16[],
     result: 'win' | 'lose' | 'tie',
+    finishReason?: 'UNKNOWN' | 'EXTERMINATION' | 'BASE' | 'TIMEOUT' | 'FAILURE' | 'TECHNICAL' | 'WIN_POINTS_CAP' | 'WIN_POINTS' | 'ALLY_KILLED' | 'OWN_VEHICLE_DESTROYED' | 'DESTROYED_OBJECTS' | 'OBJECTIVES_COMPLETED',
     winnerTeam: UInt16 | null,
     duration: UInt16,
     playerTeam: UInt8,
@@ -246,7 +270,9 @@ export interface OnBattleResult extends TokenEvent, DynamicBattleInfo, PartialSe
     playersResults: (VehicleBattleResult & {
       bdid: UInt64,
       name: string,
-    })[]
+    })[],
+    comp7?: Comp7
+    currencies?: Currencies
   }
 }
 

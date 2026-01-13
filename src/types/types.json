@@ -1,6 +1,53 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
+    "Currencies": {
+      "properties": {
+        "autoEquipCredits": {
+          "type": "integer"
+        },
+        "autoEquipCrystals": {
+          "type": "integer"
+        },
+        "autoEquipGold": {
+          "type": "integer"
+        },
+        "autoLoadCredits": {
+          "type": "integer"
+        },
+        "autoLoadGold": {
+          "type": "integer"
+        },
+        "autoRepairCost": {
+          "type": "integer"
+        },
+        "originalCredits": {
+          "type": "integer"
+        },
+        "originalCrystal": {
+          "type": "integer"
+        },
+        "piggyBank": {
+          "type": "integer"
+        },
+        "subtotalCredits": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "originalCredits",
+        "originalCrystal",
+        "subtotalCredits",
+        "autoRepairCost",
+        "autoLoadCredits",
+        "autoLoadGold",
+        "autoEquipCredits",
+        "autoEquipGold",
+        "autoEquipCrystals",
+        "piggyBank"
+      ],
+      "type": "object"
+    },
     "MoeInfo": {
       "properties": {
         "battleCount": {
@@ -364,18 +411,69 @@
               "minimum": 0,
               "type": "integer"
             },
+            "comp7": {
+              "properties": {
+                "qualActive": {
+                  "type": "boolean"
+                },
+                "qualBattleIndex": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "rating": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "ratingDelta": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "ratingDelta",
+                "rating",
+                "qualBattleIndex",
+                "qualActive"
+              ],
+              "type": "object"
+            },
             "credits": {
+              "description": "deprecated",
               "type": "integer"
+            },
+            "currencies": {
+              "$ref": "#/definitions/Currencies"
             },
             "duration": {
               "minimum": 0,
               "type": "integer"
             },
+            "finishReason": {
+              "enum": [
+                "UNKNOWN",
+                "EXTERMINATION",
+                "BASE",
+                "TIMEOUT",
+                "FAILURE",
+                "TECHNICAL",
+                "WIN_POINTS_CAP",
+                "WIN_POINTS",
+                "ALLY_KILLED",
+                "OWN_VEHICLE_DESTROYED",
+                "DESTROYED_OBJECTS",
+                "OBJECTIVES_COMPLETED"
+              ],
+              "type": "string"
+            },
             "originalCredits": {
+              "description": "deprecated",
               "type": "integer"
             },
             "personal": {
               "properties": {
+                "comp7PrestigePoints": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
                 "damageAssistedRadio": {
                   "minimum": 0,
                   "type": "integer"
@@ -554,6 +652,10 @@
               "items": {
                 "properties": {
                   "bdid": {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "comp7PrestigePoints": {
                     "minimum": 0,
                     "type": "integer"
                   },
@@ -762,8 +864,6 @@
             }
           },
           "required": [
-            "credits",
-            "originalCredits",
             "teamHealth",
             "result",
             "winnerTeam",

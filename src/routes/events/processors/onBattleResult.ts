@@ -24,22 +24,67 @@ function unwrapPlayersResults(results: OnBattleResult['result']['playersResults'
   return res
 }
 
+function finishReason(res: OnBattleResult['result']['finishReason']) {
+  if (!res) return 'unknown'
+  return res.toLowerCase().split('_').map((w, i) => i === 0 ? w : w.charAt(0).toUpperCase() + w.slice(1)).join('')
+}
+
+
+function unwrapCurrencies(prefix: string, currencies: OnBattleResult['result']['currencies'] | undefined) {
+  const values = {
+    originalCredits: 0,
+    originalCrystal: 0,
+    subtotalCredits: 0,
+    autoRepairCost: 0,
+    autoLoadCredits: 0,
+    autoLoadGold: 0,
+    autoEquipCredits: 0,
+    autoEquipGold: 0,
+    autoEquipCrystals: 0,
+    piggyBank: 0,
+    ...currencies
+  }
+
+  return Object.fromEntries(Object.entries(values).map(([k, v]) => [`${prefix}.${k}`, v]))
+}
+
+function unwrapComp7(prefix: string, comp7: OnBattleResult['result']['comp7'] | undefined) {
+  const values = {
+    ratingDelta: 0,
+    rating: 0,
+    qualBattleIndex: 0,
+    qualActive: false,
+    ...comp7
+  }
+
+  return Object.fromEntries(Object.entries(values).map(([k, v]) => [`${prefix}.${k}`, v]))
+}
+
 export default function process(battleUUID: string, e: any) {
   check(onBattleResultSchema, e, async (e) => {
     const r = e.result
+
+    const currencies = unwrapCurrencies('currencies', r.currencies);
+
+    if (!r.currencies) {
+      currencies['currencies.originalCredits'] = r.originalCredits ?? 0;
+    }
 
     insert('Event_OnBattleResult', {
       id: uuid(),
       onBattleStartId: battleUUID,
       dateTime: now(),
       result: r.result,
-      credits: r.credits,
-      originalCredits: r.originalCredits,
+      finishReason: finishReason(r.finishReason),
+      credits: r.credits ?? 0,
+      originalCredits: r.originalCredits ?? 0,
       duration: r.duration,
       teamHealth: r.teamHealth,
       winnerTeam: r.winnerTeam,
       playerTeam: r.playerTeam,
       arenaId: r.arenaID,
+      ...currencies,
+      ...unwrapComp7('comp7', r.comp7),
       ...unwrapVehicleBattleResult('personal', r.personal),
       ...unwrapPlayersResults(r.playersResults),
       ...unwrapDynamicBattleInfo(e),
