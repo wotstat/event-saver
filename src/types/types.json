@@ -1,53 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
-    "Currencies": {
-      "properties": {
-        "autoEquipCredits": {
-          "type": "integer"
-        },
-        "autoEquipCrystals": {
-          "type": "integer"
-        },
-        "autoEquipGold": {
-          "type": "integer"
-        },
-        "autoLoadCredits": {
-          "type": "integer"
-        },
-        "autoLoadGold": {
-          "type": "integer"
-        },
-        "autoRepairCost": {
-          "type": "integer"
-        },
-        "originalCredits": {
-          "type": "integer"
-        },
-        "originalCrystal": {
-          "type": "integer"
-        },
-        "piggyBank": {
-          "type": "integer"
-        },
-        "subtotalCredits": {
-          "type": "integer"
-        }
-      },
-      "required": [
-        "originalCredits",
-        "originalCrystal",
-        "subtotalCredits",
-        "autoRepairCost",
-        "autoLoadCredits",
-        "autoLoadGold",
-        "autoEquipCredits",
-        "autoEquipGold",
-        "autoEquipCrystals",
-        "piggyBank"
-      ],
-      "type": "object"
-    },
     "MoeInfo": {
       "properties": {
         "battleCount": {
@@ -441,7 +394,51 @@
               "type": "integer"
             },
             "currencies": {
-              "$ref": "#/definitions/Currencies"
+              "properties": {
+                "autoEquipCredits": {
+                  "type": "integer"
+                },
+                "autoEquipCrystals": {
+                  "type": "integer"
+                },
+                "autoEquipGold": {
+                  "type": "integer"
+                },
+                "autoLoadCredits": {
+                  "type": "integer"
+                },
+                "autoLoadGold": {
+                  "type": "integer"
+                },
+                "autoRepairCost": {
+                  "type": "integer"
+                },
+                "originalCredits": {
+                  "type": "integer"
+                },
+                "originalCrystal": {
+                  "type": "integer"
+                },
+                "piggyBank": {
+                  "type": "integer"
+                },
+                "subtotalCredits": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "originalCredits",
+                "originalCrystal",
+                "subtotalCredits",
+                "autoRepairCost",
+                "autoLoadCredits",
+                "autoLoadGold",
+                "autoEquipCredits",
+                "autoEquipGold",
+                "autoEquipCrystals",
+                "piggyBank"
+              ],
+              "type": "object"
             },
             "duration": {
               "minimum": 0,

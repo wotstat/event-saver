@@ -232,7 +232,7 @@ export interface OnBattleStart extends DynamicBattleInfo, Event, PartialSessionM
   battleTime: number
 }
 
-export type Currencies = {
+type Currencies = {
   originalCredits: Int32,
   originalCrystal: Int32,
   subtotalCredits: Int32,
