@@ -456,7 +456,18 @@ export interface OnLootboxOpen extends HangarEvent, SessionMeta, ServerInfo {
   raw: string
 }
 
-export interface MoeInfo extends HangarEvent {
+export interface OnComp7Info extends HangarEvent {
+  /** Сезон Натиска */
+  season: string
+
+  /** Текущий рейтинг */
+  rating: UInt32
+
+  /** Планка для Легенды */
+  eliteRating: UInt32
+}
+
+export interface OnMoeInfo extends HangarEvent {
   /** Тег танка */
   tankTag: string
 
