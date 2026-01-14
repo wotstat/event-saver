@@ -461,6 +461,9 @@
               ],
               "type": "string"
             },
+            "isPremium": {
+              "type": "boolean"
+            },
             "originalCredits": {
               "description": "deprecated",
               "type": "integer"

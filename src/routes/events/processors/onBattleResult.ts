@@ -78,6 +78,7 @@ export default function process(battleUUID: string, e: any) {
       finishReason: finishReason(r.finishReason),
       credits: r.credits ?? 0,
       originalCredits: r.originalCredits ?? 0,
+      isPremium: r.isPremium ?? false,
       duration: r.duration,
       teamHealth: r.teamHealth,
       winnerTeam: r.winnerTeam,
