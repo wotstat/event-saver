@@ -1,10 +1,11 @@
 import _Ajv, { type ValidateFunction } from "ajv"
+import addFormats from "ajv-formats"
 import type { OnBattleResult, OnBattleStart, OnShot, OnLootboxOpen, OnMoeInfo, OnComp7Info, OnAccountStats } from "./events";
 import types from './types.json' assert { type: "json" };
 
 export const Ajv = _Ajv as unknown as typeof _Ajv;
 
-export const ajv = new Ajv()
+export const ajv = addFormats(new Ajv())
 
 export function check<T>(schema: ValidateFunction<T>, data: any, t: (e: T) => void) {
   if (schema(data)) {

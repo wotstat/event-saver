@@ -58,9 +58,14 @@
           "type": "string"
         },
         "premiumPlusExpiryTime": {
-          "type": [
-            "string",
-            "null"
+          "anyOf": [
+            {
+              "format": "iso-date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "region": {
@@ -71,9 +76,14 @@
           "type": "string"
         },
         "wotPlusExpiryTime": {
-          "type": [
-            "string",
-            "null"
+          "anyOf": [
+            {
+              "format": "iso-date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
           ]
         }
       },

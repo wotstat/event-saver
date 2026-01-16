@@ -10,7 +10,7 @@ declare type UInt16 = Int32
 declare type UInt8 = Int32
 declare type Vector3 = { x: number, y: number, z: number }
 
-
+/** @format iso-date-time */
 declare type DateTime = string
 
 declare type AllowUndefined<T> = T | undefined
