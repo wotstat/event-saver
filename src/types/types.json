@@ -58,14 +58,9 @@
           "type": "string"
         },
         "premiumPlusExpiryTime": {
-          "anyOf": [
-            {
-              "format": "date-time-local",
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
+          "type": [
+            "string",
+            "null"
           ]
         },
         "region": {
@@ -76,14 +71,9 @@
           "type": "string"
         },
         "wotPlusExpiryTime": {
-          "anyOf": [
-            {
-              "format": "date-time-local",
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
+          "type": [
+            "string",
+            "null"
           ]
         }
       },
