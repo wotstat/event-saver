@@ -7,6 +7,7 @@ import OnShot from './processors/onShot'
 import OnLootboxOpen from './processors/onLootboxOpen'
 import OnMoeInfo from './processors/onMoeInfo'
 import OnComp7Info from './processors/OnComp7Info'
+import OnAccountStats from './processors/OnAccountStats'
 
 import { redis } from '@/redis/index'
 
@@ -32,6 +33,7 @@ const supportedHangarEvents = {
   'OnLootboxOpen': OnLootboxOpen,
   'OnMoeInfo': OnMoeInfo,
   'OnComp7Info': OnComp7Info,
+  'OnAccountStats': OnAccountStats,
 }
 
 
