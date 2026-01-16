@@ -7,7 +7,7 @@ import OnShot from './processors/onShot'
 import OnLootboxOpen from './processors/onLootboxOpen'
 import OnMoeInfo from './processors/onMoeInfo'
 import OnComp7Info from './processors/OnComp7Info'
-import OnAccountStats from './processors/OnAccountStats'
+import OnAccountStats from './processors/onAccountStats'
 
 import { redis } from '@/redis/index'
 

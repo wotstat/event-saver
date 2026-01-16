@@ -53,6 +53,14 @@
           "description": "версия мода",
           "type": "string"
         },
+        "piggyBankCredits": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "piggyBankGold": {
+          "minimum": 0,
+          "type": "integer"
+        },
         "playerName": {
           "description": "ник игрока",
           "type": "string"
@@ -101,6 +109,8 @@
         "isWotPlus",
         "localtime",
         "modVersion",
+        "piggyBankCredits",
+        "piggyBankGold",
         "playerName",
         "premiumPlusExpiryTime",
         "region",

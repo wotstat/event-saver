@@ -491,6 +491,8 @@ export interface OnAccountStats extends HangarEvent {
   equipCoin: UInt32
   bpCoin: UInt32
   eventCoin: UInt32
+  piggyBankCredits: UInt32
+  piggyBankGold: UInt32
   freeXP: UInt32
 
   isPremiumPlus: boolean
