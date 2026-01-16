@@ -10,6 +10,9 @@ declare type UInt16 = Int32
 declare type UInt8 = Int32
 declare type Vector3 = { x: number, y: number, z: number }
 
+/** @format date-time-local */
+declare type DateTime = string
+
 declare type AllowUndefined<T> = T | undefined
 
 
@@ -106,6 +109,9 @@ interface StaticBattleInfo {
 
   /** ник игрока */
   playerName: string
+
+  /** список заблокированных карт */
+  mapsBlackList?: string[]
 
 }
 
@@ -476,6 +482,24 @@ export interface OnMoeInfo extends HangarEvent {
 
   /** планка на отметку 0%, 20%, 40%, 55%, 65%, 75%, 85%, 95%, 100% */
   moeDistribution: [number, number, number, number, number, number, number, number, number]
+}
+
+export interface OnAccountStats extends HangarEvent {
+  credits: UInt32
+  gold: UInt32
+  crystal: UInt32
+  equipCoin: UInt32
+  bpCoin: UInt32
+  eventCoin: UInt32
+  freeXP: UInt32
+
+  isPremiumPlus: boolean
+  premiumPlusExpiryTime: DateTime | null
+
+  isWotPlus: boolean
+  wotPlusExpiryTime: DateTime | null
+
+  telecom: string
 }
 
 

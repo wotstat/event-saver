@@ -1,6 +1,114 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
+    "OnAccountStats": {
+      "properties": {
+        "bpCoin": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "credits": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "crystal": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "equipCoin": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "eventCoin": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "eventName": {
+          "description": "название ивента",
+          "type": "string"
+        },
+        "freeXP": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "gameVersion": {
+          "description": "версия игры",
+          "type": "string"
+        },
+        "gold": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "isPremiumPlus": {
+          "type": "boolean"
+        },
+        "isWotPlus": {
+          "type": "boolean"
+        },
+        "localtime": {
+          "description": "время события у игрока",
+          "type": "string"
+        },
+        "modVersion": {
+          "description": "версия мода",
+          "type": "string"
+        },
+        "playerName": {
+          "description": "ник игрока",
+          "type": "string"
+        },
+        "premiumPlusExpiryTime": {
+          "anyOf": [
+            {
+              "format": "date-time-local",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "region": {
+          "description": "регион игры",
+          "type": "string"
+        },
+        "telecom": {
+          "type": "string"
+        },
+        "wotPlusExpiryTime": {
+          "anyOf": [
+            {
+              "format": "date-time-local",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "bpCoin",
+        "credits",
+        "crystal",
+        "equipCoin",
+        "eventCoin",
+        "eventName",
+        "freeXP",
+        "gameVersion",
+        "gold",
+        "isPremiumPlus",
+        "isWotPlus",
+        "localtime",
+        "modVersion",
+        "playerName",
+        "premiumPlusExpiryTime",
+        "region",
+        "telecom",
+        "wotPlusExpiryTime"
+      ],
+      "type": "object"
+    },
     "OnBattleResult": {
       "properties": {
         "accountDBID": {
@@ -278,6 +386,13 @@
         "localtime": {
           "description": "время события у игрока",
           "type": "string"
+        },
+        "mapsBlackList": {
+          "description": "список заблокированных карт",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         },
         "modVersion": {
           "description": "версия мода",
@@ -1209,6 +1324,13 @@
         "localtime": {
           "description": "время события у игрока",
           "type": "string"
+        },
+        "mapsBlackList": {
+          "description": "список заблокированных карт",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         },
         "modVersion": {
           "description": "версия мода",
@@ -2538,6 +2660,13 @@
         "localtime": {
           "description": "время события у игрока",
           "type": "string"
+        },
+        "mapsBlackList": {
+          "description": "список заблокированных карт",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         },
         "modVersion": {
           "description": "версия мода",
