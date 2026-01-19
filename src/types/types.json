@@ -711,6 +711,79 @@
               ],
               "type": "object"
             },
+            "personalMissions": {
+              "items": {
+                "properties": {
+                  "conditions": {
+                    "items": {
+                      "properties": {
+                        "battles": {
+                          "anyOf": [
+                            {
+                              "items": {
+                                "type": "boolean"
+                              },
+                              "type": "array"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "goal": {
+                          "type": [
+                            "number",
+                            "null"
+                          ]
+                        },
+                        "state": {
+                          "enum": [
+                            "NONE",
+                            "UNLOCKED",
+                            "NEED_GET_MAIN_REWARD",
+                            "MAIN_REWARD_GOTTEN",
+                            "NEED_GET_ADD_REWARD",
+                            "NEED_GET_ALL_REWARDS",
+                            "ALL_REWARDS_GOTTEN"
+                          ],
+                          "type": "string"
+                        },
+                        "tag": {
+                          "type": "string"
+                        },
+                        "value": {
+                          "type": [
+                            "number",
+                            "null"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "tag",
+                        "state",
+                        "value",
+                        "goal",
+                        "battles"
+                      ],
+                      "type": "object"
+                    },
+                    "type": "array"
+                  },
+                  "tag": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "tag",
+                  "conditions"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "personalMissionsRaw": {
+              "type": "string"
+            },
             "playerTeam": {
               "minimum": 0,
               "type": "integer"

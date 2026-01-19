@@ -96,3 +96,7 @@ export function unwrapBattleEvent(e: BattleEvent) {
     battleTime: secToMs(e.battleTime)
   }
 }
+
+export function snakeCaseToCamelCase(s: string) {
+  return s.toLowerCase().split('_').map((w, i) => i === 0 ? w : w.charAt(0).toUpperCase() + w.slice(1)).join('')
+}

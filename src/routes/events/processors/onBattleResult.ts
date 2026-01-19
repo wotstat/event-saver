@@ -1,6 +1,6 @@
 import type { OnBattleResult } from "@/types/events";
 import { insert } from "../insert"
-import { now, unwrapDynamicBattleInfo, unwrapEvent, unwrapServerInfo, unwrapSessionMeta } from './utils';
+import { now, snakeCaseToCamelCase, unwrapDynamicBattleInfo, unwrapEvent, unwrapServerInfo, unwrapSessionMeta } from './utils';
 
 import { check, onBattleResultSchema } from '@/types/validator';
 import { uuid } from "@/utils/uuid";
@@ -26,7 +26,7 @@ function unwrapPlayersResults(results: OnBattleResult['result']['playersResults'
 
 function finishReason(res: OnBattleResult['result']['finishReason']) {
   if (!res) return 'unknown'
-  return res.toLowerCase().split('_').map((w, i) => i === 0 ? w : w.charAt(0).toUpperCase() + w.slice(1)).join('')
+  return snakeCaseToCamelCase(res)
 }
 
 
@@ -60,6 +60,25 @@ function unwrapComp7(prefix: string, comp7: OnBattleResult['result']['comp7'] | 
   return Object.fromEntries(Object.entries(values).map(([k, v]) => [`${prefix}.${k}`, v]))
 }
 
+function unwrapPersonalMissions(result: OnBattleResult['result']) {
+
+  const personalMissions = (result.personalMissions ?? []).map(pm => ({
+    tag: pm.tag,
+    conditions: pm.conditions.map(c => ({
+      tag: c.tag,
+      state: snakeCaseToCamelCase(c.state),
+      value: c.value,
+      goal: c.goal,
+      battles: c.battles ?? []
+    }))
+  }))
+
+  return {
+    personalMissions,
+    personalMissionsRaw: result.personalMissionsRaw ?? ''
+  }
+}
+
 export default function process(battleUUID: string, e: any) {
   check(onBattleResultSchema, e, async (e) => {
     const r = e.result
@@ -85,6 +104,7 @@ export default function process(battleUUID: string, e: any) {
       playerTeam: r.playerTeam,
       arenaId: r.arenaID,
       ...currencies,
+      ...unwrapPersonalMissions(r),
       ...unwrapComp7('comp7', r.comp7),
       ...unwrapVehicleBattleResult('personal', r.personal),
       ...unwrapPlayersResults(r.playersResults),

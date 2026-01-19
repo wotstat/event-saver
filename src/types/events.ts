@@ -280,6 +280,17 @@ export interface OnBattleResult extends TokenEvent, DynamicBattleInfo, PartialSe
     })[],
     comp7?: Comp7
     currencies?: Currencies
+    personalMissionsRaw?: string
+    personalMissions?: {
+      tag: string,
+      conditions: {
+        'tag': string,
+        'state': 'NONE' | 'UNLOCKED' | 'NEED_GET_MAIN_REWARD' | 'MAIN_REWARD_GOTTEN' | 'NEED_GET_ADD_REWARD' | 'NEED_GET_ALL_REWARDS' | 'ALL_REWARDS_GOTTEN'
+        'value': number | null,
+        'goal': number | null,
+        'battles': boolean[] | null,
+      }[]
+    }[]
   }
 }
 
