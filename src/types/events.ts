@@ -111,7 +111,7 @@ interface StaticBattleInfo {
   playerName: string
 
   /** список заблокированных карт */
-  mapsBlackList?: string[]
+  mapsBlackList?: (string | null)[]
 
 }
 

@@ -60,7 +60,7 @@ export function unwrapDynamicBattleInfo(e: DynamicBattleInfo) {
     enemyTeamMaxHealth: e.enemyTeamMaxHealth,
     allyTeamFragsCount: e.allyTeamFragsCount,
     enemyTeamFragsCount: e.enemyTeamFragsCount,
-    mapsBlackList: e.mapsBlackList ?? [],
+    mapsBlackList: (e.mapsBlackList ?? []).filter(Boolean),
     extra: e.extra ?? {}
   }
 }

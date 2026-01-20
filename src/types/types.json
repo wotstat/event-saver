@@ -400,7 +400,10 @@
         "mapsBlackList": {
           "description": "список заблокированных карт",
           "items": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "type": "array"
         },
@@ -1411,7 +1414,10 @@
         "mapsBlackList": {
           "description": "список заблокированных карт",
           "items": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "type": "array"
         },
@@ -2747,7 +2753,10 @@
         "mapsBlackList": {
           "description": "список заблокированных карт",
           "items": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "type": "array"
         },
