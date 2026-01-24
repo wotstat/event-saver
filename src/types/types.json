@@ -1033,6 +1033,140 @@
           "description": "сколько времени назад началась сессия",
           "type": "number"
         },
+        "systemInfo": {
+          "description": "Информация о системе",
+          "properties": {
+            "bits": {
+              "type": "string"
+            },
+            "cpuCores": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "cpuFamily": {
+              "type": "string"
+            },
+            "cpuFreq": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "cpuName": {
+              "type": "string"
+            },
+            "cpuScore": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "cpuVendor": {
+              "type": "string"
+            },
+            "gameHddName": {
+              "type": "string"
+            },
+            "gpuDriverVersion": {
+              "type": "string"
+            },
+            "gpuFamily": {
+              "type": "string"
+            },
+            "gpuMemory": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "gpuScore": {
+              "type": "number"
+            },
+            "linkage": {
+              "type": "string"
+            },
+            "machine": {
+              "type": "string"
+            },
+            "nativeResolution": {
+              "properties": {
+                "height": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "refreshRate": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "width": {
+                  "minimum": 0,
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "refreshRate",
+                "width",
+                "height"
+              ],
+              "type": "object"
+            },
+            "platform": {
+              "type": "string"
+            },
+            "ramTotal": {
+              "type": "number"
+            },
+            "system": {
+              "type": "string"
+            },
+            "version": {
+              "type": "string"
+            },
+            "windowMode": {
+              "type": "string"
+            },
+            "windowResolution": {
+              "properties": {
+                "height": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "refreshRate": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "width": {
+                  "minimum": 0,
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "refreshRate",
+                "width",
+                "height"
+              ],
+              "type": "object"
+            }
+          },
+          "required": [
+            "cpuName",
+            "cpuVendor",
+            "cpuFamily",
+            "cpuCores",
+            "cpuFreq",
+            "cpuScore",
+            "gpuFamily",
+            "gpuMemory",
+            "gpuDriverVersion",
+            "gpuScore",
+            "gameHddName",
+            "ramTotal",
+            "bits",
+            "linkage",
+            "system",
+            "machine",
+            "platform",
+            "version",
+            "windowMode",
+            "nativeResolution",
+            "windowResolution"
+          ],
+          "type": "object"
+        },
         "tankLevel": {
           "description": "уровень танка",
           "type": "integer"
@@ -1478,6 +1612,140 @@
             "x",
             "y",
             "z"
+          ],
+          "type": "object"
+        },
+        "systemInfo": {
+          "description": "Информация о системе",
+          "properties": {
+            "bits": {
+              "type": "string"
+            },
+            "cpuCores": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "cpuFamily": {
+              "type": "string"
+            },
+            "cpuFreq": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "cpuName": {
+              "type": "string"
+            },
+            "cpuScore": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "cpuVendor": {
+              "type": "string"
+            },
+            "gameHddName": {
+              "type": "string"
+            },
+            "gpuDriverVersion": {
+              "type": "string"
+            },
+            "gpuFamily": {
+              "type": "string"
+            },
+            "gpuMemory": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "gpuScore": {
+              "type": "number"
+            },
+            "linkage": {
+              "type": "string"
+            },
+            "machine": {
+              "type": "string"
+            },
+            "nativeResolution": {
+              "properties": {
+                "height": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "refreshRate": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "width": {
+                  "minimum": 0,
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "refreshRate",
+                "width",
+                "height"
+              ],
+              "type": "object"
+            },
+            "platform": {
+              "type": "string"
+            },
+            "ramTotal": {
+              "type": "number"
+            },
+            "system": {
+              "type": "string"
+            },
+            "version": {
+              "type": "string"
+            },
+            "windowMode": {
+              "type": "string"
+            },
+            "windowResolution": {
+              "properties": {
+                "height": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "refreshRate": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "width": {
+                  "minimum": 0,
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "refreshRate",
+                "width",
+                "height"
+              ],
+              "type": "object"
+            }
+          },
+          "required": [
+            "cpuName",
+            "cpuVendor",
+            "cpuFamily",
+            "cpuCores",
+            "cpuFreq",
+            "cpuScore",
+            "gpuFamily",
+            "gpuMemory",
+            "gpuDriverVersion",
+            "gpuScore",
+            "gameHddName",
+            "ramTotal",
+            "bits",
+            "linkage",
+            "system",
+            "machine",
+            "platform",
+            "version",
+            "windowMode",
+            "nativeResolution",
+            "windowResolution"
           ],
           "type": "object"
         },
@@ -2947,6 +3215,140 @@
         "shotId": {
           "description": "id выстрела уникальный для клиента",
           "type": "number"
+        },
+        "systemInfo": {
+          "description": "Информация о системе",
+          "properties": {
+            "bits": {
+              "type": "string"
+            },
+            "cpuCores": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "cpuFamily": {
+              "type": "string"
+            },
+            "cpuFreq": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "cpuName": {
+              "type": "string"
+            },
+            "cpuScore": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "cpuVendor": {
+              "type": "string"
+            },
+            "gameHddName": {
+              "type": "string"
+            },
+            "gpuDriverVersion": {
+              "type": "string"
+            },
+            "gpuFamily": {
+              "type": "string"
+            },
+            "gpuMemory": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "gpuScore": {
+              "type": "number"
+            },
+            "linkage": {
+              "type": "string"
+            },
+            "machine": {
+              "type": "string"
+            },
+            "nativeResolution": {
+              "properties": {
+                "height": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "refreshRate": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "width": {
+                  "minimum": 0,
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "refreshRate",
+                "width",
+                "height"
+              ],
+              "type": "object"
+            },
+            "platform": {
+              "type": "string"
+            },
+            "ramTotal": {
+              "type": "number"
+            },
+            "system": {
+              "type": "string"
+            },
+            "version": {
+              "type": "string"
+            },
+            "windowMode": {
+              "type": "string"
+            },
+            "windowResolution": {
+              "properties": {
+                "height": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "refreshRate": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "width": {
+                  "minimum": 0,
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "refreshRate",
+                "width",
+                "height"
+              ],
+              "type": "object"
+            }
+          },
+          "required": [
+            "cpuName",
+            "cpuVendor",
+            "cpuFamily",
+            "cpuCores",
+            "cpuFreq",
+            "cpuScore",
+            "gpuFamily",
+            "gpuMemory",
+            "gpuDriverVersion",
+            "gpuScore",
+            "gameHddName",
+            "ramTotal",
+            "bits",
+            "linkage",
+            "system",
+            "machine",
+            "platform",
+            "version",
+            "windowMode",
+            "nativeResolution",
+            "windowResolution"
+          ],
+          "type": "object"
         },
         "tankLevel": {
           "description": "уровень танка",

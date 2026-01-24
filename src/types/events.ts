@@ -122,6 +122,36 @@ interface BattleExtra {
   }
 }
 
+type SystemInfo = {
+  cpuName: string
+  cpuVendor: string
+  cpuFamily: string
+  cpuCores: UInt16
+  cpuFreq: UInt16
+  cpuScore: UInt16
+
+  gpuFamily: string
+  gpuMemory: UInt16
+  gpuDriverVersion: string
+  gpuScore: number
+
+  gameDriveName: string
+  ramTotal: number
+
+  architectureBits: string
+  architectureLinkage: string
+
+  system: string
+  machine: string
+  platform: string
+  version: string
+  isLaptop: boolean
+
+  windowMode: string
+  nativeResolution: { refreshRate: UInt16, width: UInt16, height: UInt16 }
+  windowResolution: { refreshRate: UInt16, width: UInt16, height: UInt16 }
+}
+
 // Динамические данные о бое (могут изменяться во время боя), присутствуют во всех событиях для удобных селектов и фильтров
 interface DynamicBattleInfo extends StaticBattleInfo, BattleExtra {
 
@@ -160,6 +190,9 @@ interface DynamicBattleInfo extends StaticBattleInfo, BattleExtra {
 
   /** Количество фрагов врагов */
   enemyTeamFragsCount: UInt8
+
+  /** Информация о системе */
+  systemInfo?: SystemInfo
 }
 
 type BOB25Stats = { [key in '1' | '2' | '3' | '4']?: { score: number, rank: number } }

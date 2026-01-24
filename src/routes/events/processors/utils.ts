@@ -4,6 +4,10 @@ export function now() {
   return (new Date()).getTime()
 }
 
+export function prefixObjectKeys(prefix: string, obj: Record<string, any>) {
+  return Object.fromEntries(Object.entries(obj).map(([k, v]) => [`${prefix}.${k}`, v]))
+}
+
 export function unwrapVector3(name: string, v: { x: number, y: number, z: number } | null) {
   if (v === null)
     return {
@@ -41,6 +45,37 @@ export function unwrapServerInfo(e: ServerInfo) {
 }
 
 export function unwrapDynamicBattleInfo(e: DynamicBattleInfo) {
+
+  const systemInfo = {
+    cpuName: '',
+    cpuVendor: '',
+    cpuFamily: '',
+    cpuCores: 0,
+    cpuFreq: 0,
+    cpuScore: 0,
+    gpuFamily: '',
+    gpuMemory: 0,
+    gpuDriverVersion: '',
+    gpuScore: 0,
+    gameDriveName: '',
+    ramTotal: 0,
+    architectureBits: '',
+    architectureLinkage: '',
+    system: '',
+    machine: '',
+    platform: '',
+    version: '',
+    isLaptop: false,
+    windowMode: '',
+    nativeResolutionRefreshRate: 0,
+    nativeResolutionWidth: 0,
+    nativeResolutionHeight: 0,
+    windowResolutionRefreshRate: 0,
+    windowResolutionWidth: 0,
+    windowResolutionHeight: 0,
+    ...e.systemInfo
+  }
+
   return {
     arenaTag: e.arenaTag,
     playerName: e.playerName,
@@ -61,7 +96,8 @@ export function unwrapDynamicBattleInfo(e: DynamicBattleInfo) {
     allyTeamFragsCount: e.allyTeamFragsCount,
     enemyTeamFragsCount: e.enemyTeamFragsCount,
     mapsBlackList: (e.mapsBlackList ?? []).filter(Boolean),
-    extra: e.extra ?? {}
+    extra: e.extra ?? {},
+    ...prefixObjectKeys('systemInfo', systemInfo),
   }
 }
 
