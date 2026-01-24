@@ -1568,6 +1568,18 @@
           "description": "версия игры",
           "type": "string"
         },
+        "leaderboardPosition": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Место в таблице лидеров"
+        },
         "localtime": {
           "description": "время события у игрока",
           "type": "string"

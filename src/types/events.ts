@@ -482,6 +482,9 @@ export interface OnComp7Info extends HangarEvent {
 
   /** Планка для Легенды */
   eliteRating: UInt32
+
+  /** Место в таблице лидеров */
+  leaderboardPosition?: UInt32 | null,
 }
 
 export interface OnMoeInfo extends HangarEvent {
