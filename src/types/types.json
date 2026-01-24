@@ -1047,7 +1047,8 @@
               "type": "integer"
             },
             "cpuFamily": {
-              "type": "string"
+              "minimum": 0,
+              "type": "integer"
             },
             "cpuFreq": {
               "minimum": 0,
@@ -1077,7 +1078,8 @@
               "type": "integer"
             },
             "gpuScore": {
-              "type": "number"
+              "minimum": 0,
+              "type": "integer"
             },
             "isLaptop": {
               "type": "boolean"
@@ -1111,7 +1113,8 @@
               "type": "string"
             },
             "ramTotal": {
-              "type": "number"
+              "minimum": 0,
+              "type": "integer"
             },
             "system": {
               "type": "string"
@@ -1633,7 +1636,8 @@
               "type": "integer"
             },
             "cpuFamily": {
-              "type": "string"
+              "minimum": 0,
+              "type": "integer"
             },
             "cpuFreq": {
               "minimum": 0,
@@ -1663,7 +1667,8 @@
               "type": "integer"
             },
             "gpuScore": {
-              "type": "number"
+              "minimum": 0,
+              "type": "integer"
             },
             "isLaptop": {
               "type": "boolean"
@@ -1697,7 +1702,8 @@
               "type": "string"
             },
             "ramTotal": {
-              "type": "number"
+              "minimum": 0,
+              "type": "integer"
             },
             "system": {
               "type": "string"
@@ -3238,7 +3244,8 @@
               "type": "integer"
             },
             "cpuFamily": {
-              "type": "string"
+              "minimum": 0,
+              "type": "integer"
             },
             "cpuFreq": {
               "minimum": 0,
@@ -3268,7 +3275,8 @@
               "type": "integer"
             },
             "gpuScore": {
-              "type": "number"
+              "minimum": 0,
+              "type": "integer"
             },
             "isLaptop": {
               "type": "boolean"
@@ -3302,7 +3310,8 @@
               "type": "string"
             },
             "ramTotal": {
-              "type": "number"
+              "minimum": 0,
+              "type": "integer"
             },
             "system": {
               "type": "string"
