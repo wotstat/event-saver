@@ -124,16 +124,16 @@ interface BattleExtra {
 
 type SystemInfo = {
   cpuName: string
-  cpuVendor: string
+  cpuVendor: UInt16
   cpuFamily: UInt32
   cpuCores: UInt16
   cpuFreq: UInt16
-  cpuScore: UInt16
+  cpuScore: UInt64
 
   gpuFamily: string
   gpuMemory: UInt16
-  gpuDriverVersion: string
-  gpuScore: UInt32
+  gpuDriverVersion: UInt64
+  gpuScore: UInt64
 
   gameDriveName: string
   ramTotal: UInt32

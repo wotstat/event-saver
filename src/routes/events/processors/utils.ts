@@ -46,16 +46,20 @@ export function unwrapServerInfo(e: ServerInfo) {
 
 export function unwrapDynamicBattleInfo(e: DynamicBattleInfo) {
 
+  function getResolution(res: { refreshRate: number, width: number, height: number }) {
+    return [res.refreshRate, res.width, res.height]
+  }
+
   const systemInfo = {
     cpuName: '',
-    cpuVendor: '',
-    cpuFamily: '',
+    cpuVendor: 0,
+    cpuFamily: 0,
     cpuCores: 0,
     cpuFreq: 0,
     cpuScore: 0,
     gpuFamily: '',
     gpuMemory: 0,
-    gpuDriverVersion: '',
+    gpuDriverVersion: 0,
     gpuScore: 0,
     gameDriveName: '',
     ramTotal: 0,
@@ -67,13 +71,9 @@ export function unwrapDynamicBattleInfo(e: DynamicBattleInfo) {
     version: '',
     isLaptop: false,
     windowMode: '',
-    nativeResolutionRefreshRate: 0,
-    nativeResolutionWidth: 0,
-    nativeResolutionHeight: 0,
-    windowResolutionRefreshRate: 0,
-    windowResolutionWidth: 0,
-    windowResolutionHeight: 0,
-    ...e.systemInfo
+    ...e.systemInfo,
+    nativeResolution: e.systemInfo ? getResolution(e.systemInfo.nativeResolution) : [0, 0, 0],
+    windowResolution: e.systemInfo ? getResolution(e.systemInfo.windowResolution) : [0, 0, 0],
   }
 
   return {

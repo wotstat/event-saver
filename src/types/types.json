@@ -1062,13 +1062,15 @@
               "type": "integer"
             },
             "cpuVendor": {
-              "type": "string"
+              "minimum": 0,
+              "type": "integer"
             },
             "gameDriveName": {
               "type": "string"
             },
             "gpuDriverVersion": {
-              "type": "string"
+              "minimum": 0,
+              "type": "integer"
             },
             "gpuFamily": {
               "type": "string"
@@ -1651,13 +1653,15 @@
               "type": "integer"
             },
             "cpuVendor": {
-              "type": "string"
+              "minimum": 0,
+              "type": "integer"
             },
             "gameDriveName": {
               "type": "string"
             },
             "gpuDriverVersion": {
-              "type": "string"
+              "minimum": 0,
+              "type": "integer"
             },
             "gpuFamily": {
               "type": "string"
@@ -3259,13 +3263,15 @@
               "type": "integer"
             },
             "cpuVendor": {
-              "type": "string"
+              "minimum": 0,
+              "type": "integer"
             },
             "gameDriveName": {
               "type": "string"
             },
             "gpuDriverVersion": {
-              "type": "string"
+              "minimum": 0,
+              "type": "integer"
             },
             "gpuFamily": {
               "type": "string"
