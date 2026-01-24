@@ -1084,6 +1084,10 @@
               "minimum": 0,
               "type": "integer"
             },
+            "gpuVendor": {
+              "minimum": 0,
+              "type": "integer"
+            },
             "isLaptop": {
               "type": "boolean"
             },
@@ -1162,6 +1166,7 @@
             "cpuFreq",
             "cpuScore",
             "workstationVendor",
+            "gpuVendor",
             "gpuFamily",
             "gpuMemory",
             "gpuDriverVersion",
@@ -1680,6 +1685,10 @@
               "minimum": 0,
               "type": "integer"
             },
+            "gpuVendor": {
+              "minimum": 0,
+              "type": "integer"
+            },
             "isLaptop": {
               "type": "boolean"
             },
@@ -1758,6 +1767,7 @@
             "cpuFreq",
             "cpuScore",
             "workstationVendor",
+            "gpuVendor",
             "gpuFamily",
             "gpuMemory",
             "gpuDriverVersion",
@@ -3295,6 +3305,10 @@
               "minimum": 0,
               "type": "integer"
             },
+            "gpuVendor": {
+              "minimum": 0,
+              "type": "integer"
+            },
             "isLaptop": {
               "type": "boolean"
             },
@@ -3373,6 +3387,7 @@
             "cpuFreq",
             "cpuScore",
             "workstationVendor",
+            "gpuVendor",
             "gpuFamily",
             "gpuMemory",
             "gpuDriverVersion",

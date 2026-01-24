@@ -131,6 +131,7 @@ type SystemInfo = {
   cpuScore: UInt64
   workstationVendor: string
 
+  gpuVendor: UInt16
   gpuFamily: UInt32
   gpuMemory: UInt16
   gpuDriverVersion: UInt64
