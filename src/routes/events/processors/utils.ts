@@ -72,8 +72,8 @@ export function unwrapDynamicBattleInfo(e: DynamicBattleInfo) {
     isLaptop: false,
     windowMode: '',
     ...e.systemInfo,
-    nativeResolution: e.systemInfo ? getResolution(e.systemInfo.nativeResolution) : [0, 0, 0],
-    windowResolution: e.systemInfo ? getResolution(e.systemInfo.windowResolution) : [0, 0, 0],
+    nativeResolution: e.systemInfo ? getResolution(e.systemInfo.nativeResolution) : { refreshRate: 0, width: 0, height: 0 },
+    windowResolution: e.systemInfo ? getResolution(e.systemInfo.windowResolution) : { refreshRate: 0, width: 0, height: 0 },
   }
 
   return {
