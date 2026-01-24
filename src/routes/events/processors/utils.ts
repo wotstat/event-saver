@@ -57,6 +57,7 @@ export function unwrapDynamicBattleInfo(e: DynamicBattleInfo) {
     cpuCores: 0,
     cpuFreq: 0,
     cpuScore: 0,
+    workstationVendor: '',
     gpuFamily: 0,
     gpuMemory: 0,
     gpuDriverVersion: 0,

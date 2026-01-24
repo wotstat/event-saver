@@ -129,6 +129,7 @@ type SystemInfo = {
   cpuCores: UInt16
   cpuFreq: UInt16
   cpuScore: UInt64
+  workstationVendor: string
 
   gpuFamily: UInt32
   gpuMemory: UInt16
