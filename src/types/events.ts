@@ -130,7 +130,7 @@ type SystemInfo = {
   cpuFreq: UInt16
   cpuScore: UInt64
 
-  gpuFamily: string
+  gpuFamily: UInt32
   gpuMemory: UInt16
   gpuDriverVersion: UInt64
   gpuScore: UInt64
