@@ -47,7 +47,7 @@ export function unwrapServerInfo(e: ServerInfo) {
 export function unwrapDynamicBattleInfo(e: DynamicBattleInfo) {
 
   function getResolution(res: { refreshRate: number, width: number, height: number }) {
-    return [res.refreshRate, res.width, res.height]
+    return { refreshRate: res.refreshRate, width: res.width, height: res.height }
   }
 
   const systemInfo = {
