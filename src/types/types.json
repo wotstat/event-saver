@@ -1036,7 +1036,10 @@
         "systemInfo": {
           "description": "Информация о системе",
           "properties": {
-            "bits": {
+            "architectureBits": {
+              "type": "string"
+            },
+            "architectureLinkage": {
               "type": "string"
             },
             "cpuCores": {
@@ -1060,7 +1063,7 @@
             "cpuVendor": {
               "type": "string"
             },
-            "gameHddName": {
+            "gameDriveName": {
               "type": "string"
             },
             "gpuDriverVersion": {
@@ -1076,8 +1079,8 @@
             "gpuScore": {
               "type": "number"
             },
-            "linkage": {
-              "type": "string"
+            "isLaptop": {
+              "type": "boolean"
             },
             "machine": {
               "type": "string"
@@ -1153,14 +1156,15 @@
             "gpuMemory",
             "gpuDriverVersion",
             "gpuScore",
-            "gameHddName",
+            "gameDriveName",
             "ramTotal",
-            "bits",
-            "linkage",
+            "architectureBits",
+            "architectureLinkage",
             "system",
             "machine",
             "platform",
             "version",
+            "isLaptop",
             "windowMode",
             "nativeResolution",
             "windowResolution"
@@ -1618,7 +1622,10 @@
         "systemInfo": {
           "description": "Информация о системе",
           "properties": {
-            "bits": {
+            "architectureBits": {
+              "type": "string"
+            },
+            "architectureLinkage": {
               "type": "string"
             },
             "cpuCores": {
@@ -1642,7 +1649,7 @@
             "cpuVendor": {
               "type": "string"
             },
-            "gameHddName": {
+            "gameDriveName": {
               "type": "string"
             },
             "gpuDriverVersion": {
@@ -1658,8 +1665,8 @@
             "gpuScore": {
               "type": "number"
             },
-            "linkage": {
-              "type": "string"
+            "isLaptop": {
+              "type": "boolean"
             },
             "machine": {
               "type": "string"
@@ -1735,14 +1742,15 @@
             "gpuMemory",
             "gpuDriverVersion",
             "gpuScore",
-            "gameHddName",
+            "gameDriveName",
             "ramTotal",
-            "bits",
-            "linkage",
+            "architectureBits",
+            "architectureLinkage",
             "system",
             "machine",
             "platform",
             "version",
+            "isLaptop",
             "windowMode",
             "nativeResolution",
             "windowResolution"
@@ -3219,7 +3227,10 @@
         "systemInfo": {
           "description": "Информация о системе",
           "properties": {
-            "bits": {
+            "architectureBits": {
+              "type": "string"
+            },
+            "architectureLinkage": {
               "type": "string"
             },
             "cpuCores": {
@@ -3243,7 +3254,7 @@
             "cpuVendor": {
               "type": "string"
             },
-            "gameHddName": {
+            "gameDriveName": {
               "type": "string"
             },
             "gpuDriverVersion": {
@@ -3259,8 +3270,8 @@
             "gpuScore": {
               "type": "number"
             },
-            "linkage": {
-              "type": "string"
+            "isLaptop": {
+              "type": "boolean"
             },
             "machine": {
               "type": "string"
@@ -3336,14 +3347,15 @@
             "gpuMemory",
             "gpuDriverVersion",
             "gpuScore",
-            "gameHddName",
+            "gameDriveName",
             "ramTotal",
-            "bits",
-            "linkage",
+            "architectureBits",
+            "architectureLinkage",
             "system",
             "machine",
             "platform",
             "version",
+            "isLaptop",
             "windowMode",
             "nativeResolution",
             "windowResolution"
