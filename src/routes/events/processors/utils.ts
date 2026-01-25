@@ -1,3 +1,4 @@
+import { pciDb } from "@/pciids/pciids"
 import type { Event, DynamicBattleInfo, BattleEvent, HangarEvent, SessionMeta, ServerInfo } from "@/types/events"
 
 export function now() {
@@ -44,11 +45,24 @@ export function unwrapServerInfo(e: ServerInfo) {
   }
 }
 
+function vendorId(gpuVendor: number) {
+  switch (gpuVendor) {
+    case 0: return null
+    case 1: return '8086' // Intel
+    case 2: return '10DE' // NVIDIA
+    case 3: return '1002' // AMD
+    default: return null
+  }
+}
+
 export function unwrapDynamicBattleInfo(e: DynamicBattleInfo) {
 
   function getResolution(res: { refreshRate: number, width: number, height: number }) {
     return { refreshRate: res.refreshRate, width: res.width, height: res.height }
   }
+
+  const gpuVendorId = e.systemInfo ? vendorId(e.systemInfo.gpuVendor) : null
+  const gpuName = gpuVendorId && e.systemInfo ? pciDb.getDevice(gpuVendorId, e.systemInfo.gpuFamily.toString(16))?.name : null
 
   const systemInfo = {
     cpuName: '',
@@ -76,6 +90,7 @@ export function unwrapDynamicBattleInfo(e: DynamicBattleInfo) {
     ...e.systemInfo,
     nativeResolution: e.systemInfo ? getResolution(e.systemInfo.nativeResolution) : { refreshRate: 0, width: 0, height: 0 },
     windowResolution: e.systemInfo ? getResolution(e.systemInfo.windowResolution) : { refreshRate: 0, width: 0, height: 0 },
+    gpuName: gpuName || 'Unknown',
   }
 
   return {
