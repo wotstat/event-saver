@@ -4,6 +4,7 @@ import { now, unwrapEvent, unwrapHangarEvent, unwrapServerInfo, unwrapSessionMet
 
 import { check, onLootboxOpenSchema } from '@/types/validator';
 import { uuid } from "@/utils/uuid";
+import { logger } from "@/logger";
 
 
 
@@ -20,7 +21,7 @@ export default function process(e: any) {
       raw = JSON.parse(e.raw)
     }
     catch (e) {
-      console.error('Failed to parse parsed field', e)
+      logger.error({ error: e }, 'Failed to parse raw field')
     }
 
     // TODO: Remove this after 1.5.4.1
@@ -40,7 +41,7 @@ export default function process(e: any) {
           }
         }
       } catch (e) {
-        console.error('Failed to parse currencies from raw field', e)
+        logger.error({ error: e }, 'Failed to parse currencies from raw field')
       }
     }
     // ----

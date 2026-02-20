@@ -1,3 +1,4 @@
+import { logger } from '@/logger';
 import { createClient, type ClickHouseSettings } from '@clickhouse/client'
 
 const clickhouse = createClient({
@@ -16,11 +17,11 @@ async function connect(options: { timeout?: number }) {
     try {
       const ping = await clickhouse.query({ query: `select 1;` })
       if (ping && ping.query_id) {
-        console.log('ClickHouse connected');
+        logger.info('ClickHouse connected');
         return true
       }
     } catch (e: any) {
-      if (i == 0) console.log(`ClickHouse is not available: ${e?.message}, retrying...`);
+      if (i == 0) logger.warn({ error: e.message }, `ClickHouse is not available, retrying...`);
     }
     await new Promise(r => setTimeout(r, delay * 1000))
   }

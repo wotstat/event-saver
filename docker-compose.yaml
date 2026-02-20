@@ -19,6 +19,7 @@ services:
       - redis
     environment:
       - PORT=9000
+      - LOKI_HOST=http://host.docker.internal:3100
       - CLICKHOUSE_HOST=http://172.17.0.1:8123
       - CLICKHOUSE_DATABASE=WOT
       - CLICKHOUSE_USER

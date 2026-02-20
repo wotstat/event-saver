@@ -57,3 +57,4 @@ services:
       - JWT_SECRET=JWT_SECRET
       - REDIS_HOST=redis
       - DEBUG=1
+      - DEVELOPMENT=1

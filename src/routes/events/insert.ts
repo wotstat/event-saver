@@ -1,5 +1,6 @@
 
 import { clickhouse } from '@/db/index'
+import { logger } from '@/logger'
 import type { ClickHouseSettings } from '@clickhouse/client'
 
 const asyncInsertSettings = {
@@ -28,8 +29,7 @@ async function insertLoop() {
           clickhouse_settings: Bun.env.ASYNC_INSERT ? asyncInsertSettings : undefined
         })
       } catch (e) {
-        console.error(e)
-        console.error(`insert into ${key}`, data);
+        logger.error({ error: e, table: key, data }, `Error inserting into ${key}: ${(e as Error).message}`)
       }
     }
   }

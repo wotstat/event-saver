@@ -4,6 +4,7 @@ import { BallisticCalculator } from "@/utils/ballisticCalc";
 
 import { check, onShotSchema } from '@/types/validator';
 import { uuid } from "@/utils/uuid";
+import { logger } from "@/logger";
 
 export default function process(battleUUID: string, e: any) {
   check(onShotSchema, e, (e) => {
@@ -28,7 +29,7 @@ export default function process(battleUUID: string, e: any) {
         dispersionAngle: e.clientShotDispersion,
       })
     } catch (error) {
-      console.error(`Error calculating client ballistic: ${error}. Event: ${JSON.stringify(e)}`)
+      logger.warn({ error, event: e }, `Error calculating client ballistic`)
     }
 
     try {
@@ -38,7 +39,7 @@ export default function process(battleUUID: string, e: any) {
         dispersionAngle: e.serverShotDispersion,
       })
     } catch (error) {
-      console.error(`Error calculating server ballistic: ${error}. Event: ${JSON.stringify(e)}`)
+      logger.warn({ error, event: e }, `Error calculating server ballistic`)
     }
 
     if (clientBallistic === null || serverBallistic === null) return

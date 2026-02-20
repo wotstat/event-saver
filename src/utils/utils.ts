@@ -1,10 +1,4 @@
 
-export function debug(log: any) {
-  if (process.env.DEBUG) {
-    console.log(log)
-  }
-}
-
 export function modVersionComparator(version: string) {
   const parts = version.split('.').map(Number)
   const cacheCompareResult = new Map<string, number>()

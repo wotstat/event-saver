@@ -12,10 +12,10 @@ import OnAccountStats from './processors/onAccountStats'
 import { redis } from '@/redis/index'
 
 import { onBattleStartSchema } from '@/types/validator';
-import { debug } from '@/utils/utils'
 import { uuid } from '@/utils/uuid'
 
 import { createVerifier, createSigner } from "fast-jwt";
+import { logger } from "@/logger"
 
 const verify = createVerifier({ key: Bun.env.JWT_SECRET, cache: true })
 const sign = createSigner({ key: Bun.env.JWT_SECRET, expiresIn: '1h' })
@@ -46,10 +46,10 @@ async function processEvent(eventName: string, event: TokenEvent) {
       if ('id' in data && typeof data.id === 'string')
         supportedEvents[eventName as keyof typeof supportedEvents](data.id, event as any)
     } catch (e) {
-      debug(`JWT error: ${e}`)
+      logger.warn({ error: (e as Error).message, eventName }, `JWT verification failed for event ${eventName}`)
     }
   } else {
-    debug(`Unsupported event: ${eventName}`)
+    logger.error({ eventName }, `Unsupported battle event: ${eventName}`)
   }
 }
 
@@ -57,7 +57,7 @@ async function processHangarEvent(eventName: string, event: HangarEvent) {
   if (eventName in supportedHangarEvents) {
     supportedHangarEvents[eventName as keyof typeof supportedHangarEvents](event)
   } else {
-    debug(`Unsupported hangar event: ${eventName}`)
+    logger.error({ eventName }, `Unsupported hangar event: ${eventName}`)
   }
 }
 
@@ -65,8 +65,7 @@ router.post('/OnBattleStart', async c => {
   const body = await c.req.json()
 
   if (!onBattleStartSchema(body)) {
-    console.debug(onBattleStartSchema.errors);
-    console.debug(JSON.stringify(body));
+    logger.warn({ errors: onBattleStartSchema.errors }, `Validation failed for OnBattleStart event`)
     return c.json(Bun.env.DEBUG ? onBattleStartSchema.errors : '', 400)
   }
 
@@ -118,7 +117,7 @@ router.post('/send', async c => {
     }
   }
   catch (e: any) {
-    console.error(`Send Event error: ${e.message}`);
+    logger.error({ error: e.message }, `Error processing events: ${e.message}`)
   }
   finally {
     return c.text('')
