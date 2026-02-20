@@ -101,6 +101,9 @@ interface StaticBattleInfo {
   /** клан игрока */
   playerClan: string
 
+  /** ID клана игрока */
+  playerClanDBID?: UInt64
+
   /** тип боя */
   battleMode: string
 
@@ -312,8 +315,11 @@ export interface OnBattleResult extends TokenEvent, DynamicBattleInfo, PartialSe
     playersResults: (VehicleBattleResult & {
       bdid: UInt64,
       name: string,
+      clan?: string,
+      clanDBID?: UInt64,
     })[],
     comp7?: Comp7
+    fortClanDBIDs?: UInt64[]
     currencies?: Currencies
     personalMissionsRaw?: string
     personalMissions?: {

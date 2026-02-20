@@ -20,6 +20,7 @@ import { createVerifier, createSigner } from "fast-jwt";
 const verify = createVerifier({ key: Bun.env.JWT_SECRET, cache: true })
 const sign = createSigner({ key: Bun.env.JWT_SECRET, expiresIn: '1h' })
 const lifetime = process.env.REDIS_BATTLE_TOKEN_LIFETIME ? Number.parseInt(process.env.REDIS_BATTLE_TOKEN_LIFETIME) : 30 * 60
+const EVENT_DEDUPLICATION_TTL = 60 * 3 // 3 minutes
 
 const router = new Hono()
 
@@ -77,7 +78,7 @@ router.post('/OnBattleStart', async c => {
   } else {
     const id = uuid();
     const token = sign({ id });
-    await redis.setEx(cacheKey, lifetime, token)
+    await redis.setex(cacheKey, lifetime, token)
     OnBattleStart(id, body)
     return c.text(token)
   }
@@ -98,6 +99,15 @@ router.post('/send', async c => {
 
   try {
     if (isEventBody(body)) {
+
+      const deduplicationId = 'deduplicationId' in body ? body.deduplicationId : null
+      if (deduplicationId) {
+        const key = `deduplication:${deduplicationId}`
+        const existing = await redis.exists(key)
+        if (existing) return c.text('')
+        await redis.setex(key, EVENT_DEDUPLICATION_TTL, '1')
+      }
+
       for (const event of body.events) {
         if ('token' in event) {
           await processEvent(event.eventName, event)

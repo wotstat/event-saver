@@ -97,6 +97,7 @@ export function unwrapDynamicBattleInfo(e: DynamicBattleInfo) {
     arenaTag: e.arenaTag,
     playerName: e.playerName,
     playerClan: e.playerClan,
+    playerClanDBID: e.playerClanDBID ?? 0,
     accountDBID: e.accountDBID,
     battleMode: e.battleMode,
     battleGameplay: e.battleGameplay,

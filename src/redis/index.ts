@@ -1,7 +1,3 @@
-import Redis from 'redis'
+import { RedisClient } from "bun";
 
-export const redis = Redis.createClient({
-  socket: {
-    host: Bun.env.REDIS_HOST
-  }
-});
+export const redis = new RedisClient(Bun.env.REDIS_HOST)

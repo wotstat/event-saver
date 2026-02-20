@@ -18,6 +18,8 @@ function unwrapPlayersResults(results: OnBattleResult['result']['playersResults'
       ...unwrapVehicleBattleResult('playersResults', r),
       'playersResults.bdid': r.bdid,
       'playersResults.name': r.name,
+      'playersResults.clan': r.clan ?? '',
+      'playersResults.clanDBID': r.clanDBID ?? 0,
     })) as Record<string, any>[]
 
   const res = Object.fromEntries(Object.entries(temp[0]).map(([k, v]) => [k, temp.map(r => r[k])]))
@@ -103,6 +105,7 @@ export default function process(battleUUID: string, e: any) {
       winnerTeam: r.winnerTeam,
       playerTeam: r.playerTeam,
       arenaId: r.arenaID,
+      fortClanDBIDs: r.fortClanDBIDs ?? [],
       ...currencies,
       ...unwrapPersonalMissions(r),
       ...unwrapComp7('comp7', r.comp7),

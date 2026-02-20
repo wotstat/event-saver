@@ -18,7 +18,7 @@ try {
   }
 
   console.log('Connecting to Redis...');
-  redis.connect()
+  await redis.connect()
 
   console.log(`Server is listening on port ${Bun.env.PORT}`);
 }

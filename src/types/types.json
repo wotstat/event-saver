@@ -415,6 +415,11 @@
           "description": "клан игрока",
           "type": "string"
         },
+        "playerClanDBID": {
+          "description": "ID клана игрока",
+          "minimum": 0,
+          "type": "integer"
+        },
         "playerName": {
           "description": "ник игрока",
           "type": "string"
@@ -530,6 +535,13 @@
                 "OBJECTIVES_COMPLETED"
               ],
               "type": "string"
+            },
+            "fortClanDBIDs": {
+              "items": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "type": "array"
             },
             "isPremium": {
               "type": "boolean"
@@ -795,6 +807,13 @@
               "items": {
                 "properties": {
                   "bdid": {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "clan": {
+                    "type": "string"
+                  },
+                  "clanDBID": {
                     "minimum": 0,
                     "type": "integer"
                   },
@@ -1581,6 +1600,11 @@
         "playerClan": {
           "description": "клан игрока",
           "type": "string"
+        },
+        "playerClanDBID": {
+          "description": "ID клана игрока",
+          "minimum": 0,
+          "type": "integer"
         },
         "playerName": {
           "description": "ник игрока",
@@ -3089,6 +3113,11 @@
         "playerClan": {
           "description": "клан игрока",
           "type": "string"
+        },
+        "playerClanDBID": {
+          "description": "ID клана игрока",
+          "minimum": 0,
+          "type": "integer"
         },
         "playerName": {
           "description": "ник игрока",
