@@ -69,8 +69,8 @@ function unwrapPersonalMissions(result: OnBattleResult['result']) {
     conditions: pm.conditions.map(c => ({
       tag: c.tag,
       state: snakeCaseToCamelCase(c.state),
-      value: c.value,
-      goal: c.goal,
+      value: c.value == null ? null : Math.floor(c.value),
+      goal: c.goal == null ? null : Math.floor(c.goal),
       battles: c.battles ?? []
     }))
   }))
