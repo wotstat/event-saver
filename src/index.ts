@@ -4,7 +4,8 @@ import { cors } from 'hono/cors'
 import routes from './routes';
 import { connect } from './db/index'
 import { redis } from './redis/index'
-import { logger } from "./logger";
+import { logger, ready as loggerReady } from "./logger";
+
 
 const hono = new Hono();
 hono.use(cors());
@@ -12,6 +13,11 @@ hono.use(cors());
 hono.route('/', routes);
 
 try {
+  console.log('Connecting to Loki...');
+  if (!await loggerReady()) {
+    throw new Error('Loki is not available')
+  }
+
   logger.info('Connecting to ClickHouse...');
 
   if (!await connect({ timeout: 10 })) {
