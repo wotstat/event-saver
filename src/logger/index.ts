@@ -1,8 +1,8 @@
 import pino from 'pino'
 import type { PrettyOptions } from "pino-pretty";
-import type { LokiOptions } from 'pino-loki'
+import { createLokiTransport } from './loki-transport';
 
-const isDevelopment = Bun.env.DEVELOPMENT === '1';
+const isDevelopment = Boolean(Bun.env.DEVELOPMENT);
 const LOKI_HOST = Bun.env.LOKI_HOST || 'http://127.0.0.1:3100';
 
 export async function ready(attempts = 5) {
@@ -24,11 +24,10 @@ export async function ready(attempts = 5) {
   }
 }
 
-const lokiTransport = pino.transport<LokiOptions>({
-  target: "pino-loki",
-  options: {
-    host: LOKI_HOST,
-  },
+const lokiTransport = createLokiTransport({
+  host: LOKI_HOST,
+  labels: { app: "event-saver" },
+  structuredMetaKey: 'meta',
 });
 
 const prettyTransport = pino.transport<PrettyOptions>({

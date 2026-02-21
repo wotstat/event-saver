@@ -1,7 +1,6 @@
 # docker compose down; docker compose up --build --remove-orphans;
 services:
   clickhouse:
-    container_name: clickhouse
     image: clickhouse/clickhouse-server:24.2.2-alpine
     volumes:
       - ./docker-volumes/clickhouse-local/data:/var/lib/clickhouse
@@ -33,11 +32,9 @@ services:
     command: [ "sleep", "infinity" ]
 
   redis:
-    container_name: redis
     image: 'redis:alpine'
 
-  app:
-    container_name: event-saver
+  event-saver:
     restart: always
     build:
       dockerfile: Dockerfile.dev
@@ -50,6 +47,7 @@ services:
       - redis
     environment:
       - PORT=9000
+      - LOKI_HOST=http://loki-clickhouse:3000
       - CLICKHOUSE_HOST=http://clickhouse:8123
       - CLICKHOUSE_USER=default
       - CLICKHOUSE_PASSWORD=
@@ -58,3 +56,13 @@ services:
       - REDIS_HOST=redis
       - DEBUG=1
       - DEVELOPMENT=1
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - default
+      - shared_loki
+
+networks:
+  shared_loki:
+    external: true
+    name: shared_loki

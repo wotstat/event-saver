@@ -27,6 +27,7 @@ connectLoki()
 try {
 
   logger.info('Connecting to ClickHouse...');
+  logger.warn('This is a warning message');
 
   if (!await connect({ timeout: 10 })) {
     throw new Error('ClickHouse is not available')
