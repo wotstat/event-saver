@@ -26,7 +26,7 @@ export async function ready(attempts = 5) {
 
 const lokiTransport = createLokiTransport({
   host: LOKI_HOST,
-  labels: { app: "event-saver" },
+  labels: { source: "event-saver" },
   structuredMetaKey: 'meta',
 });
 
