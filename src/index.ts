@@ -12,11 +12,19 @@ hono.use(cors());
 
 hono.route('/', routes);
 
-try {
-  console.log('Connecting to Loki...');
-  if (!await loggerReady()) {
-    throw new Error('Loki is not available')
+async function connectLoki() {
+  try {
+    console.log('Connecting to Loki...');
+    await loggerReady()
+    console.log('Loki is ready');
+  } catch (error) {
+    console.error('Failed to connect to Loki:', error);
   }
+}
+
+connectLoki()
+
+try {
 
   logger.info('Connecting to ClickHouse...');
 

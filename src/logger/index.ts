@@ -19,8 +19,7 @@ export async function ready(attempts = 5) {
       console.log(`Loki is not ready. Retrying... (${5 - attempts + 1}/5)`);
       return await ready(attempts - 1)
     } else {
-      console.error('Loki is not ready after multiple attempts. Exiting.');
-      process.exit(1);
+      throw new Error("Loki is not ready after multiple attempts");
     }
   }
 }
