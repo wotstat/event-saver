@@ -22,7 +22,7 @@ const PINO_LEVELS: Record<number, string> = {
   60: 'fatal',
 };
 
-type LokiValue = [string, string] | [string, string, Record<string, string>];
+type LokiValue = [string, string] | [string, string, Record<string, unknown>];
 
 interface LokiStream {
   stream: Record<string, string>;
@@ -126,7 +126,7 @@ export function createLokiTransport(opts: LokiTransportOptions): Writable {
         const streamLabels: Record<string, string> = { ...labels, level };
 
         // Collect structured metadata from dedicated key + all extra fields
-        const structuredMeta: Record<string, string> = {};
+        const structuredMeta: Record<string, unknown> = {};
 
         // Fields to exclude from structured metadata
         const excludeKeys = new Set(['level', 'time', 'pid', 'hostname', 'msg', 'v']);
@@ -135,14 +135,14 @@ export function createLokiTransport(opts: LokiTransportOptions): Writable {
         // Extract from structuredMetaKey if present
         if (structuredMetaKey && obj[structuredMetaKey] && typeof obj[structuredMetaKey] === 'object') {
           for (const [k, v] of Object.entries(obj[structuredMetaKey])) {
-            structuredMeta[k] = typeof v === 'object' ? JSON.stringify(v) : String(v);
+            structuredMeta[k] = v;
           }
         }
 
         // Add all remaining extra fields as structured metadata
         for (const [k, v] of Object.entries(obj)) {
           if (excludeKeys.has(k)) continue;
-          structuredMeta[k] = typeof v === 'object' ? JSON.stringify(v) : String(v);
+          structuredMeta[k] = v;
         }
 
         // Build the log line as a plain string
