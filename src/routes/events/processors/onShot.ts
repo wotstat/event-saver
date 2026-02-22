@@ -29,7 +29,7 @@ export default function process(battleUUID: string, e: any) {
         dispersionAngle: e.clientShotDispersion,
       })
     } catch (error) {
-      logger.warn({ error, event: JSON.stringify(e) }, `Error calculating client ballistic`)
+      logger.warn({ error, event: e }, `Error calculating client ballistic`)
     }
 
     try {
@@ -39,7 +39,7 @@ export default function process(battleUUID: string, e: any) {
         dispersionAngle: e.serverShotDispersion,
       })
     } catch (error) {
-      logger.warn({ error, event: JSON.stringify(e) }, `Error calculating server ballistic`)
+      logger.warn({ error, event: e }, `Error calculating server ballistic`)
     }
 
     if (clientBallistic === null || serverBallistic === null) return
