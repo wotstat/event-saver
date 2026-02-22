@@ -29,7 +29,7 @@ async function insertLoop() {
           clickhouse_settings: Bun.env.ASYNC_INSERT ? asyncInsertSettings : undefined
         })
       } catch (error) {
-        logger.error({ error, table: key, data }, `Error inserting into ${key}: ${(error as Error).message}`)
+        logger.error({ error, table: key, data: JSON.stringify(data) }, `Error inserting into ${key}: ${(error as Error).message}`)
       }
     }
   }

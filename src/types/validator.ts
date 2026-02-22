@@ -10,7 +10,7 @@ export function check<T>(schema: ValidateFunction<T>, data: any, t: (e: T) => vo
   if (schema(data)) {
     t(data)
   } else {
-    logger.warn({ errors: schema.errors, data }, `Validation failed for event data`)
+    logger.warn({ errors: schema.errors, data: JSON.stringify(data) }, `Validation failed for event data`)
   }
 }
 
