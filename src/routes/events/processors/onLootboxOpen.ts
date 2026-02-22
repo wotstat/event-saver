@@ -20,8 +20,8 @@ export default function process(e: any) {
     try {
       raw = JSON.parse(e.raw)
     }
-    catch (e) {
-      logger.error({ error: e }, 'Failed to parse raw field')
+    catch (error) {
+      logger.error({ error }, 'Failed to parse raw field')
     }
 
     // TODO: Remove this after 1.5.4.1
@@ -40,8 +40,8 @@ export default function process(e: any) {
             currenciesAmount.push(count)
           }
         }
-      } catch (e) {
-        logger.error({ error: e }, 'Failed to parse currencies from raw field')
+      } catch (error) {
+        logger.error({ error }, 'Failed to parse currencies from raw field')
       }
     }
     // ----

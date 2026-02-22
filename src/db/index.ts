@@ -21,7 +21,7 @@ async function connect(options: { timeout?: number }) {
         return true
       }
     } catch (e: any) {
-      if (i == 0) logger.warn({ error: e.message }, `ClickHouse is not available, retrying...`);
+      if (i == 0) logger.warn({ error: e }, `ClickHouse is not available, retrying...`);
     }
     await new Promise(r => setTimeout(r, delay * 1000))
   }

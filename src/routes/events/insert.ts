@@ -28,8 +28,8 @@ async function insertLoop() {
           format: 'JSONEachRow',
           clickhouse_settings: Bun.env.ASYNC_INSERT ? asyncInsertSettings : undefined
         })
-      } catch (e) {
-        logger.error({ error: e, table: key, data }, `Error inserting into ${key}: ${(e as Error).message}`)
+      } catch (error) {
+        logger.error({ error, table: key, data }, `Error inserting into ${key}: ${(error as Error).message}`)
       }
     }
   }

@@ -45,8 +45,8 @@ async function processEvent(eventName: string, event: TokenEvent) {
       const data = verify(token)
       if ('id' in data && typeof data.id === 'string')
         supportedEvents[eventName as keyof typeof supportedEvents](data.id, event as any)
-    } catch (e) {
-      logger.warn({ error: (e as Error).message, eventName }, `JWT verification failed for event ${eventName}`)
+    } catch (error) {
+      logger.warn({ error, eventName }, `JWT verification failed for event ${eventName}`)
     }
   } else {
     logger.error({ eventName }, `Unsupported battle event: ${eventName}`)
@@ -116,8 +116,8 @@ router.post('/send', async c => {
       }
     }
   }
-  catch (e: any) {
-    logger.error({ error: e.message }, `Error processing events: ${e.message}`)
+  catch (error: any) {
+    logger.error({ error }, `Error processing events: ${error.message}`)
   }
   finally {
     return c.text('')
