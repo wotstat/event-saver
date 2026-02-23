@@ -1,5 +1,5 @@
-import { pciDb } from "@/pciids/pciids"
-import type { Event, DynamicBattleInfo, BattleEvent, HangarEvent, SessionMeta, ServerInfo } from "@/types/events"
+import { pciDb } from '@/pciids/pciids'
+import type { Event, DynamicBattleInfo, BattleEvent, HangarEvent, SessionMeta, ServerInfo } from '@/types/events'
 
 export function now() {
   return (new Date()).getTime()

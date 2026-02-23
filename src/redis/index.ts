@@ -1,3 +1,3 @@
-import { RedisClient } from "bun";
+import { RedisClient } from 'bun'
 
 export const redis = new RedisClient(Bun.env.REDIS_HOST)

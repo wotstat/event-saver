@@ -1,10 +1,10 @@
-import { Hono } from "hono";
+import { Hono } from 'hono'
 
 import eventProcessor from './events/index'
 
-const router = new Hono();
+const router = new Hono()
 
-router.get("/api", c => {
+router.get('/api', c => {
   return c.json({
     status: 'online',
     time: new Date().toISOString(),

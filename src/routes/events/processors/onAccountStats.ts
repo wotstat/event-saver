@@ -1,8 +1,8 @@
-import { insert } from "../insert"
-import { now, unwrapEvent, unwrapHangarEvent } from './utils';
+import { insert } from '../insert'
+import { now, unwrapEvent, unwrapHangarEvent } from './utils'
 
-import { check, onAccountStatsSchema } from '@/types/validator';
-import { uuid } from "@/utils/uuid";
+import { check, onAccountStatsSchema } from '@/types/validator'
+import { uuid } from '@/utils/uuid'
 
 
 export default function process(e: any) {

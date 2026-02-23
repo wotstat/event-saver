@@ -1,9 +1,9 @@
-import type { OnBattleResult } from "@/types/events";
-import { insert } from "../insert"
-import { now, snakeCaseToCamelCase, unwrapDynamicBattleInfo, unwrapEvent, unwrapServerInfo, unwrapSessionMeta } from './utils';
+import type { OnBattleResult } from '@/types/events'
+import { insert } from '../insert'
+import { now, snakeCaseToCamelCase, unwrapDynamicBattleInfo, unwrapEvent, unwrapServerInfo, unwrapSessionMeta } from './utils'
 
-import { check, onBattleResultSchema } from '@/types/validator';
-import { uuid } from "@/utils/uuid";
+import { check, onBattleResultSchema } from '@/types/validator'
+import { uuid } from '@/utils/uuid'
 
 function unwrapVehicleBattleResult(prefix: string, res: OnBattleResult['result']['personal']) {
   return {
@@ -85,10 +85,10 @@ export default function process(battleUUID: string, e: any) {
   check(onBattleResultSchema, e, async (e) => {
     const r = e.result
 
-    const currencies = unwrapCurrencies('currencies', r.currencies);
+    const currencies = unwrapCurrencies('currencies', r.currencies)
 
     if (!r.currencies) {
-      currencies['currencies.originalCredits'] = r.originalCredits ?? 0;
+      currencies['currencies.originalCredits'] = r.originalCredits ?? 0
     }
 
     insert('Event_OnBattleResult', {

@@ -1,4 +1,4 @@
-declare module "bun" {
+declare module 'bun' {
   interface Env {
     readonly JWT_SECRET: string;
     readonly PORT?: string;

@@ -1,4 +1,4 @@
-import { Hono } from "hono"
+import { Hono } from 'hono'
 
 import type { TokenEvent, HangarEvent } from '@/types/events'
 import OnBattleResult from './processors/onBattleResult'
@@ -11,11 +11,11 @@ import OnAccountStats from './processors/onAccountStats'
 
 import { redis } from '@/redis/index'
 
-import { onBattleStartSchema } from '@/types/validator';
+import { onBattleStartSchema } from '@/types/validator'
 import { uuid } from '@/utils/uuid'
 
-import { createVerifier, createSigner } from "fast-jwt";
-import { logger } from "@/logger"
+import { createVerifier, createSigner } from 'fast-jwt'
+import { logger } from '@/logger'
 
 const verify = createVerifier({ key: Bun.env.JWT_SECRET, cache: true })
 const sign = createSigner({ key: Bun.env.JWT_SECRET, expiresIn: '1h' })
@@ -65,7 +65,7 @@ router.post('/OnBattleStart', async c => {
   const body = await c.req.json()
 
   if (!onBattleStartSchema(body)) {
-    logger.warn({ errors: onBattleStartSchema.errors }, `Validation failed for OnBattleStart event`)
+    logger.warn({ errors: onBattleStartSchema.errors }, 'Validation failed for OnBattleStart event')
     return c.json(Bun.env.DEBUG ? onBattleStartSchema.errors : '', 400)
   }
 
@@ -75,8 +75,8 @@ router.post('/OnBattleStart', async c => {
   if (replay) {
     return c.text(replay)
   } else {
-    const id = uuid();
-    const token = sign({ id });
+    const id = uuid()
+    const token = sign({ id })
     await redis.setex(cacheKey, lifetime, token)
     OnBattleStart(id, body)
     return c.text(token)
