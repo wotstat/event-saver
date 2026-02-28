@@ -93,6 +93,9 @@
               "type": "null"
             }
           ]
+        },
+        "wotPlusTier": {
+          "type": "string"
         }
       },
       "required": [

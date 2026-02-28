@@ -24,6 +24,7 @@ export default function process(e: any) {
       isPremiumPlus: e.isPremiumPlus,
       premiumPlusExpiryTime: e.premiumPlusExpiryTime,
       isWotPlus: e.isWotPlus,
+      wotPlusTier: e.wotPlusTier ?? (e.isWotPlus ? 'classic' : 'none'),
       wotPlusExpiryTime: e.wotPlusExpiryTime,
       telecom: e.telecom,
 

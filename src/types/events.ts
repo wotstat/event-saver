@@ -554,6 +554,7 @@ export interface OnAccountStats extends HangarEvent {
   premiumPlusExpiryTime: DateTime | null
 
   isWotPlus: boolean
+  wotPlusTier?: string
   wotPlusExpiryTime: DateTime | null
 
   telecom: string
