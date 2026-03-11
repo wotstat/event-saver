@@ -14,7 +14,7 @@ export default function process(e: any) {
 
       season: e.season,
       rating: e.rating,
-      eliteRating: e.eliteRating,
+      eliteRating: e.eliteRating || 0,
       leaderboardPosition: e.leaderboardPosition ?? null,
 
       ...unwrapHangarEvent(e),
