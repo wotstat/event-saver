@@ -9,7 +9,7 @@ import { logger } from '@/logger'
 export default function process(battleUUID: string, e: any) {
   check(onShotSchema, e, (e) => {
 
-    const gravity = e.gravity ?? -(e.acceleration?.y ?? 0)
+    const gravity = -(e.acceleration?.y ?? 0)
 
     const shared = {
       gravity: -gravity,

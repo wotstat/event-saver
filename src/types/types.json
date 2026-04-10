@@ -2595,24 +2595,31 @@
     "OnShot": {
       "properties": {
         "acceleration": {
-          "description": "Ускорение",
-          "properties": {
-            "x": {
-              "type": "number"
+          "anyOf": [
+            {
+              "properties": {
+                "x": {
+                  "type": "number"
+                },
+                "y": {
+                  "type": "number"
+                },
+                "z": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "x",
+                "y",
+                "z"
+              ],
+              "type": "object"
             },
-            "y": {
-              "type": "number"
-            },
-            "z": {
-              "type": "number"
+            {
+              "type": "null"
             }
-          },
-          "required": [
-            "x",
-            "y",
-            "z"
           ],
-          "type": "object"
+          "description": "Ускорение"
         },
         "accountDBID": {
           "description": "ID аккаунта",
@@ -2901,10 +2908,6 @@
         "gameVersion": {
           "description": "версия игры",
           "type": "string"
-        },
-        "gravity": {
-          "description": "Гравитация",
-          "type": "number"
         },
         "gunDescr": {
           "description": "ID пушки своего танка",
@@ -3563,6 +3566,7 @@
         }
       },
       "required": [
+        "acceleration",
         "accountDBID",
         "allyTeamFragsCount",
         "allyTeamHealth",
