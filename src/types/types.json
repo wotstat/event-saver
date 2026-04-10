@@ -523,20 +523,6 @@
               "type": "integer"
             },
             "finishReason": {
-              "enum": [
-                "UNKNOWN",
-                "EXTERMINATION",
-                "BASE",
-                "TIMEOUT",
-                "FAILURE",
-                "TECHNICAL",
-                "WIN_POINTS_CAP",
-                "WIN_POINTS",
-                "ALLY_KILLED",
-                "OWN_VEHICLE_DESTROYED",
-                "DESTROYED_OBJECTS",
-                "OBJECTIVES_COMPLETED"
-              ],
               "type": "string"
             },
             "fortClanDBIDs": {
@@ -1889,9 +1875,16 @@
     "OnComp7Info": {
       "properties": {
         "eliteRating": {
-          "description": "Планка для Легенды",
-          "minimum": 0,
-          "type": "integer"
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Планка для Легенды"
         },
         "eventName": {
           "description": "название ивента",

@@ -307,7 +307,7 @@ export interface OnBattleResult extends TokenEvent, DynamicBattleInfo, PartialSe
     isPremium?: boolean,
     teamHealth: UInt16[],
     result: 'win' | 'lose' | 'tie',
-    finishReason?: 'UNKNOWN' | 'EXTERMINATION' | 'BASE' | 'TIMEOUT' | 'FAILURE' | 'TECHNICAL' | 'WIN_POINTS_CAP' | 'WIN_POINTS' | 'ALLY_KILLED' | 'OWN_VEHICLE_DESTROYED' | 'DESTROYED_OBJECTS' | 'OBJECTIVES_COMPLETED',
+    finishReason?: 'UNKNOWN' | 'EXTERMINATION' | 'BASE' | 'TIMEOUT' | 'FAILURE' | 'TECHNICAL' | 'WIN_POINTS_CAP' | 'WIN_POINTS' | 'ALLY_KILLED' | 'OWN_VEHICLE_DESTROYED' | 'DESTROYED_OBJECTS' | 'OBJECTIVES_COMPLETED' | 'HB_ENEMY_EXTERMINATION' | 'HB_ALLY_SPG_EXTERMINATION' | (string & {}),
     winnerTeam: UInt16 | null,
     duration: UInt16,
     playerTeam: UInt8,
