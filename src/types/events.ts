@@ -253,6 +253,7 @@ type VehicleBattleResult = {
   playerRank?: UInt8
   comp7PrestigePoints?: UInt16
   comp7SkillTag?: string
+  comp7Rank?: string
 }
 
 export interface OnBattleStart extends DynamicBattleInfo, Event, PartialSessionMeta, ServerInfo {

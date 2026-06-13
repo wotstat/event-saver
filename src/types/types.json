@@ -549,6 +549,9 @@
                   "minimum": 0,
                   "type": "integer"
                 },
+                "comp7Rank": {
+                  "type": "string"
+                },
                 "comp7SkillTag": {
                   "type": "string"
                 },
@@ -816,6 +819,9 @@
                   "comp7PrestigePoints": {
                     "minimum": 0,
                     "type": "integer"
+                  },
+                  "comp7Rank": {
+                    "type": "string"
                   },
                   "comp7SkillTag": {
                     "type": "string"
