@@ -114,6 +114,7 @@ export function unwrapDynamicBattleInfo(e: DynamicBattleInfo) {
     allyTeamFragsCount: e.allyTeamFragsCount,
     enemyTeamFragsCount: e.enemyTeamFragsCount,
     mapsBlackList: (e.mapsBlackList ?? []).filter(Boolean),
+    comp7SkillTag: e.comp7SkillTag ?? '',
     extra: e.extra ?? {},
     ...prefixObjectKeys('systemInfo', systemInfo),
   }

@@ -198,6 +198,9 @@ interface DynamicBattleInfo extends StaticBattleInfo, BattleExtra {
 
   /** Информация о системе */
   systemInfo?: SystemInfo
+
+  /** Тег навыка натиска */
+  comp7SkillTag?: string
 }
 
 type BOB25Stats = { [key in '1' | '2' | '3' | '4']?: { score: number, rank: number } }
@@ -249,6 +252,7 @@ type VehicleBattleResult = {
   squadID: UInt8
   playerRank?: UInt8
   comp7PrestigePoints?: UInt16
+  comp7SkillTag?: string
 }
 
 export interface OnBattleStart extends DynamicBattleInfo, Event, PartialSessionMeta, ServerInfo {
