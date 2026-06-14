@@ -201,6 +201,18 @@ interface DynamicBattleInfo extends StaticBattleInfo, BattleExtra {
 
   /** Тег навыка натиска */
   comp7SkillTag?: string
+
+  /** Теги снаряжения */
+  equipment?: (string | null)[]
+
+  /** Теги расходников */
+  consumables?: (string | null)[]
+
+  /** Теги инструкции */
+  battleBooster?: string | null
+
+  /** Теги снарядов */
+  shells?: Record<string, UInt16>
 }
 
 type BOB25Stats = { [key in '1' | '2' | '3' | '4']?: { score: number, rank: number } }

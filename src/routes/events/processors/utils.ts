@@ -5,8 +5,8 @@ export function now() {
   return (new Date()).getTime()
 }
 
-export function prefixObjectKeys(prefix: string, obj: Record<string, any>) {
-  return Object.fromEntries(Object.entries(obj).map(([k, v]) => [`${prefix}.${k}`, v]))
+export function prefixObjectKeys<K extends keyof any, T>(prefix: string, obj: Record<K, T>): Record<K, T> {
+  return Object.fromEntries(Object.entries(obj).map(([k, v]) => [`${prefix}.${k}`, v])) as Record<K, T>
 }
 
 export function unwrapVector3(name: string, v: { x: number, y: number, z: number } | null) {
@@ -53,6 +53,15 @@ function vendorId(gpuVendor: number) {
     case 3: return '1002' // AMD
     default: return null
   }
+}
+
+const SUPPORTED_SHELLS = ['HIGH_EXPLOSIVE', 'FLAME', 'ARMOR_PIERCING_CR', 'ARMOR_PIERCING_FSDS', 'HOLLOW_CHARGE', 'ARMOR_PIERCING'] as const
+function unwrapShells(prefix: string, shells: DynamicBattleInfo['shells']): { [k in typeof SUPPORTED_SHELLS[number]]: number } {
+  shells = shells ?? {}
+  const result: Record<typeof SUPPORTED_SHELLS[number], number> = {} as any
+
+  for (const shell of SUPPORTED_SHELLS) result[shell] = shells[shell] ?? 0
+  return prefixObjectKeys(prefix, result)
 }
 
 export function unwrapDynamicBattleInfo(e: DynamicBattleInfo) {
@@ -115,7 +124,11 @@ export function unwrapDynamicBattleInfo(e: DynamicBattleInfo) {
     enemyTeamFragsCount: e.enemyTeamFragsCount,
     mapsBlackList: (e.mapsBlackList ?? []).filter(Boolean),
     comp7SkillTag: e.comp7SkillTag ?? '',
+    equipment: (e.equipment ?? []).map(s => s ?? ''),
+    consumables: (e.consumables ?? []).map(s => s ?? ''),
+    battleBooster: e.battleBooster ?? '',
     extra: e.extra ?? {},
+    ...unwrapShells('shells', e.shells),
     ...prefixObjectKeys('systemInfo', systemInfo),
   }
 }

@@ -148,6 +148,13 @@
           "description": "название карты",
           "type": "string"
         },
+        "battleBooster": {
+          "description": "Теги инструкции",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "battleGameplay": {
           "description": "режим игры",
           "type": "string"
@@ -168,6 +175,16 @@
           "description": "Тег навыка натиска",
           "type": "string"
         },
+        "consumables": {
+          "description": "Теги расходников",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": "array"
+        },
         "enemyTeamFragsCount": {
           "description": "Количество фрагов врагов",
           "minimum": 0,
@@ -182,6 +199,16 @@
           "description": "Максимальное ХП вражеской команды",
           "minimum": 0,
           "type": "integer"
+        },
+        "equipment": {
+          "description": "Теги снаряжения",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": "array"
         },
         "eventName": {
           "description": "название ивента",
@@ -1057,6 +1084,14 @@
           "description": "сколько времени назад началась сессия",
           "type": "number"
         },
+        "shells": {
+          "additionalProperties": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "description": "Теги снарядов",
+          "type": "object"
+        },
         "systemInfo": {
           "description": "Информация о системе",
           "properties": {
@@ -1310,6 +1345,13 @@
           "description": "название карты",
           "type": "string"
         },
+        "battleBooster": {
+          "description": "Теги инструкции",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "battleGameplay": {
           "description": "режим игры",
           "type": "string"
@@ -1345,6 +1387,16 @@
           "description": "Тег навыка натиска",
           "type": "string"
         },
+        "consumables": {
+          "description": "Теги расходников",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": "array"
+        },
         "enemyTeamFragsCount": {
           "description": "Количество фрагов врагов",
           "minimum": 0,
@@ -1359,6 +1411,16 @@
           "description": "Максимальное ХП вражеской команды",
           "minimum": 0,
           "type": "integer"
+        },
+        "equipment": {
+          "description": "Теги снаряжения",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": "array"
         },
         "eventName": {
           "description": "название ивента",
@@ -1646,6 +1708,14 @@
         "sessionStartAgo": {
           "description": "сколько времени назад началась сессия",
           "type": "number"
+        },
+        "shells": {
+          "additionalProperties": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "description": "Теги снарядов",
+          "type": "object"
         },
         "spawnPoint": {
           "description": "координата спавна",
@@ -2669,6 +2739,13 @@
           "description": "Используется автоприцел",
           "type": "boolean"
         },
+        "battleBooster": {
+          "description": "Теги инструкции",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "battleDispersion": {
           "description": "Разброс орудия по ттх без временных бафов, но с учётом оборудования",
           "type": "number"
@@ -2726,6 +2803,16 @@
           "description": "Тег навыка натиска",
           "type": "string"
         },
+        "consumables": {
+          "description": "Теги расходников",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": "array"
+        },
         "damageRandomization": {
           "description": "Разброс урона снаряда +-25",
           "type": "number"
@@ -2744,6 +2831,16 @@
           "description": "Максимальное ХП вражеской команды",
           "minimum": 0,
           "type": "integer"
+        },
+        "equipment": {
+          "description": "Теги снаряжения",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": "array"
         },
         "eventName": {
           "description": "название ивента",
@@ -3301,6 +3398,14 @@
         "shellTag": {
           "description": "Тип снаряда",
           "type": "string"
+        },
+        "shells": {
+          "additionalProperties": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "description": "Теги снарядов",
+          "type": "object"
         },
         "shotId": {
           "description": "id выстрела уникальный для клиента",
