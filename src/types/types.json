@@ -150,10 +150,7 @@
         },
         "battleBooster": {
           "description": "Теги инструкции",
-          "type": [
-            "string",
-            "null"
-          ]
+          "type": "string"
         },
         "battleGameplay": {
           "description": "режим игры",
@@ -179,21 +176,14 @@
           ]
         },
         "consumables": {
-          "anyOf": [
-            {
-              "items": {
-                "type": [
-                  "string",
-                  "null"
-                ]
-              },
-              "type": "array"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "Теги расходников"
+          "description": "Теги расходников",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": "array"
         },
         "enemyTeamFragsCount": {
           "description": "Количество фрагов врагов",
@@ -211,21 +201,14 @@
           "type": "integer"
         },
         "equipment": {
-          "anyOf": [
-            {
-              "items": {
-                "type": [
-                  "string",
-                  "null"
-                ]
-              },
-              "type": "array"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "Теги снаряжения"
+          "description": "Теги снаряжения",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": "array"
         },
         "eventName": {
           "description": "название ивента",
@@ -1102,19 +1085,12 @@
           "type": "number"
         },
         "shells": {
-          "anyOf": [
-            {
-              "additionalProperties": {
-                "minimum": 0,
-                "type": "integer"
-              },
-              "type": "object"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "Теги снарядов"
+          "additionalProperties": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "description": "Теги снарядов",
+          "type": "object"
         },
         "systemInfo": {
           "description": "Информация о системе",
@@ -1371,10 +1347,7 @@
         },
         "battleBooster": {
           "description": "Теги инструкции",
-          "type": [
-            "string",
-            "null"
-          ]
+          "type": "string"
         },
         "battleGameplay": {
           "description": "режим игры",
@@ -1415,21 +1388,14 @@
           ]
         },
         "consumables": {
-          "anyOf": [
-            {
-              "items": {
-                "type": [
-                  "string",
-                  "null"
-                ]
-              },
-              "type": "array"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "Теги расходников"
+          "description": "Теги расходников",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": "array"
         },
         "enemyTeamFragsCount": {
           "description": "Количество фрагов врагов",
@@ -1447,21 +1413,14 @@
           "type": "integer"
         },
         "equipment": {
-          "anyOf": [
-            {
-              "items": {
-                "type": [
-                  "string",
-                  "null"
-                ]
-              },
-              "type": "array"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "Теги снаряжения"
+          "description": "Теги снаряжения",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": "array"
         },
         "eventName": {
           "description": "название ивента",
@@ -1751,19 +1710,12 @@
           "type": "number"
         },
         "shells": {
-          "anyOf": [
-            {
-              "additionalProperties": {
-                "minimum": 0,
-                "type": "integer"
-              },
-              "type": "object"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "Теги снарядов"
+          "additionalProperties": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "description": "Теги снарядов",
+          "type": "object"
         },
         "spawnPoint": {
           "description": "координата спавна",
@@ -2789,10 +2741,7 @@
         },
         "battleBooster": {
           "description": "Теги инструкции",
-          "type": [
-            "string",
-            "null"
-          ]
+          "type": "string"
         },
         "battleDispersion": {
           "description": "Разброс орудия по ттх без временных бафов, но с учётом оборудования",
@@ -2855,21 +2804,14 @@
           ]
         },
         "consumables": {
-          "anyOf": [
-            {
-              "items": {
-                "type": [
-                  "string",
-                  "null"
-                ]
-              },
-              "type": "array"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "Теги расходников"
+          "description": "Теги расходников",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": "array"
         },
         "damageRandomization": {
           "description": "Разброс урона снаряда +-25",
@@ -2891,21 +2833,14 @@
           "type": "integer"
         },
         "equipment": {
-          "anyOf": [
-            {
-              "items": {
-                "type": [
-                  "string",
-                  "null"
-                ]
-              },
-              "type": "array"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "Теги снаряжения"
+          "description": "Теги снаряжения",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": "array"
         },
         "eventName": {
           "description": "название ивента",
@@ -3465,19 +3400,12 @@
           "type": "string"
         },
         "shells": {
-          "anyOf": [
-            {
-              "additionalProperties": {
-                "minimum": 0,
-                "type": "integer"
-              },
-              "type": "object"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "Теги снарядов"
+          "additionalProperties": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "description": "Теги снарядов",
+          "type": "object"
         },
         "shotId": {
           "description": "id выстрела уникальный для клиента",
