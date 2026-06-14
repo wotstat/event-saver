@@ -577,7 +577,10 @@
                   "type": "integer"
                 },
                 "comp7Rank": {
-                  "type": "string"
+                  "type": [
+                    "string",
+                    "null"
+                  ]
                 },
                 "comp7SkillTag": {
                   "type": [
@@ -851,7 +854,10 @@
                     "type": "integer"
                   },
                   "comp7Rank": {
-                    "type": "string"
+                    "type": [
+                      "string",
+                      "null"
+                    ]
                   },
                   "comp7SkillTag": {
                     "type": [

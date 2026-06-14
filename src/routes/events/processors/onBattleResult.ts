@@ -16,7 +16,8 @@ function unwrapPlayersResults(results: OnBattleResult['result']['playersResults'
   const temp = results
     .map(r => ({
       ...unwrapVehicleBattleResult('playersResults', r),
-      'playersResults.comp7SkillTag': r.comp7SkillTag ?? '',
+      'playersResults.comp7SkillTag': r.comp7SkillTag ?? '', // TODO: удалить после выпуска обновления
+      'playersResults.comp7Rank': r.comp7Rank ?? '', // TODO: удалить после выпуска обновления
       'playersResults.bdid': r.bdid,
       'playersResults.name': r.name,
       'playersResults.clan': r.clan ?? '',
@@ -111,8 +112,9 @@ export default function process(battleUUID: string, e: any) {
       ...unwrapPersonalMissions(r),
       ...unwrapComp7('comp7', r.comp7),
       ...unwrapVehicleBattleResult('personal', r.personal),
-      'personal.comp7SkillTag': r.personal.comp7SkillTag ?? '',
       ...unwrapPlayersResults(r.playersResults),
+      'personal.comp7SkillTag': r.personal.comp7SkillTag ?? '', // TODO: удалить после выпуска обновления
+      'personal.comp7Rank': r.personal.comp7Rank ?? '',
       ...unwrapDynamicBattleInfo(e),
       ...unwrapSessionMeta(e),
       ...unwrapEvent(e),

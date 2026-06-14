@@ -266,7 +266,7 @@ type VehicleBattleResult = {
   comp7PrestigePoints?: UInt16
   // TODO: удалить | null после выпуска обновления
   comp7SkillTag?: string | null
-  comp7Rank?: string
+  comp7Rank?: string | null
 }
 
 export interface OnBattleStart extends DynamicBattleInfo, Event, PartialSessionMeta, ServerInfo {
