@@ -173,17 +173,27 @@
         },
         "comp7SkillTag": {
           "description": "Тег навыка натиска",
-          "type": "string"
+          "type": [
+            "string",
+            "null"
+          ]
         },
         "consumables": {
-          "description": "Теги расходников",
-          "items": {
-            "type": [
-              "string",
-              "null"
-            ]
-          },
-          "type": "array"
+          "anyOf": [
+            {
+              "items": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Теги расходников"
         },
         "enemyTeamFragsCount": {
           "description": "Количество фрагов врагов",
@@ -201,14 +211,21 @@
           "type": "integer"
         },
         "equipment": {
-          "description": "Теги снаряжения",
-          "items": {
-            "type": [
-              "string",
-              "null"
-            ]
-          },
-          "type": "array"
+          "anyOf": [
+            {
+              "items": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Теги снаряжения"
         },
         "eventName": {
           "description": "название ивента",
@@ -1085,12 +1102,19 @@
           "type": "number"
         },
         "shells": {
-          "additionalProperties": {
-            "minimum": 0,
-            "type": "integer"
-          },
-          "description": "Теги снарядов",
-          "type": "object"
+          "anyOf": [
+            {
+              "additionalProperties": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Теги снарядов"
         },
         "systemInfo": {
           "description": "Информация о системе",
@@ -1385,17 +1409,27 @@
         },
         "comp7SkillTag": {
           "description": "Тег навыка натиска",
-          "type": "string"
+          "type": [
+            "string",
+            "null"
+          ]
         },
         "consumables": {
-          "description": "Теги расходников",
-          "items": {
-            "type": [
-              "string",
-              "null"
-            ]
-          },
-          "type": "array"
+          "anyOf": [
+            {
+              "items": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Теги расходников"
         },
         "enemyTeamFragsCount": {
           "description": "Количество фрагов врагов",
@@ -1413,14 +1447,21 @@
           "type": "integer"
         },
         "equipment": {
-          "description": "Теги снаряжения",
-          "items": {
-            "type": [
-              "string",
-              "null"
-            ]
-          },
-          "type": "array"
+          "anyOf": [
+            {
+              "items": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Теги снаряжения"
         },
         "eventName": {
           "description": "название ивента",
@@ -1710,12 +1751,19 @@
           "type": "number"
         },
         "shells": {
-          "additionalProperties": {
-            "minimum": 0,
-            "type": "integer"
-          },
-          "description": "Теги снарядов",
-          "type": "object"
+          "anyOf": [
+            {
+              "additionalProperties": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Теги снарядов"
         },
         "spawnPoint": {
           "description": "координата спавна",
@@ -2801,17 +2849,27 @@
         },
         "comp7SkillTag": {
           "description": "Тег навыка натиска",
-          "type": "string"
+          "type": [
+            "string",
+            "null"
+          ]
         },
         "consumables": {
-          "description": "Теги расходников",
-          "items": {
-            "type": [
-              "string",
-              "null"
-            ]
-          },
-          "type": "array"
+          "anyOf": [
+            {
+              "items": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Теги расходников"
         },
         "damageRandomization": {
           "description": "Разброс урона снаряда +-25",
@@ -2833,14 +2891,21 @@
           "type": "integer"
         },
         "equipment": {
-          "description": "Теги снаряжения",
-          "items": {
-            "type": [
-              "string",
-              "null"
-            ]
-          },
-          "type": "array"
+          "anyOf": [
+            {
+              "items": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Теги снаряжения"
         },
         "eventName": {
           "description": "название ивента",
@@ -3400,12 +3465,19 @@
           "type": "string"
         },
         "shells": {
-          "additionalProperties": {
-            "minimum": 0,
-            "type": "integer"
-          },
-          "description": "Теги снарядов",
-          "type": "object"
+          "anyOf": [
+            {
+              "additionalProperties": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Теги снарядов"
         },
         "shotId": {
           "description": "id выстрела уникальный для клиента",
