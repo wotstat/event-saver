@@ -580,7 +580,10 @@
                   "type": "string"
                 },
                 "comp7SkillTag": {
-                  "type": "string"
+                  "type": [
+                    "string",
+                    "null"
+                  ]
                 },
                 "damageAssistedRadio": {
                   "minimum": 0,
@@ -851,7 +854,10 @@
                     "type": "string"
                   },
                   "comp7SkillTag": {
-                    "type": "string"
+                    "type": [
+                      "string",
+                      "null"
+                    ]
                   },
                   "damageAssistedRadio": {
                     "minimum": 0,

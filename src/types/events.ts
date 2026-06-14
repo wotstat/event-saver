@@ -264,7 +264,8 @@ type VehicleBattleResult = {
   squadID: UInt8
   playerRank?: UInt8
   comp7PrestigePoints?: UInt16
-  comp7SkillTag?: string
+  // TODO: удалить | null после выпуска обновления
+  comp7SkillTag?: string | null
   comp7Rank?: string
 }
 
