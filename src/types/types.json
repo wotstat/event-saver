@@ -185,6 +185,49 @@
           },
           "type": "array"
         },
+        "crew": {
+          "description": "Информация о членах экипажа",
+          "items": {
+            "properties": {
+              "level": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "roles": {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "skills": {
+                "items": {
+                  "properties": {
+                    "level": {
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    "tag": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "tag",
+                    "level"
+                  ],
+                  "type": "object"
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "roles",
+              "level",
+              "skills"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
         "enemyTeamFragsCount": {
           "description": "Количество фрагов врагов",
           "minimum": 0,
@@ -1406,6 +1449,49 @@
               "string",
               "null"
             ]
+          },
+          "type": "array"
+        },
+        "crew": {
+          "description": "Информация о членах экипажа",
+          "items": {
+            "properties": {
+              "level": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "roles": {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "skills": {
+                "items": {
+                  "properties": {
+                    "level": {
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    "tag": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "tag",
+                    "level"
+                  ],
+                  "type": "object"
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "roles",
+              "level",
+              "skills"
+            ],
+            "type": "object"
           },
           "type": "array"
         },
@@ -2822,6 +2908,49 @@
               "string",
               "null"
             ]
+          },
+          "type": "array"
+        },
+        "crew": {
+          "description": "Информация о членах экипажа",
+          "items": {
+            "properties": {
+              "level": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "roles": {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "skills": {
+                "items": {
+                  "properties": {
+                    "level": {
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    "tag": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "tag",
+                    "level"
+                  ],
+                  "type": "object"
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "roles",
+              "level",
+              "skills"
+            ],
+            "type": "object"
           },
           "type": "array"
         },

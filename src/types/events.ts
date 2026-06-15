@@ -157,6 +157,12 @@ type SystemInfo = {
   windowResolution: { refreshRate: UInt16, width: UInt16, height: UInt16 }
 }
 
+type Crewmate = {
+  roles: string[]
+  level: UInt8
+  skills: { tag: string, level: UInt8 }[]
+}
+
 // Динамические данные о бое (могут изменяться во время боя), присутствуют во всех событиях для удобных селектов и фильтров
 interface DynamicBattleInfo extends StaticBattleInfo, BattleExtra {
 
@@ -213,6 +219,9 @@ interface DynamicBattleInfo extends StaticBattleInfo, BattleExtra {
 
   /** Теги снарядов */
   shells?: Record<string, UInt16>
+
+  /** Информация о членах экипажа */
+  crew?: Crewmate[]
 }
 
 type BOB25Stats = { [key in '1' | '2' | '3' | '4']?: { score: number, rank: number } }

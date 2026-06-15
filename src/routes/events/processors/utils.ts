@@ -127,6 +127,7 @@ export function unwrapDynamicBattleInfo(e: DynamicBattleInfo) {
     equipment: (e.equipment ?? []).map(s => s ?? ''),
     consumables: (e.consumables ?? []).map(s => s ?? ''),
     battleBooster: e.battleBooster ?? '',
+    crew: e.crew?.map((c, i) => ([c.roles, c.level, c.skills.map(s => [s.tag, s.level])])) ?? [],
     extra: e.extra ?? {},
     ...unwrapShells('shells', e.shells),
     ...prefixObjectKeys('systemInfo', systemInfo),
