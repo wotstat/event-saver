@@ -122,7 +122,7 @@ export function unwrapDynamicBattleInfo(e: DynamicBattleInfo) {
     enemyTeamMaxHealth: e.enemyTeamMaxHealth,
     allyTeamFragsCount: e.allyTeamFragsCount,
     enemyTeamFragsCount: e.enemyTeamFragsCount,
-    mapsBlackList: (e.mapsBlackList ?? []).filter(Boolean),
+    mapsBlackList: e.mapsBlackList?.map(s => s ?? '') ?? [],
     comp7SkillTag: e.comp7SkillTag ?? '',
     equipment: (e.equipment ?? []).map(s => s ?? ''),
     consumables: (e.consumables ?? []).map(s => s ?? ''),
