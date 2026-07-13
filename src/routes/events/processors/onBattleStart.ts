@@ -1,11 +1,11 @@
-import { insert } from '../insert'
+import { insert, insertNow } from '../insert'
 import { now, secToMs, unwrapDynamicBattleInfo, unwrapEvent, unwrapServerInfo, unwrapSessionMeta, unwrapVector3 } from './utils'
 
 import { type OnBattleStart } from '@/types/events'
 
 
 export default function process(battleUUID: string, e: OnBattleStart) {
-  insert('Event_OnBattleStart', {
+  insertNow('Event_OnBattleStart', {
     id: battleUUID,
     dateTime: now(),
     arenaId: e.arenaID,

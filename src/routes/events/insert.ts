@@ -5,8 +5,7 @@ import type { ClickHouseSettings } from '@clickhouse/client'
 
 const asyncInsertSettings = {
   async_insert: 1,
-  wait_for_async_insert: 0,
-  async_insert_busy_timeout_ms: 1000,
+  wait_for_async_insert: 1
 } satisfies ClickHouseSettings
 
 const insertCache: { [key: string]: any } = {}
@@ -45,4 +44,17 @@ async function insertFunc(tableName: string, data: any, event: any) {
 
 export function insert(tableName: string, data: any, event: any) {
   insertFunc(tableName, data, event)
+}
+
+export async function insertNow(tableName: string, data: any, event: any) {
+  try {
+    await clickhouse.insert({
+      table: tableName,
+      values: data,
+      format: 'JSONEachRow',
+      clickhouse_settings: asyncInsertSettings
+    })
+  } catch (error) {
+    logger.error({ error, table: tableName, data: JSON.stringify(data) }, `Error inserting into ${tableName}: ${(error as Error).message}`)
+  }
 }
