@@ -1,4 +1,4 @@
-import { insert, insertNow } from '../insert'
+import { insertNow } from '../insert'
 import { now, unwrapBattleEvent, unwrapDynamicBattleInfo, unwrapEvent, unwrapServerInfo, unwrapSessionMeta, unwrapVector3 } from './utils'
 import { BallisticCalculator } from '@/utils/ballisticCalc'
 

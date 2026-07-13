@@ -1,5 +1,5 @@
 import type { OnBattleResult } from '@/types/events'
-import { insert, insertNow } from '../insert'
+import { insertNow } from '../insert'
 import { now, snakeCaseToCamelCase, unwrapDynamicBattleInfo, unwrapEvent, unwrapServerInfo, unwrapSessionMeta } from './utils'
 
 import { check, onBattleResultSchema } from '@/types/validator'

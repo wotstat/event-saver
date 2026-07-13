@@ -1,4 +1,4 @@
-import { insert, insertNow } from '../insert'
+import { insertNow } from '../insert'
 import { now, unwrapEvent, unwrapHangarEvent } from './utils'
 
 import { check, onAccountStatsSchema } from '@/types/validator'

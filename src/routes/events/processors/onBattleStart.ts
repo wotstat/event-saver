@@ -1,4 +1,4 @@
-import { insert, insertNow } from '../insert'
+import { insertNow } from '../insert'
 import { now, secToMs, unwrapDynamicBattleInfo, unwrapEvent, unwrapServerInfo, unwrapSessionMeta, unwrapVector3 } from './utils'
 
 import { type OnBattleStart } from '@/types/events'

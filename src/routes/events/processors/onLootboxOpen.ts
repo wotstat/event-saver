@@ -1,5 +1,5 @@
 import { modVersionComparator } from '@/utils/utils'
-import { insert, insertNow } from '../insert'
+import { insertNow } from '../insert'
 import { now, unwrapEvent, unwrapHangarEvent, unwrapServerInfo, unwrapSessionMeta, unwrapVector3 } from './utils'
 
 import { check, onLootboxOpenSchema } from '@/types/validator'
