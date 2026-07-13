@@ -1,4 +1,4 @@
-import { insert } from '../insert'
+import { insert, insertNow } from '../insert'
 import { now, unwrapEvent, unwrapHangarEvent } from './utils'
 
 import { check, onAccountStatsSchema } from '@/types/validator'
@@ -8,7 +8,7 @@ import { uuid } from '@/utils/uuid'
 export default function process(e: any) {
 
   check(onAccountStatsSchema, e, async (e) => {
-    insert('Event_OnAccountStats', {
+    insertNow('Event_OnAccountStats', {
       id: uuid(),
       dateTime: now(),
 

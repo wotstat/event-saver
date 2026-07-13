@@ -1,4 +1,4 @@
-import { insert } from '../insert'
+import { insert, insertNow } from '../insert'
 import { now, unwrapBattleEvent, unwrapDynamicBattleInfo, unwrapEvent, unwrapServerInfo, unwrapSessionMeta, unwrapVector3 } from './utils'
 import { BallisticCalculator } from '@/utils/ballisticCalc'
 
@@ -44,7 +44,7 @@ export default function process(battleUUID: string, e: any) {
 
     if (clientBallistic === null || serverBallistic === null) return
 
-    insert('Event_OnShot', {
+    insertNow('Event_OnShot', {
       id: uuid(),
       onBattleStartId: battleUUID,
       dateTime: now(),

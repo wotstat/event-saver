@@ -1,4 +1,4 @@
-import { insert } from '../insert'
+import { insertNow } from '../insert'
 import { now, unwrapEvent, unwrapHangarEvent } from './utils'
 
 import { check, onComp7InfoSchema } from '@/types/validator'
@@ -8,7 +8,7 @@ import { uuid } from '@/utils/uuid'
 export default function process(e: any) {
 
   check(onComp7InfoSchema, e, async (e) => {
-    insert('Event_OnComp7Info', {
+    insertNow('Event_OnComp7Info', {
       id: uuid(),
       dateTime: now(),
 

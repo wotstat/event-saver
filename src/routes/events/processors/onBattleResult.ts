@@ -1,5 +1,5 @@
 import type { OnBattleResult } from '@/types/events'
-import { insert } from '../insert'
+import { insert, insertNow } from '../insert'
 import { now, snakeCaseToCamelCase, unwrapDynamicBattleInfo, unwrapEvent, unwrapServerInfo, unwrapSessionMeta } from './utils'
 
 import { check, onBattleResultSchema } from '@/types/validator'
@@ -93,7 +93,7 @@ export default function process(battleUUID: string, e: any) {
       currencies['currencies.originalCredits'] = r.originalCredits ?? 0
     }
 
-    insert('Event_OnBattleResult', {
+    insertNow('Event_OnBattleResult', {
       id: uuid(),
       onBattleStartId: battleUUID,
       dateTime: now(),

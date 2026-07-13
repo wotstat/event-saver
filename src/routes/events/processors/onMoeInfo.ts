@@ -1,4 +1,4 @@
-import { insert } from '../insert'
+import { insertNow } from '../insert'
 import { now, unwrapEvent, unwrapHangarEvent } from './utils'
 
 import { check, onMoeInfoSchema } from '@/types/validator'
@@ -10,7 +10,7 @@ export default function process(e: any) {
   check(onMoeInfoSchema, e, async (e) => {
     const [p0, p20, p40, p55, p65, p75, p85, p95, p100] = e.moeDistribution
 
-    insert('Event_OnMoeInfo', {
+    insertNow('Event_OnMoeInfo', {
       id: uuid(),
       dateTime: now(),
 

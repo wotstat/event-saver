@@ -1,5 +1,5 @@
 import { modVersionComparator } from '@/utils/utils'
-import { insert } from '../insert'
+import { insert, insertNow } from '../insert'
 import { now, unwrapEvent, unwrapHangarEvent, unwrapServerInfo, unwrapSessionMeta, unwrapVector3 } from './utils'
 
 import { check, onLootboxOpenSchema } from '@/types/validator'
@@ -46,7 +46,7 @@ export default function process(e: any) {
     }
     // ----
 
-    insert('Event_OnLootboxOpen', {
+    insertNow('Event_OnLootboxOpen', {
       id: uuid(),
       dateTime: now(),
 
