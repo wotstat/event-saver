@@ -1,4 +1,33 @@
-# docker compose down; docker compose up --build --remove-orphans;
+# Прод-деплой: bash rerun-prod.sh (blue-green, без даунтайма)
+
+x-event-saver: &event-saver
+  restart: always
+  image: wotstat-event-saver
+  build:
+    dockerfile: Dockerfile
+  depends_on:
+    - redis
+  environment:
+    - PORT=9000
+    - LOKI_HOST=http://loki-clickhouse:3100
+    - CLICKHOUSE_HOST=http://172.17.0.1:8123
+    - CLICKHOUSE_DATABASE=WOT
+    - CLICKHOUSE_USER
+    - CLICKHOUSE_PASSWORD
+    - JWT_SECRET
+    - REDIS_HOST=redis
+  extra_hosts:
+    - "host.docker.internal:host-gateway"
+  networks:
+    - bridge
+    - loki_event_saver
+  healthcheck:
+    test: ["CMD", "wget", "-qO-", "http://127.0.0.1:9000/api"]
+    interval: 3s
+    timeout: 3s
+    retries: 20
+    start_period: 10s
+  stop_grace_period: 15s
 
 services:
   redis:
@@ -7,31 +36,19 @@ services:
     networks:
       - bridge
 
-  event-saver:
-    restart: always
-    build:
-      dockerfile: Dockerfile
+  event-saver-blue:
+    <<: *event-saver
     ports:
       - 9100:9000
-    depends_on:
-      - redis
-    environment:
-      - PORT=9000
-      - LOKI_HOST=http://loki-clickhouse:3100
-      - CLICKHOUSE_HOST=http://172.17.0.1:8123
-      - CLICKHOUSE_DATABASE=WOT
-      - CLICKHOUSE_USER
-      - CLICKHOUSE_PASSWORD
-      - JWT_SECRET
-      - REDIS_HOST=redis
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
-    networks:
-      bridge:
-        ipv4_address: 172.25.0.10
-      loki_event_saver: {}
+
+  event-saver-green:
+    <<: *event-saver
+    ports:
+      - 9101:9000
 
 networks:
+  # подсеть запинена: она прописана в вайтлисте self-hosted ClickHouse (172.25.0.0/16),
+  # фиксированные IP контейнеров не нужны — вайтлист покрывает всю подсеть
   bridge:
     driver: bridge
     ipam:
