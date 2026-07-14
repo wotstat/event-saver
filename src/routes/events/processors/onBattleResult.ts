@@ -4,6 +4,7 @@ import { now, snakeCaseToCamelCase, unwrapDynamicBattleInfo, unwrapEvent, unwrap
 
 import { check, onBattleResultSchema } from '@/types/validator'
 import { uuid } from '@/utils/uuid'
+import { redis } from '@/redis/index'
 
 function unwrapVehicleBattleResult(prefix: string, res: OnBattleResult['result']['personal']) {
   return {
@@ -83,6 +84,7 @@ function unwrapPersonalMissions(result: OnBattleResult['result']) {
   }
 }
 
+const DEDUPLICATION_KEY_TTL = 60 * 60 // 1 hours
 export default function process(battleUUID: string, e: any) {
   check(onBattleResultSchema, e, async (e) => {
     const r = e.result
@@ -93,7 +95,7 @@ export default function process(battleUUID: string, e: any) {
       currencies['currencies.originalCredits'] = r.originalCredits ?? 0
     }
 
-    insertNow('Event_OnBattleResult', {
+    const battleEvent = {
       id: uuid(),
       onBattleStartId: battleUUID,
       dateTime: now(),
@@ -119,6 +121,15 @@ export default function process(battleUUID: string, e: any) {
       ...unwrapSessionMeta(e),
       ...unwrapEvent(e),
       ...unwrapServerInfo(e),
-    }, e)
+    }
+
+    insertNow('Event_OnBattleResult', battleEvent, e)
+
+    const deduplicationKey = `deduplication:OnBattleResult:${e.result.arenaID}`
+    const existing = await redis.exists(deduplicationKey)
+    if (!existing) {
+      await redis.setex(deduplicationKey, DEDUPLICATION_KEY_TTL, '1')
+      insertNow('DeduplicatedBattleResults', battleEvent, e)
+    }
   })
 }

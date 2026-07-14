@@ -69,7 +69,7 @@ router.post('/OnBattleStart', async c => {
     return c.json(Bun.env.DEBUG ? onBattleStartSchema.errors : '', 400)
   }
 
-  const cacheKey = `${body.accountDBID}-${body.arenaID}`
+  const cacheKey = `onBattleStart:${body.accountDBID}-${body.arenaID}`
 
   const replay = await redis.get(cacheKey)
   if (replay) {
