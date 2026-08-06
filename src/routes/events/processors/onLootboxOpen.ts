@@ -24,28 +24,6 @@ export default function process(e: any) {
       logger.error({ error }, 'Failed to parse raw field')
     }
 
-    // TODO: Remove this after 1.5.4.1
-    const currenciesTag: string[] = []
-    const currenciesAmount: number[] = []
-
-    if (e.parsed.currencies) for (const [tag, amount] of e.parsed.currencies) {
-      currenciesTag.push(tag)
-      currenciesAmount.push(amount)
-    } else {
-      try {
-        const parsedString = JSON.parse(e.raw) as { currencies?: Record<string, { count: number }> }
-        if (parsedString.currencies) {
-          for (const [tag, { count }] of Object.entries(parsedString.currencies)) {
-            currenciesTag.push(tag)
-            currenciesAmount.push(count)
-          }
-        }
-      } catch (error) {
-        logger.error({ error }, 'Failed to parse currencies from raw field')
-      }
-    }
-    // ----
-
     insertNow('Event_OnLootboxOpen', {
       id: uuid(),
       dateTime: now(),
@@ -63,8 +41,8 @@ export default function process(e: any) {
       eventCoin: e.parsed.eventCoin,
       equipCoin: e.parsed.equipCoin,
       bpcoin: e.parsed.bpcoin,
-      'currencies.tag': currenciesTag,
-      'currencies.amount': currenciesAmount,
+      'currencies.tag': e.parsed.currencies.map(([tag, amount]) => tag),
+      'currencies.amount': e.parsed.currencies.map(([tag, amount]) => amount),
 
       premium: e.parsed.premium,
       premiumPlus: e.parsed.premium_plus,
