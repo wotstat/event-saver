@@ -106,6 +106,7 @@ export default function process(e: any) {
 
       claimed: e.claimed ?? true,
       rerollCount: e.rerollCount ?? 0,
+      recordBoxCount: e.recordBoxCount ?? 1,
       raw: {},
       rawString: e.raw,
       ...unwrapHangarEvent(e),

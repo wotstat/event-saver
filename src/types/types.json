@@ -2651,6 +2651,10 @@
         "raw": {
           "type": "string"
         },
+        "recordBoxCount": {
+          "minimum": 0,
+          "type": "integer"
+        },
         "region": {
           "description": "регион игры",
           "type": "string"
