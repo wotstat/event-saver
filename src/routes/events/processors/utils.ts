@@ -2,7 +2,7 @@ import { pciDb } from '@/pciids/pciids'
 import type { Event, DynamicBattleInfo, BattleEvent, HangarEvent, SessionMeta, ServerInfo } from '@/types/events'
 
 export function now() {
-  return (new Date()).getTime()
+  return Date.now() / 1000
 }
 
 export function prefixObjectKeys<K extends keyof any, T>(prefix: string, obj: Record<K, T>): Record<K, T> {

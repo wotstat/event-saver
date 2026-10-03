@@ -8,9 +8,6 @@ const clickhouse = createClient({
   database: process.env.CLICKHOUSE_DATABASE,
   request_timeout: 120000,
   max_open_connections: 64,
-  clickhouse_settings: {
-    input_format_read_datetime_number_as_raw_value: 1
-  }
 })
 
 async function connect(options: { timeout?: number }) {
