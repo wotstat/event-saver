@@ -1,24 +1,23 @@
 import { insertNow } from '../insert'
-import { now, unwrapEvent, unwrapHangarEvent } from './utils'
+import { now, unwrapHangarEvent } from './utils'
 
-import { check, onComp7InfoSchema } from '@/types/validator'
+import { isValidEvent, onComp7InfoSchema } from '@/types/validator'
 import { uuid } from '@/utils/uuid'
 
 
-export default function process(e: any) {
+export default function process(e: unknown) {
 
-  check(onComp7InfoSchema, e, async (e) => {
-    insertNow('Event_OnComp7Info', {
-      id: uuid(),
-      dateTime: now(),
+  if (!isValidEvent(onComp7InfoSchema, e)) return
 
-      season: e.season,
-      rating: e.rating,
-      eliteRating: e.eliteRating || 0,
-      leaderboardPosition: e.leaderboardPosition ?? null,
+  insertNow('Event_OnComp7Info', {
+    id: uuid(),
+    dateTime: now(),
 
-      ...unwrapHangarEvent(e),
-      ...unwrapEvent(e),
-    }, e)
+    season: e.season,
+    rating: e.rating,
+    rank: e.rank,
+    leaderboardPosition: e.leaderboardPosition,
+
+    ...unwrapHangarEvent(e),
   })
 }

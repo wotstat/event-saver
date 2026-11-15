@@ -1,5 +1,5 @@
 import { insertNow } from '../insert'
-import { now, secToMs, unwrapDynamicBattleInfo, unwrapEvent, unwrapServerInfo, unwrapSessionMeta, unwrapVector3 } from './utils'
+import { now, secToMs, unwrapDynamicBattleInfo, unwrapEvent, unwrapPlayerInfo, unwrapServerInfo, unwrapSessionMeta, unwrapVector3 } from './utils'
 
 import { type OnBattleStart } from '@/types/events'
 
@@ -17,8 +17,9 @@ export default function process(battleUUID: string, e: OnBattleStart) {
     battleTime: secToMs(e.battleTime),
     ...unwrapVector3('spawnPoint', e.spawnPoint),
     ...unwrapDynamicBattleInfo(e),
+    ...unwrapPlayerInfo(e),
     ...unwrapSessionMeta(e),
     ...unwrapEvent(e),
     ...unwrapServerInfo(e),
-  }, e)
+  })
 }

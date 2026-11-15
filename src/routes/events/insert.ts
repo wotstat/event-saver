@@ -46,7 +46,7 @@ const asyncInsertSettings = {
 //   insertFunc(tableName, data, event)
 // }
 
-export async function insertNow(tableName: string, data: any, event: any) {
+export async function insertNow(tableName: string, data: any) {
   try {
     await clickhouse.insert({
       table: tableName,

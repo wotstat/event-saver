@@ -1,284 +1,10 @@
-/** @asType integer */
-declare type Int32 = number
-/** @minimum 0*/
-declare type UInt32 = Int32
-/** @minimum 0*/
-declare type UInt64 = Int32
-/** @minimum 0*/
-declare type UInt16 = Int32
-/** @minimum 0*/
-declare type UInt8 = Int32
-declare type Vector3 = { x: number, y: number, z: number }
+import type { BattleEvent, HangarEvent } from './utils/event'
+import type { DateTime, Int32, UInt8, UInt16, UInt32, UInt64, Vector3 } from './utils/primitives'
+import type { Comp7, Comp7Rank } from './utils/comp7'
+import type { Currencies } from './utils/currencies'
+import type { VehicleBattleResult } from './utils/vehicleBattleResult'
 
-/** @format iso-date-time */
-declare type DateTime = string
-
-declare type AllowUndefined<T> = T | undefined
-
-
-interface Event {
-  /** название ивента */
-  eventName: string
-
-  /** время события у игрока */
-  localtime: string
-
-  /** регион игры */
-  region: string
-
-  /** версия игры */
-  gameVersion: string
-
-  /** версия мода */
-  modVersion: string
-
-}
-
-interface TokenEvent extends Event {
-  token: string
-}
-
-interface BattleEvent extends TokenEvent {
-  /** Время относительно начала боя. Если событие до старта, время отрицательно */
-  battleTime: number
-}
-
-interface HangarEvent extends Event {
-  /** ник игрока */
-  playerName: string
-}
-
-interface SessionMeta {
-  /** Количество начатых боёв */
-  sessionStart: string
-  /** сколько времени назад началась сессия */
-  sessionStartAgo: number
-  /** сколько времени назад начался прошлый бой */
-  lastBattleAgo: number
-  /** Количество начатых боёв */
-  battleStarts: number
-  /** Количество результатов */
-  battleResults: number
-  /** Число побед из результатов */
-  winCount: number
-  /** Количество выстрелов */
-  totalShots: number
-  /** Количество выстрелов с уроном */
-  totalShotsDamaged: number
-  /** Количество попавших выстрелов */
-  totalShotsHit: number
-
-  /** Последние 10 результатов это победы */
-  lastResult: ('win' | 'lose' | 'tie')[]
-  /** Место в топе по урону за последние 10 результатов */
-  lastDmgPlace: number[]
-  /** Место в топе по опыту за последние 10 результатов */
-  lastXpPlace: number[]
-}
-
-interface ServerInfo {
-  /** название сервера */
-  serverName?: string
-
-  /** онлайн на сервере */
-  serverOnline?: number
-
-  /** онлайн в регионе */
-  regionOnline?: number
-}
-
-interface PartialSessionMeta extends Partial<SessionMeta> { }
-
-// Статические данные о бое (не изменяются), присутствуют во всех событиях для удобных селектов и фильтров
-interface StaticBattleInfo {
-
-  /** название карты */
-  arenaTag: string
-
-  /** ID аккаунта */
-  accountDBID: UInt64
-
-  /** клан игрока */
-  playerClan: string
-
-  /** ID клана игрока */
-  playerClanDBID?: UInt64
-
-  /** тип боя */
-  battleMode: string
-
-  /** режим игры */
-  battleGameplay: string
-
-  /** ник игрока */
-  playerName: string
-
-  /** список заблокированных карт */
-  mapsBlackList?: (string | null)[]
-
-}
-
-// Дополнительная информация внутри боя
-interface BattleExtra {
-  extra?: {
-    bob?: BOB25Extra
-  }
-}
-
-type SystemInfo = {
-  cpuName: string
-  cpuVendor: UInt16
-  cpuFamily: UInt32
-  cpuCores: UInt16
-  cpuFreq: UInt16
-  cpuScore: UInt64
-  workstationVendor: string
-
-  gpuVendor: UInt16
-  gpuFamily: UInt32
-  gpuMemory: UInt16
-  gpuDriverVersion: UInt64
-  gpuScore: UInt64
-
-  gameDriveName: string
-  ramTotal: UInt32
-
-  architectureBits: string
-  architectureLinkage: string
-
-  system: string
-  machine: string
-  platform: string
-  version: string
-  isLaptop: boolean
-
-  windowMode: string
-  nativeResolution: { refreshRate: UInt16, width: UInt16, height: UInt16 }
-  windowResolution: { refreshRate: UInt16, width: UInt16, height: UInt16 }
-}
-
-type Crewmate = {
-  roles: string[]
-  level: UInt8
-  skills: { tag: string, level: UInt8 }[]
-}
-
-// Динамические данные о бое (могут изменяться во время боя), присутствуют во всех событиях для удобных селектов и фильтров
-interface DynamicBattleInfo extends StaticBattleInfo, BattleExtra {
-
-  /** команда игрока */
-  team: Int32
-
-  /** название танка */
-  tankTag: string
-
-  /** типа танка */
-  tankType: string
-
-  /** роль танка */
-  tankRole: string
-
-  /** уровень танка */
-  tankLevel: Int32
-
-  /** название пушки */
-  gunTag: string,
-
-  /** ХП союзной команды */
-  allyTeamHealth: UInt8
-
-  /** ХП вражеской команды */
-  enemyTeamHealth: UInt8
-
-  /** Максимальное ХП союзной команды */
-  allyTeamMaxHealth: UInt8
-
-  /** Максимальное ХП вражеской команды */
-  enemyTeamMaxHealth: UInt8
-
-  /** Количество фрагов союзников */
-  allyTeamFragsCount: UInt8
-
-  /** Количество фрагов врагов */
-  enemyTeamFragsCount: UInt8
-
-  /** Информация о системе */
-  systemInfo?: SystemInfo
-
-  /** Тег навыка натиска */
-  comp7SkillTag?: string | null
-
-  /** Теги снаряжения */
-  equipment?: (string | null)[]
-
-  /** Теги расходников */
-  consumables?: (string | null)[]
-
-  /** Теги инструкции */
-  battleBooster?: string
-
-  /** Теги снарядов */
-  shells?: Record<string, UInt16>
-
-  /** Информация о членах экипажа */
-  crew?: Crewmate[]
-}
-
-type BOB25Stats = { [key in '1' | '2' | '3' | '4']?: { score: number, rank: number } }
-type BOB25Extra = {
-  allySkill: string
-  enemySkill: string
-  allyBloggerId: number
-  enemyBloggerId: number
-
-  personalLevel: number,
-
-  stats: BOB25Stats
-} | {
-  stats: BOB25Stats
-}
-
-type VehicleBattleResult = {
-  spotted: UInt16
-  mileage: UInt16
-  damageAssistedTrack: UInt16
-  damageReceivedFromInvisibles: UInt16
-  damageReceived: UInt16
-  piercingsReceived: UInt16
-  directHitsReceived: UInt16
-  piercingEnemyHits: UInt16
-  explosionHits: UInt16
-  damageAssistedRadio: UInt16
-  stunDuration: number
-  damageBlockedByArmor: UInt16
-  damageDealt: UInt16
-  xp: UInt16
-  team: UInt8
-  damaged: UInt16
-  damageAssistedStun: UInt16
-  explosionHitsReceived: UInt16
-  directEnemyHits: UInt16
-  stunned: UInt16
-  shots: UInt16
-  kills: UInt16
-  lifeTime: UInt16
-  tankTag: string
-  tankType: 'LT' | 'MT' | 'HT' | 'SPG' | 'AT',
-  tankRole: string
-  tankLevel: UInt8
-  killerIndex: Int32
-  maxHealth: UInt16
-  health: UInt16
-  isAlive: boolean
-  squadID: UInt8
-  playerRank?: UInt8
-  comp7PrestigePoints?: UInt16
-  // TODO: удалить | null после выпуска обновления
-  comp7SkillTag?: string | null
-  comp7Rank?: string | null
-}
-
-export interface OnBattleStart extends DynamicBattleInfo, Event, PartialSessionMeta, ServerInfo {
+export interface OnBattleStart extends Omit<BattleEvent, 'token'> {
   /** id арены из танков */
   arenaID: UInt64
 
@@ -299,42 +25,16 @@ export interface OnBattleStart extends DynamicBattleInfo, Event, PartialSessionM
 
   gameplayMask: Int32
 
-  /** Время относительно начала боя. Если событие до старта, время отрицательно */
-  battleTime: number
 }
 
-type Currencies = {
-  originalCredits: Int32,
-  originalCrystal: Int32,
-  subtotalCredits: Int32,
-  autoRepairCost: Int32,
-  autoLoadCredits: Int32,
-  autoLoadGold: Int32,
-  autoEquipCredits: Int32,
-  autoEquipGold: Int32,
-  autoEquipCrystals: Int32,
-  piggyBank: Int32,
-}
-
-type Comp7 = {
-  ratingDelta: Int32,
-  rating: UInt16,
-  qualBattleIndex: UInt8,
-  qualActive: boolean,
-}
-
-export interface OnBattleResult extends TokenEvent, DynamicBattleInfo, PartialSessionMeta, ServerInfo {
+export interface OnBattleResult extends Omit<BattleEvent, 'battleTime'> {
   result: {
     /** id арены из танков */
-    arenaID: AllowUndefined<UInt64>
-    /** deprecated */
-    credits?: Int32,
-    /** deprecated */
-    originalCredits?: Int32,
-    isPremium?: boolean,
+    arenaID: UInt64
+    isPremium: boolean,
     teamHealth: UInt16[],
     result: 'win' | 'lose' | 'tie',
-    finishReason?: 'UNKNOWN' | 'EXTERMINATION' | 'BASE' | 'TIMEOUT' | 'FAILURE' | 'TECHNICAL' | 'WIN_POINTS_CAP' | 'WIN_POINTS' | 'ALLY_KILLED' | 'OWN_VEHICLE_DESTROYED' | 'DESTROYED_OBJECTS' | 'OBJECTIVES_COMPLETED' | 'HB_ENEMY_EXTERMINATION' | 'HB_ALLY_SPG_EXTERMINATION' | (string & {}),
+    finishReason: 'UNKNOWN' | 'EXTERMINATION' | 'BASE' | 'TIMEOUT' | 'FAILURE' | 'TECHNICAL' | 'WIN_POINTS_CAP' | 'WIN_POINTS' | 'ALLY_KILLED' | 'OWN_VEHICLE_DESTROYED' | 'DESTROYED_OBJECTS' | 'OBJECTIVES_COMPLETED' | 'HB_ENEMY_EXTERMINATION' | 'HB_ALLY_SPG_EXTERMINATION' | (string & {}),
     winnerTeam: UInt16 | null,
     duration: UInt16,
     playerTeam: UInt8,
@@ -342,14 +42,14 @@ export interface OnBattleResult extends TokenEvent, DynamicBattleInfo, PartialSe
     playersResults: (VehicleBattleResult & {
       bdid: UInt64,
       name: string,
-      clan?: string,
-      clanDBID?: UInt64,
+      clan: string,
+      clanDBID: UInt64,
     })[],
-    comp7?: Comp7
-    fortClanDBIDs?: UInt64[]
-    currencies?: Currencies
-    personalMissionsRaw?: string
-    personalMissions?: {
+    comp7: Comp7
+    fortClanDBIDs: UInt64[]
+    currencies: Currencies
+    personalMissionsRaw: string
+    personalMissions: {
       tag: string,
       conditions: {
         'tag': string,
@@ -362,7 +62,7 @@ export interface OnBattleResult extends TokenEvent, DynamicBattleInfo, PartialSe
   }
 }
 
-export interface OnShot extends BattleEvent, DynamicBattleInfo, PartialSessionMeta, ServerInfo {
+export interface OnShot extends BattleEvent {
   /** id выстрела уникальный для клиента */
   shotId: number,
 
@@ -396,9 +96,8 @@ export interface OnShot extends BattleEvent, DynamicBattleInfo, PartialSessionMe
   /** Клиентское сведение */
   clientShotDispersion: number,
 
-  // TODO: Удалить | null после 1.6.1.2 (фикс нулевой гравитации)
   /** Ускорение */
-  acceleration: Vector3 | null,
+  acceleration: Vector3,
 
   /** Используется ли серверный прицел */
   serverAim: boolean,
@@ -484,13 +183,13 @@ export interface OnShot extends BattleEvent, DynamicBattleInfo, PartialSessionMe
   }[],
 }
 
-export interface OnLootboxOpen extends HangarEvent, SessionMeta, ServerInfo {
+export interface OnLootboxOpen extends HangarEvent {
   containerTag: string,
-  openByTag?: string,
-  isOpenSuccess?: boolean,
-  claimed?: boolean,
-  rerollCount?: UInt8,
-  recordBoxCount?: UInt16,
+  openByTag: string,
+  isOpenSuccess: boolean,
+  claimed: boolean,
+  rerollCount: UInt8,
+  recordBoxCount: UInt16,
 
   openCount: UInt16,
   openGroup: string,
@@ -525,33 +224,33 @@ export interface OnLootboxOpen extends HangarEvent, SessionMeta, ServerInfo {
 
     lootboxesTokens: [tag: string, count: UInt16][]
     bonusTokens: [tag: string, count: UInt16][]
-    extraTokens?: [tag: string, count: UInt16][]
+    extraTokens: [tag: string, count: UInt16][]
 
     customizations: [type: string, tag: string, count: UInt16][]
     blueprints: [type: 'VEHICLE' | 'NATION' | 'UNIVERSAL', specification: string, count: UInt16][]
 
     selectableCrewbook: [crewbookName: string][]
 
-    toys?: [toyTag: string, count: UInt16][]
-    compensatedToys?: [toyTag: string, compensationCurrency: string, count: UInt16][]
+    toys: [toyTag: string, count: UInt16][]
+    compensatedToys: [toyTag: string, compensationCurrency: string, count: UInt16][]
 
-    entitlements?: [tag: string, count: UInt16][]
+    entitlements: [tag: string, count: UInt16][]
   },
   raw: string
 }
 
-export interface OnComp7Info extends HangarEvent {
+export interface OnComp7Info extends Required<HangarEvent> {
   /** Сезон Натиска */
   season: string
 
   /** Текущий рейтинг */
   rating: UInt32
 
-  /** Планка для Легенды */
-  eliteRating: UInt32 | null
+  /** Точный ранг и дивизион игрока на момент события */
+  rank: Comp7Rank
 
   /** Место в таблице лидеров */
-  leaderboardPosition?: UInt32 | null,
+  leaderboardPosition: UInt32 | null,
 }
 
 export interface OnMoeInfo extends HangarEvent {
@@ -580,11 +279,8 @@ export interface OnAccountStats extends HangarEvent {
   premiumPlusExpiryTime: DateTime | null
 
   isWotPlus: boolean
-  wotPlusTier?: string
+  wotPlusTier: string
   wotPlusExpiryTime: DateTime | null
 
   telecom: string
 }
-
-
-export type { Event, TokenEvent, HangarEvent, BattleEvent, SessionMeta, DynamicBattleInfo, StaticBattleInfo, ServerInfo }

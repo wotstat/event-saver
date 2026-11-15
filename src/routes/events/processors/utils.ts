@@ -1,12 +1,16 @@
 import { pciDb } from '@/pciids/pciids'
-import type { Event, DynamicBattleInfo, BattleEvent, HangarEvent, SessionMeta, ServerInfo } from '@/types/events'
+import type { Event, BattleEvent, HangarEvent } from '@/types/utils/event'
+import type { PlayerInfo } from '@/types/utils/playerInfo'
+import type { DynamicBattleInfo } from '@/types/utils/battleInfo'
+import type { SessionMeta } from '@/types/utils/sessionMeta'
+import type { ServerInfo } from '@/types/utils/serverInfo'
 
 export function now() {
   return Date.now() / 1000
 }
 
-export function prefixObjectKeys<K extends keyof any, T>(prefix: string, obj: Record<K, T>): Record<K, T> {
-  return Object.fromEntries(Object.entries(obj).map(([k, v]) => [`${prefix}.${k}`, v])) as Record<K, T>
+export function prefixObjectKeys<K extends keyof any, T>(prefix: string, obj: Record<K, T>): Record<string, T> {
+  return Object.fromEntries(Object.entries(obj).map(([k, v]) => [`${prefix}.${k}`, v])) as Record<string, T>
 }
 
 export function unwrapVector3(name: string, v: { x: number, y: number, z: number } | null) {
@@ -37,11 +41,20 @@ export function unwrapEvent(e: Event) {
   }
 }
 
-export function unwrapServerInfo(e: ServerInfo) {
+export function unwrapServerInfo(e: Partial<ServerInfo>) {
   return {
     serverName: e.serverName ?? '',
     serverOnline: e.serverOnline ?? 0,
     regionOnline: e.regionOnline ?? 0,
+  }
+}
+
+export function unwrapPlayerInfo(e: Partial<PlayerInfo> & Pick<PlayerInfo, 'playerName'>) {
+  return {
+    playerName: e.playerName,
+    accountDBID: e.accountDBID ?? 0,
+    playerClan: e.playerClan ?? '',
+    playerClanDBID: e.playerClanDBID ?? 0,
   }
 }
 
@@ -55,59 +68,24 @@ function vendorId(gpuVendor: number) {
   }
 }
 
-const SUPPORTED_SHELLS = ['HIGH_EXPLOSIVE', 'FLAME', 'ARMOR_PIERCING_CR', 'ARMOR_PIERCING_FSDS', 'HOLLOW_CHARGE', 'ARMOR_PIERCING'] as const
-function unwrapShells(prefix: string, shells: DynamicBattleInfo['shells']): { [k in typeof SUPPORTED_SHELLS[number]]: number } {
-  shells = shells ?? {}
-  const result: Record<typeof SUPPORTED_SHELLS[number], number> = {} as any
-
-  for (const shell of SUPPORTED_SHELLS) result[shell] = shells[shell] ?? 0
+const SUPPORTED_SHELLS = ['HIGH_EXPLOSIVE', 'FLAME', 'ARMOR_PIERCING_CR', 'ARMOR_PIERCING_FSDS', 'HOLLOW_CHARGE', 'ARMOR_PIERCING', 'ARMOR_PIERCING_HE', 'SMOKE'] as const
+function unwrapShells(prefix: string, shells: DynamicBattleInfo['shells']) {
+  const result = Object.fromEntries(SUPPORTED_SHELLS.map(shell => [shell, shells[shell] ?? 0]))
   return prefixObjectKeys(prefix, result)
 }
 
 export function unwrapDynamicBattleInfo(e: DynamicBattleInfo) {
 
-  function getResolution(res: { refreshRate: number, width: number, height: number }) {
-    return { refreshRate: res.refreshRate, width: res.width, height: res.height }
-  }
-
-  const gpuVendorId = e.systemInfo ? vendorId(e.systemInfo.gpuVendor) : null
-  const gpuName = gpuVendorId && e.systemInfo ? pciDb.getDevice(gpuVendorId, e.systemInfo.gpuFamily.toString(16))?.name : null
+  const gpuVendorId = vendorId(e.systemInfo.gpuVendor)
+  const gpuName = gpuVendorId ? pciDb.getDevice(gpuVendorId, e.systemInfo.gpuFamily.toString(16))?.name : null
 
   const systemInfo = {
-    cpuName: '',
-    cpuVendor: 0,
-    cpuFamily: 0,
-    cpuCores: 0,
-    cpuFreq: 0,
-    cpuScore: 0,
-    workstationVendor: '',
-    gpuVendor: 0,
-    gpuFamily: 0,
-    gpuMemory: 0,
-    gpuDriverVersion: 0,
-    gpuScore: 0,
-    gameDriveName: '',
-    ramTotal: 0,
-    architectureBits: '',
-    architectureLinkage: '',
-    system: '',
-    machine: '',
-    platform: '',
-    version: '',
-    isLaptop: false,
-    windowMode: '',
     ...e.systemInfo,
-    nativeResolution: e.systemInfo ? getResolution(e.systemInfo.nativeResolution) : { refreshRate: 0, width: 0, height: 0 },
-    windowResolution: e.systemInfo ? getResolution(e.systemInfo.windowResolution) : { refreshRate: 0, width: 0, height: 0 },
     gpuName: gpuName || 'Unknown',
   }
 
   return {
     arenaTag: e.arenaTag,
-    playerName: e.playerName,
-    playerClan: e.playerClan,
-    playerClanDBID: e.playerClanDBID ?? 0,
-    accountDBID: e.accountDBID,
     battleMode: e.battleMode,
     battleGameplay: e.battleGameplay,
     team: e.team,
@@ -122,45 +100,46 @@ export function unwrapDynamicBattleInfo(e: DynamicBattleInfo) {
     enemyTeamMaxHealth: e.enemyTeamMaxHealth,
     allyTeamFragsCount: e.allyTeamFragsCount,
     enemyTeamFragsCount: e.enemyTeamFragsCount,
-    mapsBlackList: e.mapsBlackList?.map(s => s ?? '') ?? [],
-    comp7SkillTag: e.comp7SkillTag ?? '',
-    equipment: (e.equipment ?? []).map(s => s ?? ''),
-    consumables: (e.consumables ?? []).map(s => s ?? ''),
-    battleBooster: e.battleBooster ?? '',
-    crew: e.crew?.map((c, i) => ({
+    mapsBlackList: e.mapsBlackList.map(s => s ?? ''),
+    comp7SkillTag: e.comp7SkillTag,
+    equipment: e.equipment.map(s => s ?? ''),
+    consumables: e.consumables.map(s => s ?? ''),
+    battleBooster: e.battleBooster,
+    crew: e.crew.map(c => ({
       roles: c.roles,
       level: c.level,
       skills: c.skills.map(s => ({ tag: s.tag, level: s.level }))
-    })) ?? [],
-    extra: e.extra ?? {},
+    })),
+    extra: e.extra,
     ...unwrapShells('shells', e.shells),
     ...prefixObjectKeys('systemInfo', systemInfo),
   }
 }
 
 export function unwrapSessionMeta(e: Partial<SessionMeta>) {
-  if (e.sessionStart === undefined) return {}
-
   const r = {
-    battleStarts: e.battleStarts,
-    battleResults: e.battleResults,
-    winCount: e.winCount,
-    totalShots: e.totalShots,
-    totalShotsDamaged: e.totalShotsDamaged,
-    totalShotsHit: e.totalShotsHit,
-    lastResult: e.lastResult,
-    lastDmgPlace: e.lastDmgPlace,
-    lastXpPlace: e.lastXpPlace,
-    startTime: e.sessionStart,
-    lastBattleAgo: e.lastBattleAgo,
-    startAgo: e.sessionStartAgo
+    battleStarts: e.battleStarts ?? 0,
+    battleResults: e.battleResults ?? 0,
+    winCount: e.winCount ?? 0,
+    totalShots: e.totalShots ?? 0,
+    totalShotsDamaged: e.totalShotsDamaged ?? 0,
+    totalShotsHit: e.totalShotsHit ?? 0,
+    lastResult: e.lastResult ?? [],
+    lastDmgPlace: e.lastDmgPlace ?? [],
+    lastXpPlace: e.lastXpPlace ?? [],
+    startTime: e.sessionStart || 0,
+    lastBattleAgo: e.lastBattleAgo ?? 0,
+    startAgo: e.sessionStartAgo ?? 0
   }
   return Object.fromEntries(Object.entries(r).map(([k, v]) => [`session.${k}`, v]))
 }
 
 export function unwrapHangarEvent(e: HangarEvent) {
   return {
-    playerName: e.playerName,
+    ...unwrapEvent(e),
+    ...unwrapPlayerInfo(e),
+    ...unwrapServerInfo(e),
+    ...unwrapSessionMeta(e),
   }
 }
 

@@ -3,6 +3,19 @@
   "definitions": {
     "OnAccountStats": {
       "properties": {
+        "accountDBID": {
+          "description": "ID аккаунта",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "battleResults": {
+          "description": "Количество результатов",
+          "type": "number"
+        },
+        "battleStarts": {
+          "description": "Количество начатых боёв",
+          "type": "number"
+        },
         "bpCoin": {
           "minimum": 0,
           "type": "integer"
@@ -45,6 +58,36 @@
         "isWotPlus": {
           "type": "boolean"
         },
+        "lastBattleAgo": {
+          "description": "сколько времени назад начался прошлый бой",
+          "type": "number"
+        },
+        "lastDmgPlace": {
+          "description": "Место в топе по урону за последние 10 результатов",
+          "items": {
+            "type": "number"
+          },
+          "type": "array"
+        },
+        "lastResult": {
+          "description": "Последние 10 результатов это победы",
+          "items": {
+            "enum": [
+              "win",
+              "lose",
+              "tie"
+            ],
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "lastXpPlace": {
+          "description": "Место в топе по опыту за последние 10 результатов",
+          "items": {
+            "type": "number"
+          },
+          "type": "array"
+        },
         "localtime": {
           "description": "время события у игрока",
           "type": "string"
@@ -61,8 +104,17 @@
           "minimum": 0,
           "type": "integer"
         },
+        "playerClan": {
+          "description": "Тег клана; пустая строка, если игрок без клана",
+          "type": "string"
+        },
+        "playerClanDBID": {
+          "description": "ID клана; 0, если игрок без клана",
+          "minimum": 0,
+          "type": "integer"
+        },
         "playerName": {
-          "description": "ник игрока",
+          "description": "Ник игрока",
           "type": "string"
         },
         "premiumPlusExpiryTime": {
@@ -80,8 +132,44 @@
           "description": "регион игры",
           "type": "string"
         },
+        "regionOnline": {
+          "description": "онлайн в регионе",
+          "type": "number"
+        },
+        "serverName": {
+          "description": "название сервера",
+          "type": "string"
+        },
+        "serverOnline": {
+          "description": "онлайн на сервере",
+          "type": "number"
+        },
+        "sessionStart": {
+          "description": "Начало сессии по локальному времени клиента в ISO 8601; пустая строка, если неизвестно",
+          "type": "string"
+        },
+        "sessionStartAgo": {
+          "description": "Секунд с начала сессии",
+          "type": "number"
+        },
         "telecom": {
           "type": "string"
+        },
+        "totalShots": {
+          "description": "Количество выстрелов",
+          "type": "number"
+        },
+        "totalShotsDamaged": {
+          "description": "Количество выстрелов с уроном",
+          "type": "number"
+        },
+        "totalShotsHit": {
+          "description": "Количество попавших выстрелов",
+          "type": "number"
+        },
+        "winCount": {
+          "description": "Число побед из результатов",
+          "type": "number"
         },
         "wotPlusExpiryTime": {
           "anyOf": [
@@ -118,7 +206,8 @@
         "premiumPlusExpiryTime",
         "region",
         "telecom",
-        "wotPlusExpiryTime"
+        "wotPlusExpiryTime",
+        "wotPlusTier"
       ],
       "type": "object"
     },
@@ -170,10 +259,7 @@
         },
         "comp7SkillTag": {
           "description": "Тег навыка натиска",
-          "type": [
-            "string",
-            "null"
-          ]
+          "type": "string"
         },
         "consumables": {
           "description": "Теги расходников",
@@ -489,16 +575,16 @@
           "type": "string"
         },
         "playerClan": {
-          "description": "клан игрока",
+          "description": "Тег клана; пустая строка, если игрок без клана",
           "type": "string"
         },
         "playerClanDBID": {
-          "description": "ID клана игрока",
+          "description": "ID клана; 0, если игрок без клана",
           "minimum": 0,
           "type": "integer"
         },
         "playerName": {
-          "description": "ник игрока",
+          "description": "Ник игрока",
           "type": "string"
         },
         "region": {
@@ -541,10 +627,6 @@
               ],
               "type": "object"
             },
-            "credits": {
-              "description": "deprecated",
-              "type": "integer"
-            },
             "currencies": {
               "properties": {
                 "autoEquipCredits": {
@@ -571,6 +653,9 @@
                 "originalCrystal": {
                   "type": "integer"
                 },
+                "originalGold": {
+                  "type": "integer"
+                },
                 "piggyBank": {
                   "type": "integer"
                 },
@@ -580,6 +665,7 @@
               },
               "required": [
                 "originalCredits",
+                "originalGold",
                 "originalCrystal",
                 "subtotalCredits",
                 "autoRepairCost",
@@ -609,10 +695,6 @@
             "isPremium": {
               "type": "boolean"
             },
-            "originalCredits": {
-              "description": "deprecated",
-              "type": "integer"
-            },
             "personal": {
               "properties": {
                 "comp7PrestigePoints": {
@@ -620,12 +702,14 @@
                   "type": "integer"
                 },
                 "comp7Rank": {
+                  "description": "null, если ранг не применим или не удалось его получить",
                   "type": [
                     "string",
                     "null"
                   ]
                 },
                 "comp7SkillTag": {
+                  "description": "null, если навык отсутствует или не удалось его получить",
                   "type": [
                     "string",
                     "null"
@@ -797,7 +881,11 @@
                 "maxHealth",
                 "health",
                 "isAlive",
-                "squadID"
+                "squadID",
+                "playerRank",
+                "comp7PrestigePoints",
+                "comp7SkillTag",
+                "comp7Rank"
               ],
               "type": "object"
             },
@@ -897,12 +985,14 @@
                     "type": "integer"
                   },
                   "comp7Rank": {
+                    "description": "null, если ранг не применим или не удалось его получить",
                     "type": [
                       "string",
                       "null"
                     ]
                   },
                   "comp7SkillTag": {
+                    "description": "null, если навык отсутствует или не удалось его получить",
                     "type": [
                       "string",
                       "null"
@@ -1047,6 +1137,11 @@
                 },
                 "required": [
                   "bdid",
+                  "clan",
+                  "clanDBID",
+                  "comp7PrestigePoints",
+                  "comp7Rank",
+                  "comp7SkillTag",
                   "damageAssistedRadio",
                   "damageAssistedStun",
                   "damageAssistedTrack",
@@ -1069,6 +1164,7 @@
                   "name",
                   "piercingEnemyHits",
                   "piercingsReceived",
+                  "playerRank",
                   "shots",
                   "spotted",
                   "squadID",
@@ -1113,13 +1209,21 @@
             }
           },
           "required": [
+            "arenaID",
+            "isPremium",
             "teamHealth",
             "result",
+            "finishReason",
             "winnerTeam",
             "duration",
             "playerTeam",
             "personal",
-            "playersResults"
+            "playersResults",
+            "comp7",
+            "fortClanDBIDs",
+            "currencies",
+            "personalMissionsRaw",
+            "personalMissions"
           ],
           "type": "object"
         },
@@ -1132,11 +1236,11 @@
           "type": "number"
         },
         "sessionStart": {
-          "description": "Количество начатых боёв",
+          "description": "Начало сессии по локальному времени клиента в ISO 8601; пустая строка, если неизвестно",
           "type": "string"
         },
         "sessionStartAgo": {
-          "description": "сколько времени назад началась сессия",
+          "description": "Секунд с начала сессии",
           "type": "number"
         },
         "shells": {
@@ -1346,26 +1450,51 @@
         "allyTeamHealth",
         "allyTeamMaxHealth",
         "arenaTag",
+        "battleBooster",
         "battleGameplay",
         "battleMode",
+        "battleResults",
+        "battleStarts",
+        "comp7SkillTag",
+        "consumables",
+        "crew",
         "enemyTeamFragsCount",
         "enemyTeamHealth",
         "enemyTeamMaxHealth",
+        "equipment",
         "eventName",
+        "extra",
         "gameVersion",
         "gunTag",
+        "lastBattleAgo",
+        "lastDmgPlace",
+        "lastResult",
+        "lastXpPlace",
         "localtime",
+        "mapsBlackList",
         "modVersion",
         "playerClan",
+        "playerClanDBID",
         "playerName",
         "region",
+        "regionOnline",
         "result",
+        "serverName",
+        "serverOnline",
+        "sessionStart",
+        "sessionStartAgo",
+        "shells",
+        "systemInfo",
         "tankLevel",
         "tankRole",
         "tankTag",
         "tankType",
         "team",
-        "token"
+        "token",
+        "totalShots",
+        "totalShotsDamaged",
+        "totalShotsHit",
+        "winCount"
       ],
       "type": "object"
     },
@@ -1437,10 +1566,7 @@
         },
         "comp7SkillTag": {
           "description": "Тег навыка натиска",
-          "type": [
-            "string",
-            "null"
-          ]
+          "type": "string"
         },
         "consumables": {
           "description": "Теги расходников",
@@ -1767,16 +1893,16 @@
           "type": "string"
         },
         "playerClan": {
-          "description": "клан игрока",
+          "description": "Тег клана; пустая строка, если игрок без клана",
           "type": "string"
         },
         "playerClanDBID": {
-          "description": "ID клана игрока",
+          "description": "ID клана; 0, если игрок без клана",
           "minimum": 0,
           "type": "integer"
         },
         "playerName": {
-          "description": "ник игрока",
+          "description": "Ник игрока",
           "type": "string"
         },
         "preBattleWaitTime": {
@@ -1800,11 +1926,11 @@
           "type": "number"
         },
         "sessionStart": {
-          "description": "Количество начатых боёв",
+          "description": "Начало сессии по локальному времени клиента в ISO 8601; пустая строка, если неизвестно",
           "type": "string"
         },
         "sessionStartAgo": {
-          "description": "сколько времени назад началась сессия",
+          "description": "Секунд с начала сессии",
           "type": "number"
         },
         "shells": {
@@ -2032,47 +2158,73 @@
         "allyTeamMaxHealth",
         "arenaID",
         "arenaTag",
+        "battleBooster",
         "battleGameplay",
         "battleMode",
         "battlePeriod",
+        "battleResults",
+        "battleStarts",
         "battleTime",
+        "comp7SkillTag",
+        "consumables",
+        "crew",
         "enemyTeamFragsCount",
         "enemyTeamHealth",
         "enemyTeamMaxHealth",
+        "equipment",
         "eventName",
+        "extra",
         "gameVersion",
         "gameplayMask",
         "gunTag",
         "inQueueWaitTime",
+        "lastBattleAgo",
+        "lastDmgPlace",
+        "lastResult",
+        "lastXpPlace",
         "loadTime",
         "localtime",
+        "mapsBlackList",
         "modVersion",
         "playerClan",
+        "playerClanDBID",
         "playerName",
         "preBattleWaitTime",
         "region",
+        "regionOnline",
+        "serverName",
+        "serverOnline",
+        "sessionStart",
+        "sessionStartAgo",
+        "shells",
         "spawnPoint",
+        "systemInfo",
         "tankLevel",
         "tankRole",
         "tankTag",
         "tankType",
-        "team"
+        "team",
+        "totalShots",
+        "totalShotsDamaged",
+        "totalShotsHit",
+        "winCount"
       ],
       "type": "object"
     },
     "OnComp7Info": {
       "properties": {
-        "eliteRating": {
-          "anyOf": [
-            {
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "Планка для Легенды"
+        "accountDBID": {
+          "description": "ID аккаунта",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "battleResults": {
+          "description": "Количество результатов",
+          "type": "number"
+        },
+        "battleStarts": {
+          "description": "Количество начатых боёв",
+          "type": "number"
         },
         "eventName": {
           "description": "название ивента",
@@ -2081,6 +2233,36 @@
         "gameVersion": {
           "description": "версия игры",
           "type": "string"
+        },
+        "lastBattleAgo": {
+          "description": "сколько времени назад начался прошлый бой",
+          "type": "number"
+        },
+        "lastDmgPlace": {
+          "description": "Место в топе по урону за последние 10 результатов",
+          "items": {
+            "type": "number"
+          },
+          "type": "array"
+        },
+        "lastResult": {
+          "description": "Последние 10 результатов это победы",
+          "items": {
+            "enum": [
+              "win",
+              "lose",
+              "tie"
+            ],
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "lastXpPlace": {
+          "description": "Место в топе по опыту за последние 10 результатов",
+          "items": {
+            "type": "number"
+          },
+          "type": "array"
         },
         "leaderboardPosition": {
           "anyOf": [
@@ -2102,8 +2284,52 @@
           "description": "версия мода",
           "type": "string"
         },
+        "playerClan": {
+          "description": "Тег клана; пустая строка, если игрок без клана",
+          "type": "string"
+        },
+        "playerClanDBID": {
+          "description": "ID клана; 0, если игрок без клана",
+          "minimum": 0,
+          "type": "integer"
+        },
         "playerName": {
-          "description": "ник игрока",
+          "description": "Ник игрока",
+          "type": "string"
+        },
+        "rank": {
+          "description": "Точный ранг и дивизион игрока на момент события",
+          "enum": [
+            "qual",
+            "fifth",
+            "sixth",
+            "first_E",
+            "first_D",
+            "first_C",
+            "first_B",
+            "first_A",
+            "second_E",
+            "second_D",
+            "second_C",
+            "second_B",
+            "second_A",
+            "third_E",
+            "third_D",
+            "third_C",
+            "third_B",
+            "third_A",
+            "fourth_E",
+            "fourth_D",
+            "fourth_C",
+            "fourth_B",
+            "fourth_A",
+            "fifth_C",
+            "fifth_B",
+            "fifth_A",
+            "sixth_C",
+            "sixth_B",
+            "sixth_A"
+          ],
           "type": "string"
         },
         "rating": {
@@ -2115,26 +2341,86 @@
           "description": "регион игры",
           "type": "string"
         },
+        "regionOnline": {
+          "description": "онлайн в регионе",
+          "type": "number"
+        },
         "season": {
           "description": "Сезон Натиска",
           "type": "string"
+        },
+        "serverName": {
+          "description": "название сервера",
+          "type": "string"
+        },
+        "serverOnline": {
+          "description": "онлайн на сервере",
+          "type": "number"
+        },
+        "sessionStart": {
+          "description": "Начало сессии по локальному времени клиента в ISO 8601; пустая строка, если неизвестно",
+          "type": "string"
+        },
+        "sessionStartAgo": {
+          "description": "Секунд с начала сессии",
+          "type": "number"
+        },
+        "totalShots": {
+          "description": "Количество выстрелов",
+          "type": "number"
+        },
+        "totalShotsDamaged": {
+          "description": "Количество выстрелов с уроном",
+          "type": "number"
+        },
+        "totalShotsHit": {
+          "description": "Количество попавших выстрелов",
+          "type": "number"
+        },
+        "winCount": {
+          "description": "Число побед из результатов",
+          "type": "number"
         }
       },
       "required": [
-        "eliteRating",
+        "accountDBID",
+        "battleResults",
+        "battleStarts",
         "eventName",
         "gameVersion",
+        "lastBattleAgo",
+        "lastDmgPlace",
+        "lastResult",
+        "lastXpPlace",
+        "leaderboardPosition",
         "localtime",
         "modVersion",
+        "playerClan",
+        "playerClanDBID",
         "playerName",
+        "rank",
         "rating",
         "region",
-        "season"
+        "regionOnline",
+        "season",
+        "serverName",
+        "serverOnline",
+        "sessionStart",
+        "sessionStartAgo",
+        "totalShots",
+        "totalShotsDamaged",
+        "totalShotsHit",
+        "winCount"
       ],
       "type": "object"
     },
     "OnLootboxOpen": {
       "properties": {
+        "accountDBID": {
+          "description": "ID аккаунта",
+          "minimum": 0,
+          "type": "integer"
+        },
         "battleResults": {
           "description": "Количество результатов",
           "type": "number"
@@ -2638,14 +2924,27 @@
             "equip",
             "lootboxesTokens",
             "bonusTokens",
+            "extraTokens",
             "customizations",
             "blueprints",
-            "selectableCrewbook"
+            "selectableCrewbook",
+            "toys",
+            "compensatedToys",
+            "entitlements"
           ],
           "type": "object"
         },
+        "playerClan": {
+          "description": "Тег клана; пустая строка, если игрок без клана",
+          "type": "string"
+        },
+        "playerClanDBID": {
+          "description": "ID клана; 0, если игрок без клана",
+          "minimum": 0,
+          "type": "integer"
+        },
         "playerName": {
-          "description": "ник игрока",
+          "description": "Ник игрока",
           "type": "string"
         },
         "raw": {
@@ -2676,11 +2975,11 @@
           "type": "number"
         },
         "sessionStart": {
-          "description": "Количество начатых боёв",
+          "description": "Начало сессии по локальному времени клиента в ISO 8601; пустая строка, если неизвестно",
           "type": "string"
         },
         "sessionStartAgo": {
-          "description": "сколько времени назад началась сессия",
+          "description": "Секунд с начала сессии",
           "type": "number"
         },
         "totalShots": {
@@ -2701,38 +3000,44 @@
         }
       },
       "required": [
-        "battleResults",
-        "battleStarts",
+        "claimed",
         "containerTag",
         "eventName",
         "gameVersion",
-        "lastBattleAgo",
-        "lastDmgPlace",
-        "lastResult",
-        "lastXpPlace",
+        "isOpenSuccess",
         "localtime",
         "modVersion",
+        "openByTag",
         "openCount",
         "openGroup",
         "parsed",
         "playerName",
         "raw",
+        "recordBoxCount",
         "region",
-        "sessionStart",
-        "sessionStartAgo",
-        "totalShots",
-        "totalShotsDamaged",
-        "totalShotsHit",
-        "winCount"
+        "rerollCount"
       ],
       "type": "object"
     },
     "OnMoeInfo": {
       "properties": {
+        "accountDBID": {
+          "description": "ID аккаунта",
+          "minimum": 0,
+          "type": "integer"
+        },
         "battleCount": {
           "description": "количество боёв",
           "minimum": 0,
           "type": "integer"
+        },
+        "battleResults": {
+          "description": "Количество результатов",
+          "type": "number"
+        },
+        "battleStarts": {
+          "description": "Количество начатых боёв",
+          "type": "number"
         },
         "eventName": {
           "description": "название ивента",
@@ -2741,6 +3046,36 @@
         "gameVersion": {
           "description": "версия игры",
           "type": "string"
+        },
+        "lastBattleAgo": {
+          "description": "сколько времени назад начался прошлый бой",
+          "type": "number"
+        },
+        "lastDmgPlace": {
+          "description": "Место в топе по урону за последние 10 результатов",
+          "items": {
+            "type": "number"
+          },
+          "type": "array"
+        },
+        "lastResult": {
+          "description": "Последние 10 результатов это победы",
+          "items": {
+            "enum": [
+              "win",
+              "lose",
+              "tie"
+            ],
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "lastXpPlace": {
+          "description": "Место в топе по опыту за последние 10 результатов",
+          "items": {
+            "type": "number"
+          },
+          "type": "array"
         },
         "localtime": {
           "description": "время события у игрока",
@@ -2759,17 +3094,62 @@
           "minItems": 9,
           "type": "array"
         },
+        "playerClan": {
+          "description": "Тег клана; пустая строка, если игрок без клана",
+          "type": "string"
+        },
+        "playerClanDBID": {
+          "description": "ID клана; 0, если игрок без клана",
+          "minimum": 0,
+          "type": "integer"
+        },
         "playerName": {
-          "description": "ник игрока",
+          "description": "Ник игрока",
           "type": "string"
         },
         "region": {
           "description": "регион игры",
           "type": "string"
         },
+        "regionOnline": {
+          "description": "онлайн в регионе",
+          "type": "number"
+        },
+        "serverName": {
+          "description": "название сервера",
+          "type": "string"
+        },
+        "serverOnline": {
+          "description": "онлайн на сервере",
+          "type": "number"
+        },
+        "sessionStart": {
+          "description": "Начало сессии по локальному времени клиента в ISO 8601; пустая строка, если неизвестно",
+          "type": "string"
+        },
+        "sessionStartAgo": {
+          "description": "Секунд с начала сессии",
+          "type": "number"
+        },
         "tankTag": {
           "description": "Тег танка",
           "type": "string"
+        },
+        "totalShots": {
+          "description": "Количество выстрелов",
+          "type": "number"
+        },
+        "totalShotsDamaged": {
+          "description": "Количество выстрелов с уроном",
+          "type": "number"
+        },
+        "totalShotsHit": {
+          "description": "Количество попавших выстрелов",
+          "type": "number"
+        },
+        "winCount": {
+          "description": "Число побед из результатов",
+          "type": "number"
         }
       },
       "required": [
@@ -2788,31 +3168,24 @@
     "OnShot": {
       "properties": {
         "acceleration": {
-          "anyOf": [
-            {
-              "properties": {
-                "x": {
-                  "type": "number"
-                },
-                "y": {
-                  "type": "number"
-                },
-                "z": {
-                  "type": "number"
-                }
-              },
-              "required": [
-                "x",
-                "y",
-                "z"
-              ],
-              "type": "object"
+          "description": "Ускорение",
+          "properties": {
+            "x": {
+              "type": "number"
             },
-            {
-              "type": "null"
+            "y": {
+              "type": "number"
+            },
+            "z": {
+              "type": "number"
             }
+          },
+          "required": [
+            "x",
+            "y",
+            "z"
           ],
-          "description": "Ускорение"
+          "type": "object"
         },
         "accountDBID": {
           "description": "ID аккаунта",
@@ -2901,10 +3274,7 @@
         },
         "comp7SkillTag": {
           "description": "Тег навыка натиска",
-          "type": [
-            "string",
-            "null"
-          ]
+          "type": "string"
         },
         "consumables": {
           "description": "Теги расходников",
@@ -3377,16 +3747,16 @@
           "type": "number"
         },
         "playerClan": {
-          "description": "клан игрока",
+          "description": "Тег клана; пустая строка, если игрок без клана",
           "type": "string"
         },
         "playerClanDBID": {
-          "description": "ID клана игрока",
+          "description": "ID клана; 0, если игрок без клана",
           "minimum": 0,
           "type": "integer"
         },
         "playerName": {
-          "description": "ник игрока",
+          "description": "Ник игрока",
           "type": "string"
         },
         "region": {
@@ -3505,11 +3875,11 @@
           "type": "number"
         },
         "sessionStart": {
-          "description": "Количество начатых боёв",
+          "description": "Начало сессии по локальному времени клиента в ISO 8601; пустая строка, если неизвестно",
           "type": "string"
         },
         "sessionStartAgo": {
-          "description": "сколько времени назад началась сессия",
+          "description": "Секунд с начала сессии",
           "type": "number"
         },
         "shellCaliber": {
@@ -3848,18 +4218,26 @@
         "allyTeamMaxHealth",
         "arenaTag",
         "autoAim",
+        "battleBooster",
         "battleDispersion",
         "battleGameplay",
         "battleMode",
+        "battleResults",
+        "battleStarts",
         "battleTime",
         "chassisDescr",
         "clientMarkerPoint",
         "clientShotDispersion",
+        "comp7SkillTag",
+        "consumables",
+        "crew",
         "damageRandomization",
         "enemyTeamFragsCount",
         "enemyTeamHealth",
         "enemyTeamMaxHealth",
+        "equipment",
         "eventName",
+        "extra",
         "fps",
         "gameVersion",
         "gunDescr",
@@ -3876,16 +4254,27 @@
         "hitTurretPitch",
         "hitTurretYaw",
         "hitVehicleDescr",
+        "lastBattleAgo",
+        "lastDmgPlace",
+        "lastResult",
+        "lastXpPlace",
         "localtime",
+        "mapsBlackList",
         "modVersion",
         "ping",
         "playerClan",
+        "playerClanDBID",
         "playerName",
         "region",
+        "regionOnline",
         "results",
         "serverAim",
         "serverMarkerPoint",
+        "serverName",
+        "serverOnline",
         "serverShotDispersion",
+        "sessionStart",
+        "sessionStartAgo",
         "shellCaliber",
         "shellDamage",
         "shellDescr",
@@ -3894,13 +4283,18 @@
         "shellPiercingPower",
         "shellSpeed",
         "shellTag",
+        "shells",
         "shotId",
+        "systemInfo",
         "tankLevel",
         "tankRole",
         "tankTag",
         "tankType",
         "team",
         "token",
+        "totalShots",
+        "totalShotsDamaged",
+        "totalShotsHit",
         "tracerEnd",
         "tracerStart",
         "tracerVel",
@@ -3910,7 +4304,8 @@
         "turretYaw",
         "vehicleDescr",
         "vehicleRotationSpeed",
-        "vehicleSpeed"
+        "vehicleSpeed",
+        "winCount"
       ],
       "type": "object"
     }

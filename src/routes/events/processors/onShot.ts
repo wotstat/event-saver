@@ -1,117 +1,117 @@
 import { insertNow } from '../insert'
-import { now, unwrapBattleEvent, unwrapDynamicBattleInfo, unwrapEvent, unwrapServerInfo, unwrapSessionMeta, unwrapVector3 } from './utils'
+import { now, unwrapBattleEvent, unwrapDynamicBattleInfo, unwrapEvent, unwrapPlayerInfo, unwrapServerInfo, unwrapSessionMeta, unwrapVector3 } from './utils'
 import { BallisticCalculator } from '@/utils/ballisticCalc'
 
-import { check, onShotSchema } from '@/types/validator'
+import { isValidEvent, onShotSchema } from '@/types/validator'
 import { uuid } from '@/utils/uuid'
 import { logger } from '@/logger'
 
-export default function process(battleUUID: string, e: any) {
-  check(onShotSchema, e, (e) => {
+export default function process(battleUUID: string, e: unknown) {
+  if (!isValidEvent(onShotSchema, e)) return
 
-    const gravity = -(e.acceleration?.y ?? 0)
+  const gravity = -e.acceleration.y
 
-    const shared = {
-      gravity: -gravity,
-      gunPos: e.gunPoint,
-      shellSpeed: e.shellSpeed * 0.8,
-      tracerStart: e.tracerStart,
-      tracerVelocity: e.tracerVel,
-    }
+  const shared = {
+    gravity: -gravity,
+    gunPos: e.gunPoint,
+    shellSpeed: e.shellSpeed * 0.8,
+    tracerStart: e.tracerStart,
+    tracerVelocity: e.tracerVel,
+  }
 
-    let clientBallistic: ReturnType<typeof BallisticCalculator.calculate> | null = null
-    let serverBallistic: ReturnType<typeof BallisticCalculator.calculate> | null = null
+  let clientBallistic: ReturnType<typeof BallisticCalculator.calculate> | null = null
+  let serverBallistic: ReturnType<typeof BallisticCalculator.calculate> | null = null
 
-    try {
-      clientBallistic = BallisticCalculator.calculate({
-        ...shared,
-        markerPos: e.clientMarkerPoint,
-        dispersionAngle: e.clientShotDispersion,
-      })
-    } catch (error) {
-      logger.warn({ error, event: JSON.stringify(e) }, 'Error calculating client ballistic')
-    }
+  try {
+    clientBallistic = BallisticCalculator.calculate({
+      ...shared,
+      markerPos: e.clientMarkerPoint,
+      dispersionAngle: e.clientShotDispersion,
+    })
+  } catch (error) {
+    logger.warn({ error, event: JSON.stringify(e) }, 'Error calculating client ballistic')
+  }
 
-    try {
-      serverBallistic = BallisticCalculator.calculate({
-        ...shared,
-        markerPos: e.serverMarkerPoint,
-        dispersionAngle: e.serverShotDispersion,
-      })
-    } catch (error) {
-      logger.warn({ error, event: JSON.stringify(e) }, 'Error calculating server ballistic')
-    }
+  try {
+    serverBallistic = BallisticCalculator.calculate({
+      ...shared,
+      markerPos: e.serverMarkerPoint,
+      dispersionAngle: e.serverShotDispersion,
+    })
+  } catch (error) {
+    logger.warn({ error, event: JSON.stringify(e) }, 'Error calculating server ballistic')
+  }
 
-    if (clientBallistic === null || serverBallistic === null) return
+  if (clientBallistic === null || serverBallistic === null) return
 
-    insertNow('Event_OnShot', {
-      id: uuid(),
-      onBattleStartId: battleUUID,
-      dateTime: now(),
-      health: e.health,
+  insertNow('Event_OnShot', {
+    id: uuid(),
+    onBattleStartId: battleUUID,
+    dateTime: now(),
+    health: e.health,
 
-      ballisticResultClient_r: clientBallistic.r,
-      ballisticResultClient_theta: clientBallistic.theta,
-      ballisticResultServer_r: serverBallistic.r,
-      ballisticResultServer_theta: serverBallistic.theta,
+    ballisticResultClient_r: clientBallistic.r,
+    ballisticResultClient_theta: clientBallistic.theta,
+    ballisticResultServer_r: serverBallistic.r,
+    ballisticResultServer_theta: serverBallistic.theta,
 
-      shotId: e.shotId,
-      shellTag: e.shellTag,
-      shellName: e.shellName,
-      shellDamage: e.shellDamage,
-      damageRandomization: e.damageRandomization,
-      shellPiercingPower: e.shellPiercingPower,
-      shellCaliber: e.shellCaliber,
-      shellSpeed: e.shellSpeed,
-      shellMaxDistance: e.shellMaxDistance,
-      gunDispersion: e.gunDispersion,
-      battleDispersion: e.battleDispersion,
-      serverShotDispersion: e.serverShotDispersion,
-      clientShotDispersion: e.clientShotDispersion,
-      gravity: gravity,
-      ...unwrapVector3('acceleration', e.acceleration ?? { x: 0, y: -gravity, z: 0 }),
-      serverAim: e.serverAim,
-      autoAim: e.autoAim,
-      ping: Math.max(Math.min(Math.round(e.ping * 1000), 65535), 0),
-      fps: e.fps,
-      hitVehicleDescr: e.hitVehicleDescr,
-      hitChassisDescr: e.hitChassisDescr,
-      hitTurretDescr: e.hitTurretDescr,
-      hitGunDescr: e.hitGunDescr,
-      hitTurretYaw: e.hitTurretYaw,
-      hitTurretPitch: e.hitTurretPitch,
-      vehicleDescr: e.vehicleDescr,
-      chassisDescr: e.chassisDescr,
-      turretDescr: e.turretDescr,
-      gunDescr: e.gunDescr,
-      turretYaw: e.turretYaw,
-      turretPitch: e.turretPitch,
-      shellDescr: e.shellDescr,
-      hitSegment: e.hitSegment ?? '0',
-      vehicleSpeed: e.vehicleSpeed,
-      vehicleRotationSpeed: e.vehicleRotationSpeed,
-      turretSpeed: e.turretSpeed,
-      ...unwrapVector3('gunPoint', e.gunPoint),
-      ...unwrapVector3('clientMarkerPoint', e.clientMarkerPoint),
-      ...unwrapVector3('serverMarkerPoint', e.serverMarkerPoint),
-      ...unwrapVector3('tracerStart', e.tracerStart),
-      ...unwrapVector3('tracerEnd', e.tracerEnd),
-      ...unwrapVector3('tracerVel', e.tracerVel),
-      hitReason: e.hitReason === null ? 'none' : e.hitReason,
-      ...unwrapVector3('hitPoint', e.hitPoint),
-      'results.order': e.results.map(r => r.order),
-      'results.tankTag': e.results.map(r => r.tankTag),
-      'results.shotDamage': e.results.map(r => r.shotDamage),
-      'results.fireDamage': e.results.map(r => r.fireDamage),
-      'results.shotHealth': e.results.map(r => r.shotHealth),
-      'results.fireHealth': e.results.map(r => r.fireHealth),
-      'results.ammoBayDestroyed': e.results.map(r => r.ammoBayDestroyed),
-      'results.flags': e.results.map(r => r.flags),
-      ...unwrapDynamicBattleInfo(e),
-      ...unwrapBattleEvent(e),
-      ...unwrapSessionMeta(e),
-      ...unwrapEvent(e),
-      ...unwrapServerInfo(e),
-    }, e)
+    shotId: e.shotId,
+    shellTag: e.shellTag,
+    shellName: e.shellName,
+    shellDamage: e.shellDamage,
+    damageRandomization: e.damageRandomization,
+    shellPiercingPower: e.shellPiercingPower,
+    shellCaliber: e.shellCaliber,
+    shellSpeed: e.shellSpeed,
+    shellMaxDistance: e.shellMaxDistance,
+    gunDispersion: e.gunDispersion,
+    battleDispersion: e.battleDispersion,
+    serverShotDispersion: e.serverShotDispersion,
+    clientShotDispersion: e.clientShotDispersion,
+    gravity: gravity,
+    ...unwrapVector3('acceleration', e.acceleration),
+    serverAim: e.serverAim,
+    autoAim: e.autoAim,
+    ping: Math.max(Math.min(Math.round(e.ping * 1000), 65535), 0),
+    fps: e.fps,
+    hitVehicleDescr: e.hitVehicleDescr,
+    hitChassisDescr: e.hitChassisDescr,
+    hitTurretDescr: e.hitTurretDescr,
+    hitGunDescr: e.hitGunDescr,
+    hitTurretYaw: e.hitTurretYaw,
+    hitTurretPitch: e.hitTurretPitch,
+    vehicleDescr: e.vehicleDescr,
+    chassisDescr: e.chassisDescr,
+    turretDescr: e.turretDescr,
+    gunDescr: e.gunDescr,
+    turretYaw: e.turretYaw,
+    turretPitch: e.turretPitch,
+    shellDescr: e.shellDescr,
+    hitSegment: e.hitSegment ?? '0',
+    vehicleSpeed: e.vehicleSpeed,
+    vehicleRotationSpeed: e.vehicleRotationSpeed,
+    turretSpeed: e.turretSpeed,
+    ...unwrapVector3('gunPoint', e.gunPoint),
+    ...unwrapVector3('clientMarkerPoint', e.clientMarkerPoint),
+    ...unwrapVector3('serverMarkerPoint', e.serverMarkerPoint),
+    ...unwrapVector3('tracerStart', e.tracerStart),
+    ...unwrapVector3('tracerEnd', e.tracerEnd),
+    ...unwrapVector3('tracerVel', e.tracerVel),
+    hitReason: e.hitReason === null ? 'none' : e.hitReason,
+    ...unwrapVector3('hitPoint', e.hitPoint),
+    'results.order': e.results.map(r => r.order),
+    'results.tankTag': e.results.map(r => r.tankTag),
+    'results.shotDamage': e.results.map(r => r.shotDamage),
+    'results.fireDamage': e.results.map(r => r.fireDamage),
+    'results.shotHealth': e.results.map(r => r.shotHealth),
+    'results.fireHealth': e.results.map(r => r.fireHealth),
+    'results.ammoBayDestroyed': e.results.map(r => r.ammoBayDestroyed),
+    'results.flags': e.results.map(r => r.flags),
+    ...unwrapDynamicBattleInfo(e),
+    ...unwrapPlayerInfo(e),
+    ...unwrapBattleEvent(e),
+    ...unwrapSessionMeta(e),
+    ...unwrapEvent(e),
+    ...unwrapServerInfo(e),
   })
 }

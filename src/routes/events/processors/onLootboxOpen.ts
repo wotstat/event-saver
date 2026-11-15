@@ -1,118 +1,105 @@
-import { modVersionComparator } from '@/utils/utils'
 import { insertNow } from '../insert'
-import { now, unwrapEvent, unwrapHangarEvent, unwrapServerInfo, unwrapSessionMeta, unwrapVector3 } from './utils'
+import { now, unwrapHangarEvent } from './utils'
 
-import { check, onLootboxOpenSchema } from '@/types/validator'
+import { isValidEvent, onLootboxOpenSchema } from '@/types/validator'
 import { uuid } from '@/utils/uuid'
 import { logger } from '@/logger'
 
 
+export default function process(e: unknown) {
 
-const comparator = modVersionComparator('1.4.3.0')
+  if (!isValidEvent(onLootboxOpenSchema, e)) return
 
-export default function process(e: any) {
+  let raw = {}
 
-  check(onLootboxOpenSchema, e, async (e) => {
-    if (comparator(e.modVersion) < 0) return
+  try { raw = JSON.parse(e.raw) }
+  catch (error) { logger.error({ error }, 'Failed to parse raw field') }
 
-    let raw = {}
+  insertNow('Event_OnLootboxOpen', {
+    id: uuid(),
+    dateTime: now(),
 
-    try {
-      raw = JSON.parse(e.raw)
-    }
-    catch (error) {
-      logger.error({ error }, 'Failed to parse raw field')
-    }
+    containerTag: e.containerTag,
+    openByTag: e.openByTag,
+    isOpenSuccess: e.isOpenSuccess,
+    openCount: e.openCount,
+    openGroup: e.openGroup,
 
-    insertNow('Event_OnLootboxOpen', {
-      id: uuid(),
-      dateTime: now(),
+    credits: e.parsed.credits,
+    gold: e.parsed.gold,
+    freeXP: e.parsed.freeXP,
+    crystal: e.parsed.crystal,
+    eventCoin: e.parsed.eventCoin,
+    equipCoin: e.parsed.equipCoin,
+    bpcoin: e.parsed.bpcoin,
+    'currencies.tag': e.parsed.currencies.map(([tag, amount]) => tag),
+    'currencies.amount': e.parsed.currencies.map(([tag, amount]) => amount),
 
-      containerTag: e.containerTag,
-      openByTag: e.openByTag ?? e.containerTag,
-      isOpenSuccess: e.isOpenSuccess ?? true,
-      openCount: e.openCount,
-      openGroup: e.openGroup,
+    premium: e.parsed.premium,
+    premiumPlus: e.parsed.premium_plus,
+    premiumVip: e.parsed.premium_vip,
 
-      credits: e.parsed.credits,
-      gold: e.parsed.gold,
-      freeXP: e.parsed.freeXP,
-      crystal: e.parsed.crystal,
-      eventCoin: e.parsed.eventCoin,
-      equipCoin: e.parsed.equipCoin,
-      bpcoin: e.parsed.bpcoin,
-      'currencies.tag': e.parsed.currencies.map(([tag, amount]) => tag),
-      'currencies.amount': e.parsed.currencies.map(([tag, amount]) => amount),
+    addedVehicles: e.parsed.addedVehicles,
+    'rentedVehicles.tag': e.parsed.rentedVehicles.map(([tag, rentType, rentValue]) => tag),
+    'rentedVehicles.rentType': e.parsed.rentedVehicles.map(([tag, rentType, rentValue]) => rentType),
+    'rentedVehicles.rentValue': e.parsed.rentedVehicles.map(([tag, rentType, rentValue]) => rentValue),
+    'compensatedVehicles.tag': e.parsed.compensatedVehicles.map(([tag, variant, gold]) => tag),
+    'compensatedVehicles.variant': e.parsed.compensatedVehicles.map(([tag, variant, gold]) => variant),
+    'compensatedVehicles.gold': e.parsed.compensatedVehicles.map(([tag, variant, gold]) => gold),
 
-      premium: e.parsed.premium,
-      premiumPlus: e.parsed.premium_plus,
-      premiumVip: e.parsed.premium_vip,
+    slots: e.parsed.slots,
+    berths: e.parsed.berths,
 
-      addedVehicles: e.parsed.addedVehicles,
-      'rentedVehicles.tag': e.parsed.rentedVehicles.map(([tag, rentType, rentValue]) => tag),
-      'rentedVehicles.rentType': e.parsed.rentedVehicles.map(([tag, rentType, rentValue]) => rentType),
-      'rentedVehicles.rentValue': e.parsed.rentedVehicles.map(([tag, rentType, rentValue]) => rentValue),
-      'compensatedVehicles.tag': e.parsed.compensatedVehicles?.map(([tag, variant, gold]) => tag) ?? [],
-      'compensatedVehicles.variant': e.parsed.compensatedVehicles?.map(([tag, variant, gold]) => variant) ?? [],
-      'compensatedVehicles.gold': e.parsed.compensatedVehicles?.map(([tag, variant, gold]) => gold) ?? [],
+    'items.tag': e.parsed.items.map(([tag, count]) => tag),
+    'items.count': e.parsed.items.map(([tag, count]) => count),
 
-      slots: e.parsed.slots,
-      berths: e.parsed.berths,
+    'crewBooks.tag': e.parsed.crewBooks.map(([tag, count]) => tag),
+    'crewBooks.count': e.parsed.crewBooks.map(([tag, count]) => count),
 
-      'items.tag': e.parsed.items.map(([tag, count]) => tag),
-      'items.count': e.parsed.items.map(([tag, count]) => count),
+    'boosters.tag': e.parsed.boosters.map(([tag, time, value, count]) => tag),
+    'boosters.time': e.parsed.boosters.map(([tag, time, value, count]) => time),
+    'boosters.value': e.parsed.boosters.map(([tag, time, value, count]) => value),
+    'boosters.count': e.parsed.boosters.map(([tag, time, value, count]) => count),
 
-      'crewBooks.tag': e.parsed.crewBooks.map(([tag, count]) => tag),
-      'crewBooks.count': e.parsed.crewBooks.map(([tag, count]) => count),
+    'discounts.tag': e.parsed.discounts.map(([tag, value]) => tag),
+    'discounts.value': e.parsed.discounts.map(([tag, value]) => value),
 
-      'boosters.tag': e.parsed.boosters.map(([tag, time, value, count]) => tag),
-      'boosters.time': e.parsed.boosters.map(([tag, time, value, count]) => time),
-      'boosters.value': e.parsed.boosters.map(([tag, time, value, count]) => value),
-      'boosters.count': e.parsed.boosters.map(([tag, time, value, count]) => count),
+    'equip.tag': e.parsed.equip.map(([tag, count]) => tag),
+    'equip.count': e.parsed.equip.map(([tag, count]) => count),
 
-      'discounts.tag': e.parsed.discounts.map(([tag, value]) => tag),
-      'discounts.value': e.parsed.discounts.map(([tag, value]) => value),
+    'lootboxes.tag': e.parsed.lootboxesTokens.map(([tag, count]) => tag),
+    'lootboxes.count': e.parsed.lootboxesTokens.map(([tag, count]) => count),
 
-      'equip.tag': e.parsed.equip.map(([tag, count]) => tag),
-      'equip.count': e.parsed.equip.map(([tag, count]) => count),
+    'bonus.tag': e.parsed.bonusTokens.map(([tag, count]) => tag),
+    'bonus.count': e.parsed.bonusTokens.map(([tag, count]) => count),
 
-      'lootboxes.tag': e.parsed.lootboxesTokens.map(([tag, count]) => tag),
-      'lootboxes.count': e.parsed.lootboxesTokens.map(([tag, count]) => count),
+    'extra.tag': e.parsed.extraTokens.map(([tag, count]) => tag),
+    'extra.count': e.parsed.extraTokens.map(([tag, count]) => count),
 
-      'bonus.tag': e.parsed.bonusTokens.map(([tag, count]) => tag),
-      'bonus.count': e.parsed.bonusTokens.map(([tag, count]) => count),
+    'customizations.type': e.parsed.customizations.map(([type, tag, count]) => type),
+    'customizations.tag': e.parsed.customizations.map(([type, tag, count]) => tag),
+    'customizations.count': e.parsed.customizations.map(([type, tag, count]) => count),
 
-      'extra.tag': e.parsed.extraTokens?.map(([tag, count]) => tag) ?? [],
-      'extra.count': e.parsed.extraTokens?.map(([tag, count]) => count) ?? [],
+    'blueprints.type': e.parsed.blueprints.map(([type, specification, count]) => type),
+    'blueprints.specification': e.parsed.blueprints.map(([type, specification, count]) => specification),
+    'blueprints.count': e.parsed.blueprints.map(([type, specification, count]) => count),
 
-      'customizations.type': e.parsed.customizations.map(([type, tag, count]) => type),
-      'customizations.tag': e.parsed.customizations.map(([type, tag, count]) => tag),
-      'customizations.count': e.parsed.customizations.map(([type, tag, count]) => count),
+    'selectableCrewbook.tag': e.parsed.selectableCrewbook.map(([crewbookName]) => crewbookName),
 
-      'blueprints.type': e.parsed.blueprints.map(([type, specification, count]) => type),
-      'blueprints.specification': e.parsed.blueprints.map(([type, specification, count]) => specification),
-      'blueprints.count': e.parsed.blueprints.map(([type, specification, count]) => count),
+    'toys.tag': e.parsed.toys.map(([tag, count]) => tag),
+    'toys.count': e.parsed.toys.map(([tag, count]) => count),
+    'compensatedToys.tag': e.parsed.compensatedToys.map(([tag, currency, count]) => tag),
+    'compensatedToys.currency': e.parsed.compensatedToys.map(([tag, currency, count]) => currency),
+    'compensatedToys.count': e.parsed.compensatedToys.map(([tag, currency, count]) => count),
 
-      'selectableCrewbook.tag': e.parsed.selectableCrewbook.map(([crewbookName]) => crewbookName),
+    'entitlements.tag': e.parsed.entitlements.map(([tag, count]) => tag),
+    'entitlements.count': e.parsed.entitlements.map(([tag, count]) => count),
 
-      'toys.tag': e.parsed.toys?.map(([tag, count]) => tag) ?? [],
-      'toys.count': e.parsed.toys?.map(([tag, count]) => count) ?? [],
-      'compensatedToys.tag': e.parsed.compensatedToys?.map(([tag, currency, count]) => tag) ?? [],
-      'compensatedToys.currency': e.parsed.compensatedToys?.map(([tag, currency, count]) => currency) ?? [],
-      'compensatedToys.count': e.parsed.compensatedToys?.map(([tag, currency, count]) => count) ?? [],
-
-      'entitlements.tag': e.parsed.entitlements?.map(([tag, count]) => tag) ?? [],
-      'entitlements.count': e.parsed.entitlements?.map(([tag, count]) => count) ?? [],
-
-      claimed: e.claimed ?? true,
-      rerollCount: e.rerollCount ?? 0,
-      recordBoxCount: e.recordBoxCount ?? 1,
-      raw: {},
-      rawString: e.raw,
-      ...unwrapHangarEvent(e),
-      ...unwrapSessionMeta(e),
-      ...unwrapEvent(e),
-      ...unwrapServerInfo(e),
-    }, e)
+    claimed: e.claimed,
+    rerollCount: e.rerollCount,
+    recordBoxCount: e.recordBoxCount,
+    raw: {},
+    rawString: e.raw,
+    ...unwrapHangarEvent(e),
   })
 }

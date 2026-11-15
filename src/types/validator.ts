@@ -1,16 +1,17 @@
 import Ajv, { type ValidateFunction } from 'ajv'
 import addFormats from 'ajv-formats'
 import type { OnBattleResult, OnBattleStart, OnShot, OnLootboxOpen, OnMoeInfo, OnComp7Info, OnAccountStats } from './events'
-import types from './types.json' assert { type: 'json' }
+import types from './types.json' with { type: 'json' }
 import { logger } from '@/logger'
 
 export const ajv = addFormats(new Ajv())
 
-export function check<T>(schema: ValidateFunction<T>, data: any, t: (e: T) => void) {
+export function isValidEvent<T>(schema: ValidateFunction<T>, data: unknown): data is T {
   if (schema(data)) {
-    t(data)
+    return true
   } else {
     logger.warn({ errors: schema.errors, data: JSON.stringify(data) }, 'Validation failed for event data')
+    return false
   }
 }
 

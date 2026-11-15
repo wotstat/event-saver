@@ -1,34 +1,33 @@
 import { insertNow } from '../insert'
-import { now, unwrapEvent, unwrapHangarEvent } from './utils'
+import { now, unwrapHangarEvent } from './utils'
 
-import { check, onMoeInfoSchema } from '@/types/validator'
+import { isValidEvent, onMoeInfoSchema } from '@/types/validator'
 import { uuid } from '@/utils/uuid'
 
 
-export default function process(e: any) {
+export default function process(e: unknown) {
 
-  check(onMoeInfoSchema, e, async (e) => {
-    const [p0, p20, p40, p55, p65, p75, p85, p95, p100] = e.moeDistribution
+  if (!isValidEvent(onMoeInfoSchema, e)) return
 
-    insertNow('Event_OnMoeInfo', {
-      id: uuid(),
-      dateTime: now(),
+  const [p0, p20, p40, p55, p65, p75, p85, p95, p100] = e.moeDistribution
 
-      vehicleTag: e.tankTag,
-      battleCount: e.battleCount,
+  insertNow('Event_OnMoeInfo', {
+    id: uuid(),
+    dateTime: now(),
 
-      p0: p0,
-      p20: p20,
-      p40: p40,
-      p55: p55,
-      p65: p65,
-      p75: p75,
-      p85: p85,
-      p95: p95,
-      p100: p100,
+    vehicleTag: e.tankTag,
+    battleCount: e.battleCount,
 
-      ...unwrapHangarEvent(e),
-      ...unwrapEvent(e),
-    }, e)
+    p0: p0,
+    p20: p20,
+    p40: p40,
+    p55: p55,
+    p65: p65,
+    p75: p75,
+    p85: p85,
+    p95: p95,
+    p100: p100,
+
+    ...unwrapHangarEvent(e),
   })
 }

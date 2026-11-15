@@ -1,73 +1,29 @@
 import type { OnBattleResult } from '@/types/events'
 import { insertNow } from '../insert'
-import { now, snakeCaseToCamelCase, unwrapDynamicBattleInfo, unwrapEvent, unwrapServerInfo, unwrapSessionMeta } from './utils'
+import { now, prefixObjectKeys, snakeCaseToCamelCase, unwrapDynamicBattleInfo, unwrapEvent, unwrapPlayerInfo, unwrapServerInfo, unwrapSessionMeta } from './utils'
 
-import { check, onBattleResultSchema } from '@/types/validator'
+import { isValidEvent, onBattleResultSchema } from '@/types/validator'
 import { uuid } from '@/utils/uuid'
 import { redis } from '@/redis/index'
+import { logger } from '@/logger'
 
 function unwrapVehicleBattleResult(prefix: string, res: OnBattleResult['result']['personal']) {
+  const { comp7SkillTag, comp7Rank, ...values } = res
   return {
-    [`${prefix}.playerRank`]: 0,
-    ...Object.fromEntries(Object.entries(res).map(([k, v]) => [`${prefix}.${k}`, v]))
+    ...prefixObjectKeys(prefix, values),
+    [`${prefix}.comp7SkillTag`]: comp7SkillTag ?? '',
+    [`${prefix}.comp7Rank`]: comp7Rank ?? '',
   }
 }
 
 function unwrapPlayersResults(results: OnBattleResult['result']['playersResults']) {
-  const temp = results
-    .map(r => ({
-      ...unwrapVehicleBattleResult('playersResults', r),
-      'playersResults.comp7SkillTag': r.comp7SkillTag ?? '', // TODO: удалить после выпуска обновления
-      'playersResults.comp7Rank': r.comp7Rank ?? '', // TODO: удалить после выпуска обновления
-      'playersResults.bdid': r.bdid,
-      'playersResults.name': r.name,
-      'playersResults.clan': r.clan ?? '',
-      'playersResults.clanDBID': r.clanDBID ?? 0,
-    })) as Record<string, any>[]
-
-  const res = Object.fromEntries(Object.entries(temp[0]).map(([k, v]) => [k, temp.map(r => r[k])]))
-  return res
-}
-
-function finishReason(res: OnBattleResult['result']['finishReason']) {
-  if (!res) return 'unknown'
-  return snakeCaseToCamelCase(res)
-}
-
-
-function unwrapCurrencies(prefix: string, currencies: OnBattleResult['result']['currencies'] | undefined) {
-  const values = {
-    originalCredits: 0,
-    originalCrystal: 0,
-    subtotalCredits: 0,
-    autoRepairCost: 0,
-    autoLoadCredits: 0,
-    autoLoadGold: 0,
-    autoEquipCredits: 0,
-    autoEquipGold: 0,
-    autoEquipCrystals: 0,
-    piggyBank: 0,
-    ...currencies
-  }
-
-  return Object.fromEntries(Object.entries(values).map(([k, v]) => [`${prefix}.${k}`, v]))
-}
-
-function unwrapComp7(prefix: string, comp7: OnBattleResult['result']['comp7'] | undefined) {
-  const values = {
-    ratingDelta: 0,
-    rating: 0,
-    qualBattleIndex: 0,
-    qualActive: false,
-    ...comp7
-  }
-
-  return Object.fromEntries(Object.entries(values).map(([k, v]) => [`${prefix}.${k}`, v]))
+  const temp = results.map(r => unwrapVehicleBattleResult('playersResults', r))
+  return Object.fromEntries(Object.entries(temp[0]).map(([k]) => [k, temp.map(r => r[k])]))
 }
 
 function unwrapPersonalMissions(result: OnBattleResult['result']) {
 
-  const personalMissions = (result.personalMissions ?? []).map(pm => ({
+  const personalMissions = result.personalMissions.map(pm => ({
     tag: pm.tag,
     conditions: pm.conditions.map(c => ({
       tag: c.tag,
@@ -80,56 +36,51 @@ function unwrapPersonalMissions(result: OnBattleResult['result']) {
 
   return {
     personalMissions,
-    personalMissionsRaw: result.personalMissionsRaw ?? ''
+    personalMissionsRaw: result.personalMissionsRaw
   }
 }
 
 const DEDUPLICATION_KEY_TTL = 60 * 60 // 1 hours
-export default function process(battleUUID: string, e: any) {
-  check(onBattleResultSchema, e, async (e) => {
-    const r = e.result
+export default async function process(battleUUID: string, e: unknown) {
+  if (!isValidEvent(onBattleResultSchema, e)) return
 
-    const currencies = unwrapCurrencies('currencies', r.currencies)
+  const r = e.result
 
-    if (!r.currencies) {
-      currencies['currencies.originalCredits'] = r.originalCredits ?? 0
-    }
+  const battleEvent = {
+    id: uuid(),
+    onBattleStartId: battleUUID,
+    dateTime: now(),
+    result: r.result,
+    finishReason: snakeCaseToCamelCase(r.finishReason),
+    isPremium: r.isPremium,
+    duration: r.duration,
+    teamHealth: r.teamHealth,
+    winnerTeam: r.winnerTeam,
+    playerTeam: r.playerTeam,
+    arenaId: r.arenaID,
+    fortClanDBIDs: r.fortClanDBIDs,
+    ...prefixObjectKeys('currencies', r.currencies),
+    ...unwrapPersonalMissions(r),
+    ...prefixObjectKeys('comp7', r.comp7),
+    ...unwrapVehicleBattleResult('personal', r.personal),
+    ...unwrapPlayersResults(r.playersResults),
+    ...unwrapDynamicBattleInfo(e),
+    ...unwrapPlayerInfo(e),
+    ...unwrapSessionMeta(e),
+    ...unwrapEvent(e),
+    ...unwrapServerInfo(e),
+  }
 
-    const battleEvent = {
-      id: uuid(),
-      onBattleStartId: battleUUID,
-      dateTime: now(),
-      result: r.result,
-      finishReason: finishReason(r.finishReason),
-      credits: r.credits ?? 0,
-      originalCredits: r.originalCredits ?? 0,
-      isPremium: r.isPremium ?? false,
-      duration: r.duration,
-      teamHealth: r.teamHealth,
-      winnerTeam: r.winnerTeam,
-      playerTeam: r.playerTeam,
-      arenaId: r.arenaID,
-      fortClanDBIDs: r.fortClanDBIDs ?? [],
-      ...currencies,
-      ...unwrapPersonalMissions(r),
-      ...unwrapComp7('comp7', r.comp7),
-      ...unwrapVehicleBattleResult('personal', r.personal),
-      ...unwrapPlayersResults(r.playersResults),
-      'personal.comp7SkillTag': r.personal.comp7SkillTag ?? '', // TODO: удалить после выпуска обновления
-      'personal.comp7Rank': r.personal.comp7Rank ?? '',
-      ...unwrapDynamicBattleInfo(e),
-      ...unwrapSessionMeta(e),
-      ...unwrapEvent(e),
-      ...unwrapServerInfo(e),
-    }
+  insertNow('Event_OnBattleResult', battleEvent)
 
-    insertNow('Event_OnBattleResult', battleEvent, e)
-
-    const deduplicationKey = `deduplication:OnBattleResult:${e.result.arenaID}`
+  const deduplicationKey = `deduplication:OnBattleResult:${e.result.arenaID}`
+  try {
     const existing = await redis.exists(deduplicationKey)
     if (!existing) {
       await redis.setex(deduplicationKey, DEDUPLICATION_KEY_TTL, '1')
-      insertNow('DeduplicatedBattleResults', battleEvent, e)
+      insertNow('DeduplicatedBattleResults', battleEvent)
     }
-  })
+  } catch (error) {
+    logger.error({ error, battleUUID, deduplicationKey }, 'Failed to deduplicate OnBattleResult in Redis')
+  }
 }

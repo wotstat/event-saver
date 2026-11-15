@@ -1,3 +1,5 @@
+// tsc uses TypeScript 7; the "typescript" alias supplies Microsoft's TS 6 API
+// compatibility package required by typescript-eslint.
 import tsParser from '@typescript-eslint/parser'
 import { defineConfig } from 'eslint/config'
 

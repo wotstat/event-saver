@@ -1,6 +1,7 @@
 import { Hono } from 'hono'
 
-import type { TokenEvent, HangarEvent } from '@/types/events'
+import type { OnBattleResult as BattleResultEvent, OnShot as ShotEvent } from '@/types/events'
+import type { HangarEvent } from '@/types/utils/event'
 import OnBattleResult from './processors/onBattleResult'
 import OnBattleStart from './processors/onBattleStart'
 import OnShot from './processors/onShot'
@@ -37,8 +38,7 @@ const supportedHangarEvents = {
   'OnAccountStats': OnAccountStats,
 }
 
-
-async function processEvent(eventName: string, event: TokenEvent) {
+async function processEvent(eventName: string, event: { token: string }) {
   if (eventName in supportedEvents) {
     const token = event.token
     try {
@@ -53,7 +53,7 @@ async function processEvent(eventName: string, event: TokenEvent) {
   }
 }
 
-async function processHangarEvent(eventName: string, event: HangarEvent) {
+async function processHangarEvent(eventName: string, event: unknown) {
   if (eventName in supportedHangarEvents) {
     supportedHangarEvents[eventName as keyof typeof supportedHangarEvents](event)
   } else {
@@ -83,14 +83,17 @@ router.post('/OnBattleStart', async c => {
   }
 })
 
-
-function isEventBody(body: any): body is { events: (TokenEvent | HangarEvent)[] } {
+function isEventBody(body: any): body is { events: { eventName: string }[] } {
   if (typeof body !== 'object' || body === null) return false
 
   return 'events' in body &&
     Array.isArray(body.events) &&
     body.events.length > 0 &&
     body.events.every((event: any) => typeof event === 'object' && 'eventName' in event)
+}
+
+function isTokenEvent(event: any): event is { token: string } {
+  return typeof event === 'object' && event !== null && 'token' in event && typeof event.token === 'string'
 }
 
 router.post('/send', async c => {
@@ -108,11 +111,8 @@ router.post('/send', async c => {
       }
 
       for (const event of body.events) {
-        if ('token' in event) {
-          await processEvent(event.eventName, event)
-        } else {
-          await processHangarEvent(event.eventName, event)
-        }
+        if (isTokenEvent(event)) await processEvent(event.eventName, event)
+        else await processHangarEvent(event.eventName, event)
       }
     }
   }
