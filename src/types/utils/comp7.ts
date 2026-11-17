@@ -7,8 +7,12 @@ type Comp7 = {
   qualActive: boolean,
 }
 
-type Comp7Rank = 'qual' | 'fifth' | 'sixth'
-  | `${'first' | 'second' | 'third' | 'fourth'}_${'E' | 'D' | 'C' | 'B' | 'A'}`
-  | `${'fifth' | 'sixth'}_${'C' | 'B' | 'A'}`
+type RegularRank = 'first' | 'second' | 'third' | 'fourth'
+type PrestigeRank = 'fifth' | 'sixth'
+type Division = 'E' | 'D' | 'C' | 'B' | 'A'
+
+/** WG: высшие ранги без букв; Леста: высшие дивизионы C/B/A. */
+type Comp7Rank = 'qual' | RegularRank | PrestigeRank
+  | `${RegularRank}_${Division}` | `${PrestigeRank}_${'C' | 'B' | 'A'}`
 
 export type { Comp7, Comp7Rank }

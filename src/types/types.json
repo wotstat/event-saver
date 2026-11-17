@@ -2301,6 +2301,10 @@
           "description": "Точный ранг и дивизион игрока на момент события",
           "enum": [
             "qual",
+            "first",
+            "second",
+            "third",
+            "fourth",
             "fifth",
             "sixth",
             "first_E",
