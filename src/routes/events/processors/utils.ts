@@ -1,5 +1,5 @@
 import { pciDb } from '@/pciids/pciids'
-import type { Event, BattleEvent, HangarEvent } from '@/types/utils/event'
+import type { Event, BattleEvent, LegacyHangarEvent } from '@/types/utils/event'
 import type { PlayerInfo } from '@/types/utils/playerInfo'
 import type { DynamicBattleInfo } from '@/types/utils/battleInfo'
 import type { SessionMeta } from '@/types/utils/sessionMeta'
@@ -116,8 +116,8 @@ export function unwrapDynamicBattleInfo(e: DynamicBattleInfo) {
   }
 }
 
-export function unwrapSessionMeta(e: Partial<SessionMeta>) {
-  const r = {
+export function mapSessionMeta(e: Partial<SessionMeta>) {
+  return {
     battleStarts: e.battleStarts ?? 0,
     battleResults: e.battleResults ?? 0,
     winCount: e.winCount ?? 0,
@@ -127,14 +127,18 @@ export function unwrapSessionMeta(e: Partial<SessionMeta>) {
     lastResult: e.lastResult ?? [],
     lastDmgPlace: e.lastDmgPlace ?? [],
     lastXpPlace: e.lastXpPlace ?? [],
-    startTime: e.sessionStart || 0,
+    startTime: e.sessionStart ?? '',
     lastBattleAgo: e.lastBattleAgo ?? 0,
     startAgo: e.sessionStartAgo ?? 0
   }
-  return Object.fromEntries(Object.entries(r).map(([k, v]) => [`session.${k}`, v]))
 }
 
-export function unwrapHangarEvent(e: HangarEvent) {
+export function unwrapSessionMeta(e: Partial<SessionMeta>) {
+  const session = mapSessionMeta(e)
+  return prefixObjectKeys('session', { ...session, startTime: session.startTime || 0 })
+}
+
+export function unwrapHangarEvent(e: LegacyHangarEvent) {
   return {
     ...unwrapEvent(e),
     ...unwrapPlayerInfo(e),

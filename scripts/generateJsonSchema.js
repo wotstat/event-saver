@@ -59,7 +59,7 @@ class UtilityTypeParser {
 }
 
 export function generateSchema(path = './src/types/events.ts') {
-  const config = { ...DEFAULT_CONFIG, path, skipTypeCheck: true, additionalProperties: true }
+  const config = { ...DEFAULT_CONFIG, path, skipTypeCheck: true, additionalProperties: true, extraTags: ['additionalProperties'] }
   const program = createProgram(config)
   const parser = createParser(program, config, chain => chain.addNodeParser(new UtilityTypeParser(program)))
   return new SchemaGenerator(program, parser, createFormatter(config), config).createSchema()

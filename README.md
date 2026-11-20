@@ -2,7 +2,7 @@
 
 Принимает события мода wotstat-analytics, проверяет их по JSON-схеме и сохраняет в ClickHouse.
 
-Итоговые события описаны в [events.ts](src/types/events.ts), служебные типы — в [utils](src/types/utils).
+Типы событий и их вспомогательные типы находятся в [events](src/types/events). Файл [events.ts](src/types/events.ts) переэкспортирует события, а общие типы находятся в [utils](src/types/utils).
 На графе типы сгруппированы по файлам; стрелки идут от базового типа к наследнику, `Omit` исключает указанное поле.
 
 ```mermaid
@@ -11,9 +11,11 @@ flowchart TB
     subgraph eventFile["event.ts"]
       event["Event"]
       hangar["HangarEvent"]
+      legacyHangar["LegacyHangarEvent"]
       battle["BattleEvent (+ token, battleTime)"]
 
       event --> hangar
+      event --> legacyHangar
       event --> battle
     end
 
@@ -32,19 +34,23 @@ flowchart TB
     extra --> dynamic
     dynamic --> battle
 
-    player -->|Partial| hangar
+    player --> hangar
+    player -->|Partial| legacyHangar
     player --> battle
-    server -->|Partial| hangar
+    server --> hangar
+    server -->|Partial| legacyHangar
     server --> battle
-    session -->|Partial| hangar
+    session --> hangar
+    session -->|Partial| legacyHangar
     session --> battle
   end
 
-  subgraph eventsFile["src/types/events.ts"]
+  subgraph eventsFile["src/types/events/"]
     start["OnBattleStart"]
     shot["OnShot"]
     result["OnBattleResult"]
     lootbox["OnLootboxOpen"]
+    raccoon["OnRaccoonRaidReward"]
     comp7["OnComp7Info"]
     moe["OnMoeInfo"]
     account["OnAccountStats"]
@@ -54,17 +60,18 @@ flowchart TB
   battle --> shot
   battle -->|"Omit: battleTime"| result
 
-  hangar --> lootbox
-  hangar -->|Required| comp7
-  hangar --> moe
-  hangar --> account
+  legacyHangar --> lootbox
+  hangar --> raccoon
+  hangar --> comp7
+  legacyHangar --> moe
+  legacyHangar --> account
 
   classDef base fill:#eef2ff,stroke:#6366f1
   classDef internal fill:#fff7ed,stroke:#c2410c,stroke-dasharray:5 5
   classDef finalEvent fill:#ecfdf5,stroke:#10b981
-  class event,hangar,battle,dynamic,player,server,session,extra base
+  class event,hangar,legacyHangar,battle,dynamic,player,server,session,extra base
   class staticInfo internal
-  class start,shot,result,lootbox,comp7,moe,account finalEvent
+  class start,shot,result,lootbox,raccoon,comp7,moe,account finalEvent
 ```
 
 Проверки: `bun run typecheck`, `bun run lint`, `bun test`.

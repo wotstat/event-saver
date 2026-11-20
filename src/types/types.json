@@ -3169,6 +3169,702 @@
       ],
       "type": "object"
     },
+    "OnRaccoonRaidReward": {
+      "properties": {
+        "accountDBID": {
+          "description": "ID аккаунта",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "battleResults": {
+          "description": "Количество результатов",
+          "type": "number"
+        },
+        "battleStarts": {
+          "description": "Количество начатых боёв",
+          "type": "number"
+        },
+        "durationSeconds": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "eventName": {
+          "description": "название ивента",
+          "type": "string"
+        },
+        "gameVersion": {
+          "description": "версия игры",
+          "type": "string"
+        },
+        "lastBattleAgo": {
+          "description": "сколько времени назад начался прошлый бой",
+          "type": "number"
+        },
+        "lastDmgPlace": {
+          "description": "Место в топе по урону за последние 10 результатов",
+          "items": {
+            "type": "number"
+          },
+          "type": "array"
+        },
+        "lastResult": {
+          "description": "Последние 10 результатов это победы",
+          "items": {
+            "enum": [
+              "win",
+              "lose",
+              "tie"
+            ],
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "lastXpPlace": {
+          "description": "Место в топе по опыту за последние 10 результатов",
+          "items": {
+            "type": "number"
+          },
+          "type": "array"
+        },
+        "localtime": {
+          "description": "время события у игрока",
+          "type": "string"
+        },
+        "modVersion": {
+          "description": "версия мода",
+          "type": "string"
+        },
+        "parsed": {
+          "additionalProperties": false,
+          "properties": {
+            "addedVehicles": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "berths": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "bonusTokens": {
+              "items": {
+                "items": [
+                  {
+                    "title": "tag",
+                    "type": "string"
+                  },
+                  {
+                    "minimum": 0,
+                    "title": "count",
+                    "type": "integer"
+                  }
+                ],
+                "maxItems": 2,
+                "minItems": 2,
+                "type": "array"
+              },
+              "type": "array"
+            },
+            "boosters": {
+              "items": {
+                "items": [
+                  {
+                    "title": "tag",
+                    "type": "string"
+                  },
+                  {
+                    "title": "time",
+                    "type": "number"
+                  },
+                  {
+                    "title": "value",
+                    "type": "number"
+                  },
+                  {
+                    "minimum": 0,
+                    "title": "count",
+                    "type": "integer"
+                  }
+                ],
+                "maxItems": 4,
+                "minItems": 4,
+                "type": "array"
+              },
+              "type": "array"
+            },
+            "bpcoin": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "compensatedItems": {
+              "description": "Total amount per target and currency, including repeated compensation.",
+              "items": {
+                "items": [
+                  {
+                    "title": "targetType",
+                    "type": "string"
+                  },
+                  {
+                    "title": "targetTag",
+                    "type": "string"
+                  },
+                  {
+                    "title": "currency",
+                    "type": "string"
+                  },
+                  {
+                    "minimum": 0,
+                    "title": "amount",
+                    "type": "integer"
+                  }
+                ],
+                "maxItems": 4,
+                "minItems": 4,
+                "type": "array"
+              },
+              "type": "array"
+            },
+            "compensatedVehicles": {
+              "description": "Total amounts per tank and compensation variant, including repeated compensation.",
+              "items": {
+                "items": [
+                  {
+                    "title": "tankTag",
+                    "type": "string"
+                  },
+                  {
+                    "enum": [
+                      "rent",
+                      "normal"
+                    ],
+                    "title": "variant",
+                    "type": "string"
+                  },
+                  {
+                    "additionalProperties": {
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    "title": "amounts",
+                    "type": "object"
+                  }
+                ],
+                "maxItems": 3,
+                "minItems": 3,
+                "type": "array"
+              },
+              "type": "array"
+            },
+            "credits": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "crewBooks": {
+              "items": {
+                "items": [
+                  {
+                    "title": "bookTag",
+                    "type": "string"
+                  },
+                  {
+                    "minimum": 0,
+                    "title": "count",
+                    "type": "integer"
+                  }
+                ],
+                "maxItems": 2,
+                "minItems": 2,
+                "type": "array"
+              },
+              "type": "array"
+            },
+            "crystal": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "currencies": {
+              "items": {
+                "items": [
+                  {
+                    "title": "tag",
+                    "type": "string"
+                  },
+                  {
+                    "minimum": 0,
+                    "title": "amount",
+                    "type": "integer"
+                  }
+                ],
+                "maxItems": 2,
+                "minItems": 2,
+                "type": "array"
+              },
+              "type": "array"
+            },
+            "customizations": {
+              "items": {
+                "items": [
+                  {
+                    "title": "type",
+                    "type": "string"
+                  },
+                  {
+                    "title": "tag",
+                    "type": "string"
+                  },
+                  {
+                    "minimum": 0,
+                    "title": "count",
+                    "type": "integer"
+                  }
+                ],
+                "maxItems": 3,
+                "minItems": 3,
+                "type": "array"
+              },
+              "type": "array"
+            },
+            "discounts": {
+              "items": {
+                "items": [
+                  {
+                    "title": "tag",
+                    "type": "string"
+                  },
+                  {
+                    "title": "value",
+                    "type": "number"
+                  },
+                  {
+                    "minimum": 0,
+                    "title": "count",
+                    "type": "integer"
+                  }
+                ],
+                "maxItems": 3,
+                "minItems": 3,
+                "type": "array"
+              },
+              "type": "array"
+            },
+            "entitlements": {
+              "items": {
+                "items": [
+                  {
+                    "title": "tag",
+                    "type": "string"
+                  },
+                  {
+                    "minimum": 0,
+                    "title": "count",
+                    "type": "integer"
+                  }
+                ],
+                "maxItems": 2,
+                "minItems": 2,
+                "type": "array"
+              },
+              "type": "array"
+            },
+            "equip": {
+              "description": "An empty variant denotes equipment without a variant.",
+              "items": {
+                "items": [
+                  {
+                    "title": "tag",
+                    "type": "string"
+                  },
+                  {
+                    "minimum": 0,
+                    "title": "count",
+                    "type": "integer"
+                  },
+                  {
+                    "title": "variant",
+                    "type": "string"
+                  }
+                ],
+                "maxItems": 3,
+                "minItems": 3,
+                "type": "array"
+              },
+              "type": "array"
+            },
+            "equipCoin": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "eventCoin": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "freeXP": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "gold": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "items": {
+              "items": {
+                "items": [
+                  {
+                    "title": "itemTag",
+                    "type": "string"
+                  },
+                  {
+                    "minimum": 0,
+                    "title": "count",
+                    "type": "integer"
+                  }
+                ],
+                "maxItems": 2,
+                "minItems": 2,
+                "type": "array"
+              },
+              "type": "array"
+            },
+            "lootboxFragments": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "lootboxKeys": {
+              "items": {
+                "items": [
+                  {
+                    "title": "tag",
+                    "type": "string"
+                  },
+                  {
+                    "minimum": 0,
+                    "title": "count",
+                    "type": "integer"
+                  }
+                ],
+                "maxItems": 2,
+                "minItems": 2,
+                "type": "array"
+              },
+              "type": "array"
+            },
+            "lootboxesTokens": {
+              "items": {
+                "items": [
+                  {
+                    "title": "tag",
+                    "type": "string"
+                  },
+                  {
+                    "minimum": 0,
+                    "title": "count",
+                    "type": "integer"
+                  }
+                ],
+                "maxItems": 2,
+                "minItems": 2,
+                "type": "array"
+              },
+              "type": "array"
+            },
+            "premium": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "premium_plus": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "premium_vip": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "recruits": {
+              "items": {
+                "items": [
+                  {
+                    "title": "tag",
+                    "type": "string"
+                  },
+                  {
+                    "minimum": 0,
+                    "title": "count",
+                    "type": "integer"
+                  }
+                ],
+                "maxItems": 2,
+                "minItems": 2,
+                "type": "array"
+              },
+              "type": "array"
+            },
+            "removedVehicles": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "rentedVehicles": {
+              "items": {
+                "items": [
+                  {
+                    "title": "tankTag",
+                    "type": "string"
+                  },
+                  {
+                    "title": "rentType",
+                    "type": "string"
+                  },
+                  {
+                    "title": "rentValue",
+                    "type": "string"
+                  }
+                ],
+                "maxItems": 3,
+                "minItems": 3,
+                "type": "array"
+              },
+              "type": "array"
+            },
+            "slots": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "tankmenXP": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "xp": {
+              "minimum": 0,
+              "type": "integer"
+            }
+          },
+          "type": "object"
+        },
+        "playerClan": {
+          "description": "Тег клана; пустая строка, если игрок без клана",
+          "type": "string"
+        },
+        "playerClanDBID": {
+          "description": "ID клана; 0, если игрок без клана",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "playerName": {
+          "description": "Ник игрока",
+          "type": "string"
+        },
+        "primaryDurationSeconds": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "raw": {
+          "description": "JSON object with slots (componentID and original bonus per slot) and the original claim bonus array.",
+          "type": "string"
+        },
+        "region": {
+          "description": "регион игры",
+          "type": "string"
+        },
+        "regionOnline": {
+          "description": "онлайн в регионе",
+          "type": "number"
+        },
+        "serverName": {
+          "description": "название сервера",
+          "type": "string"
+        },
+        "serverOnline": {
+          "description": "онлайн на сервере",
+          "type": "number"
+        },
+        "sessionStart": {
+          "description": "Начало сессии по локальному времени клиента в ISO 8601; пустая строка, если неизвестно",
+          "type": "string"
+        },
+        "sessionStartAgo": {
+          "description": "Секунд с начала сессии",
+          "type": "number"
+        },
+        "slots": {
+          "description": "One ingredient per slot, in the same order as raw.slots, preserving repetitions.",
+          "items": {
+            "anyOf": [
+              {
+                "items": [
+                  {
+                    "const": "currency",
+                    "title": "kind",
+                    "type": "string"
+                  },
+                  {
+                    "enum": [
+                      "gold",
+                      "credits",
+                      "crystal",
+                      "freeXP",
+                      "equipCoin"
+                    ],
+                    "title": "tag",
+                    "type": "string"
+                  },
+                  {
+                    "minimum": 0,
+                    "title": "amount",
+                    "type": "integer"
+                  }
+                ],
+                "maxItems": 3,
+                "minItems": 3,
+                "type": "array"
+              },
+              {
+                "items": [
+                  {
+                    "enum": [
+                      "item",
+                      "crewBook",
+                      "token"
+                    ],
+                    "title": "kind",
+                    "type": "string"
+                  },
+                  {
+                    "title": "tag",
+                    "type": "string"
+                  },
+                  {
+                    "minimum": 0,
+                    "title": "count",
+                    "type": "integer"
+                  }
+                ],
+                "maxItems": 3,
+                "minItems": 3,
+                "type": "array"
+              },
+              {
+                "items": [
+                  {
+                    "const": "booster",
+                    "title": "kind",
+                    "type": "string"
+                  },
+                  {
+                    "title": "tag",
+                    "type": "string"
+                  },
+                  {
+                    "title": "time",
+                    "type": "number"
+                  },
+                  {
+                    "title": "value",
+                    "type": "number"
+                  },
+                  {
+                    "minimum": 0,
+                    "title": "count",
+                    "type": "integer"
+                  }
+                ],
+                "maxItems": 5,
+                "minItems": 5,
+                "type": "array"
+              },
+              {
+                "items": [
+                  {
+                    "const": "equip",
+                    "title": "kind",
+                    "type": "string"
+                  },
+                  {
+                    "enum": [
+                      "demountKit",
+                      "recertificationForm"
+                    ],
+                    "title": "tag",
+                    "type": "string"
+                  },
+                  {
+                    "minimum": 0,
+                    "title": "count",
+                    "type": "integer"
+                  },
+                  {
+                    "title": "variant",
+                    "type": "string"
+                  }
+                ],
+                "maxItems": 4,
+                "minItems": 4,
+                "type": "array"
+              }
+            ]
+          },
+          "maxItems": 3,
+          "minItems": 3,
+          "type": "array"
+        },
+        "startTime": {
+          "description": "Unix timestamp from currentRaid, in seconds. The upper bound matches DateTime64(3) in ClickHouse 24.2.",
+          "maximum": 10413791999.999,
+          "minimum": 1,
+          "type": "number"
+        },
+        "totalShots": {
+          "description": "Количество выстрелов",
+          "type": "number"
+        },
+        "totalShotsDamaged": {
+          "description": "Количество выстрелов с уроном",
+          "type": "number"
+        },
+        "totalShotsHit": {
+          "description": "Количество попавших выстрелов",
+          "type": "number"
+        },
+        "winCount": {
+          "description": "Число побед из результатов",
+          "type": "number"
+        }
+      },
+      "required": [
+        "accountDBID",
+        "battleResults",
+        "battleStarts",
+        "durationSeconds",
+        "eventName",
+        "gameVersion",
+        "lastBattleAgo",
+        "lastDmgPlace",
+        "lastResult",
+        "lastXpPlace",
+        "localtime",
+        "modVersion",
+        "parsed",
+        "playerClan",
+        "playerClanDBID",
+        "playerName",
+        "primaryDurationSeconds",
+        "raw",
+        "region",
+        "regionOnline",
+        "serverName",
+        "serverOnline",
+        "sessionStart",
+        "sessionStartAgo",
+        "slots",
+        "startTime",
+        "totalShots",
+        "totalShotsDamaged",
+        "totalShotsHit",
+        "winCount"
+      ],
+      "type": "object"
+    },
     "OnShot": {
       "properties": {
         "acceleration": {

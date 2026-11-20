@@ -1,11 +1,11 @@
 import { Hono } from 'hono'
 
 import type { OnBattleResult as BattleResultEvent, OnShot as ShotEvent } from '@/types/events'
-import type { HangarEvent } from '@/types/utils/event'
 import OnBattleResult from './processors/onBattleResult'
 import OnBattleStart from './processors/onBattleStart'
 import OnShot from './processors/onShot'
 import OnLootboxOpen from './processors/onLootboxOpen'
+import OnRaccoonRaidReward from './processors/onRaccoonRaidReward'
 import OnMoeInfo from './processors/onMoeInfo'
 import OnComp7Info from './processors/OnComp7Info'
 import OnAccountStats from './processors/onAccountStats'
@@ -33,6 +33,7 @@ const supportedEvents = {
 
 const supportedHangarEvents = {
   'OnLootboxOpen': OnLootboxOpen,
+  'OnRaccoonRaidReward': OnRaccoonRaidReward,
   'OnMoeInfo': OnMoeInfo,
   'OnComp7Info': OnComp7Info,
   'OnAccountStats': OnAccountStats,

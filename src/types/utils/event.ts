@@ -20,8 +20,10 @@ interface Event {
   modVersion: string
 }
 
-// TODO: Убрать Partial после завершения поддержки старых ангарных событий.
-interface HangarEvent extends Event, Partial<PlayerInfo>, Partial<ServerInfo>, Partial<SessionMeta> {
+interface HangarEvent extends Event, PlayerInfo, ServerInfo, SessionMeta { }
+
+// TODO: Удалить когда 1.6.4.2 устареет
+interface LegacyHangarEvent extends Event, Partial<PlayerInfo>, Partial<ServerInfo>, Partial<SessionMeta> {
   playerName: PlayerInfo['playerName']
 }
 
@@ -32,4 +34,4 @@ interface BattleEvent extends Event, DynamicBattleInfo, PlayerInfo, ServerInfo, 
   battleTime: number
 }
 
-export type { Event, HangarEvent, BattleEvent }
+export type { Event, HangarEvent, LegacyHangarEvent, BattleEvent }
